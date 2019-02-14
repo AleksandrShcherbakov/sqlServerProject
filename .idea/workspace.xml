@@ -639,12 +639,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1550153215773</updated>
-      <workItem from="1550153225429" duration="706000" />
+      <workItem from="1550153225429" duration="1300000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="706000" />
+    <option name="totallyTimeSpent" value="1300000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="214" width="1708" height="927" extended-state="0" />

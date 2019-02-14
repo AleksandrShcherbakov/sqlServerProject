@@ -20,6 +20,6 @@ public class MainController {
     @ResponseBody
     public String find(){
         int id=13010;
-        return cellNameDAO.findCellNumber(id).toString();
+        return cellNameDAO.findCellNumber().toString();
     }
 }

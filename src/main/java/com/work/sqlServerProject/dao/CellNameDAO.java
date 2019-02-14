@@ -21,12 +21,12 @@ public class CellNameDAO extends JdbcDaoSupport {
         this.setDataSource(dataSource);
     }
 
-    public CellNameInfo findCellNumber(int id){
-        String sql = CellNameMapper.BASE_SQL+" where CI="id";";
-        Object[] params = new Object[]{id};
+    public CellNameInfo findCellNumber(){
+        String sql = CellNameMapper.BASE_SQL+" where cellname=3313000";
+
         CellNameMapper mapper = new CellNameMapper();
         try {
-            CellNameInfo cellName = this.getJdbcTemplate().queryForObject(sql,params,mapper);
+            CellNameInfo cellName = this.getJdbcTemplate().queryForObject(sql,mapper);
             System.out.println(cellName.getCellName()+" "+cellName.getCI());
             return cellName;
         }

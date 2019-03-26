@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Select BS</title>
+</head>
+<body>
+
+<br>
+<div th:if="${nothing}" th:utext="${nothing}"> </div>
+<div th:if="${nopos}" th:utext="${nopos}"> </div>
+<div th:if="${noposonnetwork}" th:utext="${noposonnetwork}"> </div>
+<br>
+
+<form th:action="@{/szPos}" th:object="${szFormPos}" method="post">
+    <b>укажите номер БС:</b><br>
+    <input type="text" th:field="*{posName}"/>
+    <br>
+    <p><input type="checkbox" name="system" value="2G 900 0" >2G 900</p>
+    <p><input type="checkbox" name="system" value="2G 1800 0">2G 1800</p>
+    <br>
+    <p><input type="checkbox" name="system" value="3G 2100 10813">3G 2100 ch: 10813</p>
+    <p><input type="checkbox" name="system" value="3G 2100 10788">3G 2100 ch: 10788</p>
+    <p><input type="checkbox" name="system" value="3G 2100 10836">3G 2100 ch: 10836</p>
+    <br>
+    <p><input type="checkbox" name="system" value="3G 900 3036">3G 900 ch: 3036</p>
+    <p><input type="checkbox" name="system" value="3G 900 3012">3G 900 ch: 3012</p>
+    <br>
+    <p><input type="checkbox" name="system" value="4G 2600 3300">4G 2600 ch: 3300</p>
+    <p><input type="checkbox" name="system" value="4G 1800 1351">4G 1800 ch: 1351</p>
+    <p><input type="checkbox" name="system" value="4G 800 6413">4G 800 ch: 6413</p>
+    <br>
+    <input type="submit" value="OK"/>
+</form>
+
+</div>
+
+</body>
+</html>

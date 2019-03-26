@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BS for</title>
+</head>
+<body>
+<form th:action="@{/setCI}" th:object="${formForSZ}" method="post">
+<div>
+    <table border="1">
+        <tr>
+            <th>Азимут</th>
+            <th>Диапазон</th>
+            <th>Несущая</th>
+            <th>Имя</th>
+            <th>Сектор по проекту</th>
+            <th>Сектор на сети</th>
+        </tr>
+        <tr th:each ="listline, rowStat : *{list}">
+            <td th:utext="${listline.azimuth}"></td>
+            <td th:utext="${listline.diapazon}"></td>
+            <td th:utext="${listline.carryingFrequency}"></td>
+            <td th:utext="${listline.name}"></td>
+            <td th:utext="${listline.CIinGeneral}"></td>
+            <td>
+                <select th:field="*{list[__${rowStat.index}__].CIinNetwork}">
+                    <option th:each="cell : ${listline.cells}"
+                            th:value="${cell}"
+                            th:utext="${cell}">
+                </select>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="ok"/>
+</form>
+</div>
+
+
+
+
+</body>
+</html>
+
+</body>
+</html>

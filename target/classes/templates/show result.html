@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>result</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Cell name</td>
+        <td>CI</td>
+    </tr>
+    <tr th:each="cellInfo : ${cellInfos}">
+        <td th:utext="${cellInfo.cellName}"></td>
+        <td th:utext="${cellInfo.CI}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

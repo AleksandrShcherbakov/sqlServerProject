@@ -12,6 +12,7 @@ import java.sql.SQLException;
 public class CellNameMapper implements RowMapper<CellNameInfo> {
     public static final String BASE_SQL = "select * from pmc.bs_general_table_cr";
 
+
     @Override
     public CellNameInfo mapRow(ResultSet resultSet, int i) throws SQLException {
         int cellName = resultSet.getInt("cellName");

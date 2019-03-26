@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BTS</title>
+</head>
+<body>
+<form th:action="@{/bts}" th:object="${btsForm}" method="post">
+    <b>укажите путь куда создаем (иначе будет создан в корне диска C):</b><br>
+    <input type="text" th:field="*{path}"/>
+    <br><br>
+    <input type="submit" value="создать БТС файл"/>
+</form>
+<br>
+<form th:action="@{/szPos}" method="get">
+    <input type="submit" value="создать СЗ на перепутку">
+</form>
+<br>
+<form th:action="@{/exit}" method="get">
+    <input type="submit" value="выключить программу"/>
+</form>
+
+</body>
+</html>
+
+</body>
+</html>

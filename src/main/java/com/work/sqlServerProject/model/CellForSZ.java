@@ -157,13 +157,6 @@ public class CellForSZ {
         this.diapazon = diapazon;
     }
 
-    public int getCarruingFrequency() {
-        return carryingFrequency;
-    }
-
-    public void setCarruingFrequency(int carruingFrequency) {
-        this.carryingFrequency = carruingFrequency;
-    }
 
     public String getName() {
         return name;

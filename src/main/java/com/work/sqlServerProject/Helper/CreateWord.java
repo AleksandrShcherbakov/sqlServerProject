@@ -2,6 +2,7 @@ package com.work.sqlServerProject.Helper;
 
 import com.work.sqlServerProject.model.CellForSZ;
 import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFonts;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,16 +51,16 @@ public class CreateWord {
     public static String createVvodniyText(List<CellForSZ>list) {
         Set<String> set = new TreeSet<>();
         for (CellForSZ c : list) {
-            set.add(c.getDiapazon() + " " + c.getCarryingFrequency());
+            set.add(c.getRan() + " " + c.getDiapazon());
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (String c : set) {
-            stringBuilder.append(c + "/");
+            stringBuilder.append(c + " ,");
         }
-        stringBuilder.replace(stringBuilder.indexOf("/"), stringBuilder.capacity(), ".");
-        String res = "В результате анализа измерений на БС "+list.get(0).getPosname() +
+        stringBuilder.deleteCharAt(stringBuilder.capacity());
+        String res = "В результате анализа объезда на БС "+list.get(0).getPosname() +
                 " ("+list.get(0).getAddress()+") выявлена неправильная ориентация секторов " +
-                "в диапазоне "+stringBuilder.toString();
+                "в диапазоне "+stringBuilder.toString()+".";
         return res;
     }
 
@@ -135,6 +136,7 @@ public class CreateWord {
         run3.setText(createVvodniyText(list));
         run3.addCarriageReturn();
 
+
         //Создаем таблицу
         XWPFTable table = document.createTable();
         XWPFTableRow tableRowZag = table.getRow(0);
@@ -158,13 +160,14 @@ public class CreateWord {
         obshayaFrazaVKonce.setIndentationFirstLine(1000);
         XWPFRun run4 =obshayaFrazaVKonce.createRun();
         run4.setFontFamily("Times new roman");
-        run4.setFontSize(16);
+        run4.setFontSize(14);
         run4.addCarriageReturn();
-        run4.setText("О результатах сообщить в отдел");
+        run4.setText("Прошу Вас дать указание проверить на станции состояние трансиверов, антенного тракта и правильность подключения трансиверов к антеннам.");
+        run4.addCarriageReturn();
+        run4.setText("О результатах прошу Вас сообщить в службу оптимизации мобильной сети.");
 
         //подпись
         XWPFParagraph podpis = document.createParagraph();
-        podpis.setAlignment(ParagraphAlignment.DISTRIBUTE);
         XWPFRun run5 =podpis.createRun();
         run5.setFontFamily("Times new roman");
         run5.setFontSize(16);

@@ -26,7 +26,7 @@ public class CreateWord {
     public static String createSZname(Integer numOfSz){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
         String date = sdf.format(new Date());
-        return "Mos_"+date+"_"+numOfSz;
+        return "Mos_"+date+"_"+numOfSz+".docx";
     }
 
     public static String createDateIspolneniya(){

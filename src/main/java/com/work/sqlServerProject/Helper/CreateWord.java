@@ -32,13 +32,13 @@ public class CreateWord {
     public static  String createVendorDiapazons(List<CellForSZ> list){
         Set<String> set = new TreeSet<>();
         for (CellForSZ c : list){
-            set.add(String.valueOf(c.getDiapazon()));
+            set.add(String.valueOf(c.getRan()));
         }
         StringBuilder s = new StringBuilder();
         for (String c : set){
-            s.append(c+", ");
+            s.append(c+"/");
         }
-        s.append(".");
+        s.append(";");
         String vendor;
         if (list.get(0).getVendor().equals("E")){
             vendor="Ericsson ";
@@ -91,14 +91,14 @@ public class CreateWord {
         XWPFRun run = paragraph.createRun();
         run.setFontFamily("Times new roman");
         run.setBold(true);
-        run.setFontSize(16);
-        run.setText("Привет мир");
+        run.setFontSize(14);
+        run.setText("Руководителю");
         run.addCarriageReturn();
-        run.setText("hello world");
+        run.setText("службы эксплуатации");
         run.addCarriageReturn();
-        run.setText("hello world");
+        run.setText("базовых станций");
         run.addCarriageReturn();
-        run.setText("hello world");
+        run.setText("Тимофееву С.В.");
         run.addCarriageReturn();
 
 
@@ -108,7 +108,7 @@ public class CreateWord {
         XWPFRun run1 = zagolovok.createRun();
         run1.setFontFamily("Times new roman");
         run1.setBold(true);
-        run1.setFontSize(20);
+        run1.setFontSize(18);
         run1.setText(createZagolovok(numOfSZ));//указывается номер СЗ
 
         //создаем подпись с характиристиками СЗ
@@ -116,10 +116,15 @@ public class CreateWord {
         characteristiky.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun run2 = characteristiky.createRun();
         run2.setFontFamily("Times new roman");
-        run2.setFontSize(16);
-        run2.setText("Дата исполнения: "+createDateIspolneniya());
+        run2.setFontSize(14);
+        run2.setText("Тип работ: проверка подключения RU;");
         run2.addCarriageReturn();
-        run2.setText("Вендор: "+ createVendorDiapazons(list));
+        run2.setText("Срок исполнения: "+createDateIspolneniya()+";");
+        run2.addCarriageReturn();
+        run2.setText("Зона: "+ createVendorDiapazons(list));
+        run2.addCarriageReturn();
+        run2.setText("Комментарий: устранение неправильного подключения RU.");
+        run2.addCarriageReturn();
 
         //создаем общую вводную фразу для СЗ
         XWPFParagraph vvodnaya = document.createParagraph();

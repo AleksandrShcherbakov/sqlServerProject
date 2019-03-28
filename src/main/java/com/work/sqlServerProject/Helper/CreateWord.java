@@ -1,5 +1,6 @@
 package com.work.sqlServerProject.Helper;
 
+import com.work.sqlServerProject.controller.SZController;
 import com.work.sqlServerProject.model.CellForSZ;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFonts;
@@ -7,6 +8,8 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFonts;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -18,6 +21,12 @@ public class CreateWord {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         String date = sdf.format(new Date());
         return "Служебная записка №"+numOfSZ+" от "+date+".";
+    }
+
+    public static String createSZname(Integer numOfSz){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
+        String date = sdf.format(new Date());
+        return "Mos_"+date+"_"+numOfSz;
     }
 
     public static String createDateIspolneniya(){
@@ -170,19 +179,35 @@ public class CreateWord {
         XWPFParagraph podpis = document.createParagraph();
         XWPFRun run5 =podpis.createRun();
         run5.setFontFamily("Times new roman");
-        run5.setFontSize(16);
+        run5.setFontSize(14);
         run5.addCarriageReturn();
-        run5.setText("исполнитель утвердитель");
+        run5.setText("Руководитель службы оптимизации");
+        run5.addBreak();
+        run5.setText("Лобанов М.А.");
         run5.addCarriageReturn();
-        run5.setText("я он");
+        run5.setText("мобильной сети");
+        run5.addCarriageReturn();
+        run5.setText("Исполнитель:");
+        run5.addBreak();
+        run5.setText(SZController.getExecutor());
+        try {
+            if (filePath==null || filePath.equals("")){
+                filePath="C://";
+            }
+            File file = new File(filePath);
+            if (!file.exists()) {
+                Files.createDirectory(Paths.get(filePath));
+            }
+            else
+            if (file.isDirectory()) {
+                FileOutputStream fileOutputStream = new FileOutputStream(new File(filePath + "/" + createSZname(numOfSZ)));
+                document.write(fileOutputStream);
+                fileOutputStream.close();
+            }
 
+        }
+        catch (IOException e){
 
-
-
-        FileOutputStream fileOutputStream = new FileOutputStream(new File("C://123.docx"));
-
-        document.write(fileOutputStream);
-
-        fileOutputStream.close();
+        }
     }
 }

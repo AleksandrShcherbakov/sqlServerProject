@@ -26,6 +26,15 @@ public class SZController {
 
     List<CellForSZ>list;
 
+    private String executor;
+
+    public static String getExecutor() {
+        return executor;
+    }
+
+    public void setExecutor(String executor) {
+        this.executor = executor;
+    }
 
     @RequestMapping(value = "/szPos", method = RequestMethod.GET)
     public String shoeInfoForSZ(Model model){

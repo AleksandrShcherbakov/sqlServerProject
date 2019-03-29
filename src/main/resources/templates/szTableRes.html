@@ -5,6 +5,12 @@
     <title>BS for</title>
 </head>
 <body>
+<div th:utext="${phrase}"> </div>
+<br>
+<form th:action="@{/copy}" method="get">
+    <input type="submit" value="копировать"/>
+</form>
+<br>
     <div>
         <table border="1">
             <tr>

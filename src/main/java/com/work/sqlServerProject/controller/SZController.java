@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +23,11 @@ import java.util.List;
 @Controller
 public class SZController {
 
+    private static String executor;
     @Autowired
     CellNameDAO cellNameDAO;
 
     List<CellForSZ>list;
-
-    private String executor;
 
     public static String getExecutor() {
         return executor;
@@ -82,7 +83,13 @@ public class SZController {
     public String showResultTable(Model model, @ModelAttribute("formForSZ") FormCellForSZ formCellForSZ) throws IOException {
         Helper.setCIfromform(list, formCellForSZ.getList());
         model.addAttribute("listSZ",list);
-        CreateWord.createWordFile(list,15,"zxczx");
+        model.addAttribute("phrase",CreateWord.createVvodniyText(list));
         return "szTableRes";
+    }
+
+    @RequestMapping(value = "/copy", method = RequestMethod.GET)
+    public void copyText(Model model, @ModelAttribute("phrase") String phrase){
+        StringSelection ss = new StringSelection(phrase);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
     }
 }

@@ -73,24 +73,6 @@ public class CreateWord {
         return res;
     }
 
-    /*public static void fillInTable(XWPFTable table, List<CellForSZ>list) {
-        XWPFTableRow tableRowZag = table.createRow();
-        tableRowZag.getCell(0).setText("Азимут, град.");
-        tableRowZag.createCell().setText("Диапазон");
-        tableRowZag.createCell().setText("Несущая частота");
-        tableRowZag.createCell().setText("Наименование");
-        tableRowZag.createCell().setText("Сектор по проекту");
-        tableRowZag.createCell().setText("Сектор на сети");
-        for (int i = 0; i < list.size(); i++) {
-            XWPFTableRow tableRow = table.createRow();
-            tableRow.getCell(0).setText(String.valueOf(list.get(i).getAzimuth()));
-            tableRow.getCell(1).setText(String.valueOf(list.get(i).getDiapazon()));
-            tableRow.getCell(2).setText(String.valueOf(list.get(i).getCarryingFrequency()));
-            tableRow.getCell(3).setText(list.get(i).getName());
-            tableRow.getCell(4).setText(String.valueOf(list.get(i).getCIinGeneral()));
-            tableRow.getCell(4).setText(String.valueOf(list.get(i).getCIinNetwork()));
-        }
-    }*/
 
     public static void createWordFile(List<CellForSZ> list, Integer numOfSZ, String filePath) throws IOException {
         XWPFDocument document = new XWPFDocument();

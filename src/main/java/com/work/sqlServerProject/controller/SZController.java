@@ -46,7 +46,14 @@ public class SZController {
 
     @RequestMapping(value = "/szPos", method = RequestMethod.POST)
     public String getInfoForSZ(Model model, @ModelAttribute("szFormPos") SZFormPos szFormPos,
-                               @RequestParam (required=false, name = "system") String system){
+                               @RequestParam (required=false, name = "system") String system,
+                               @RequestParam ("executor") String ex){
+        if (ex==null){
+            model.addAttribute("noExecutor", "Необходимо указать имя исполнителя.");
+            return "checkPos";
+        }
+        this.setExecutor(ex);
+
         if (szFormPos.getPosName()==0){
             model.addAttribute("nopos", "Номер позиции не может быть \"0\"");
             return "checkPos";

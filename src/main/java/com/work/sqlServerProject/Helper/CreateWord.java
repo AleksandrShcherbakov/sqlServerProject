@@ -130,6 +130,8 @@ public class CreateWord {
 
         //Создаем таблицу
         XWPFTable table = document.createTable();
+        table.setRowBandSize(14);
+        table.setStyleID("tymes new roman");
         XWPFTableRow tableRowZag = table.getRow(0);
         tableRowZag.getCell(0).setText("Азимут, град.");
         tableRowZag.createCell().setText("Диапазон");

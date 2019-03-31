@@ -24,6 +24,7 @@ import java.util.List;
 public class SZController {
 
     private static String executor;
+
     @Autowired
     CellNameDAO cellNameDAO;
 
@@ -33,7 +34,7 @@ public class SZController {
         return executor;
     }
 
-    public void setExecutor(String executor) {
+    public  void setExecutor(String executor) {
         this.executor = executor;
     }
 

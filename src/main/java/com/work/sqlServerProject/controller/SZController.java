@@ -2,6 +2,7 @@ package com.work.sqlServerProject.controller;
 
 import com.work.sqlServerProject.Helper.CreateWord;
 import com.work.sqlServerProject.Helper.Helper;
+import com.work.sqlServerProject.SqlServerProjectApplication;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.FormCellForSZ;
 import com.work.sqlServerProject.form.SZFormPos;
@@ -11,10 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +26,16 @@ import java.util.List;
 public class SZController {
 
     private static String executor;
+
+    public int getNumOfSZ() {
+        return numOfSZ;
+    }
+
+    public void setNumOfSZ(int numOfSZ) {
+        this.numOfSZ = numOfSZ;
+    }
+
+    private int numOfSZ;
 
     @Autowired
     CellNameDAO cellNameDAO;
@@ -48,7 +60,7 @@ public class SZController {
     @RequestMapping(value = "/szPos", method = RequestMethod.POST)
     public String getInfoForSZ(Model model, @ModelAttribute("szFormPos") SZFormPos szFormPos,
                                @RequestParam (required=false, name = "system") String system,
-                               @RequestParam ("executor") String ex){
+                               @RequestParam (required=false, name="executor") String ex){
         if (ex==null){
             model.addAttribute("noExecutor", "Необходимо указать имя исполнителя.");
             return "checkPos";
@@ -92,12 +104,27 @@ public class SZController {
         Helper.setCIfromform(list, formCellForSZ.getList());
         model.addAttribute("listSZ",list);
         model.addAttribute("phrase",CreateWord.createVvodniyText(list));
+        model.addAttribute("szcontr",this);
+        StringSelection stringSelection = new StringSelection(CreateWord.createVvodniyText(list));
+        SqlServerProjectApplication.clpbrd.setContents(stringSelection, null);
         return "szTableRes";
     }
 
-    @RequestMapping(value = "/copy", method = RequestMethod.GET)
-    public void copyText(Model model, @ModelAttribute("phrase") String phrase){
-        StringSelection ss = new StringSelection(phrase);
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+    /*@RequestMapping(value = "/copy", method = RequestMethod.GET)
+    public String copyText(Model model, @ModelAttribute("phrase") String phrase){
+        StringSelection stringSelection = new StringSelection(phrase);
+        SqlServerProjectApplication.clpbrd.setContents(stringSelection, null);
+        return "redirect:/setCI";
+    }*/
+
+    @RequestMapping(value = "/createword", method = RequestMethod.POST)
+    @ResponseBody
+    public String createword(Model model, @ModelAttribute("szcontr") SZController szController) throws IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        String nameOfFolder = sdf.format(new Date());
+        CreateWord.createWordFile(list,szController.getNumOfSZ(),"C://");
+        return "СЗ создана.<br><p><a href='/'>На главную.</a></p>";
     }
+
+
 }

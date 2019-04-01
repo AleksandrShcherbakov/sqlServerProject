@@ -24,10 +24,9 @@ public class Helper {
                 outputStream.write("\n".getBytes());
                 outputStream.write(data.getBytes());
                 outputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            }
+            catch (IOException s) {
+
             }
         }
     }

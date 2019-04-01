@@ -3,7 +3,6 @@ package com.work.sqlServerProject.Helper;
 import com.work.sqlServerProject.controller.SZController;
 import com.work.sqlServerProject.model.CellForSZ;
 import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFonts;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,7 +47,8 @@ public class CreateWord {
         for (String c : set){
             s.append(c+"/");
         }
-        s.append(";");
+        s.replace(s.length()-1,s.length(),";");
+
         String vendor;
         if (list.get(0).getVendor().equals("E")){
             vendor="Ericsson ";
@@ -66,10 +66,10 @@ public class CreateWord {
         for (String c : set) {
             stringBuilder.append(c + " ,");
         }
-        stringBuilder.deleteCharAt(stringBuilder.capacity());
+        stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),".");
         String res = "В результате анализа объезда на БС "+list.get(0).getPosname() +
                 " ("+list.get(0).getAddress()+") выявлена неправильная ориентация секторов " +
-                "в диапазоне "+stringBuilder.toString()+".";
+                "в диапазоне "+stringBuilder.toString();
         return res;
     }
 
@@ -123,7 +123,7 @@ public class CreateWord {
         vvodnaya.setIndentationFirstLine(1000);
         XWPFRun run3 = vvodnaya.createRun();
         run3.setFontFamily("Times new roman");
-        run3.setFontSize(16);
+        run3.setFontSize(14);
         run3.setText(createVvodniyText(list));
         run3.addCarriageReturn();
 
@@ -133,6 +133,7 @@ public class CreateWord {
         table.setRowBandSize(14);
         table.setStyleID("tymes new roman");
         XWPFTableRow tableRowZag = table.getRow(0);
+        tableRowZag.setHeight(10);
         tableRowZag.getCell(0).setText("Азимут, град.");
         tableRowZag.createCell().setText("Диапазон");
         tableRowZag.createCell().setText("Несущая частота");
@@ -141,6 +142,7 @@ public class CreateWord {
         tableRowZag.createCell().setText("Сектор на сети");
         for (int i = 0; i < list.size(); i++) {
             XWPFTableRow tableRow = table.createRow();
+            tableRow.setHeight(10);
             tableRow.getCell(0).setText(String.valueOf(list.get(i).getAzimuth()));
             tableRow.getCell(1).setText(String.valueOf(list.get(i).getDiapazon()));
             tableRow.getCell(2).setText(list.get(i).getCarryingFrequency()==0 ? "-" : String.valueOf(list.get(i).getCarryingFrequency()));
@@ -166,13 +168,11 @@ public class CreateWord {
         run5.setFontSize(14);
         run5.addCarriageReturn();
         run5.setText("Руководитель службы оптимизации");
-        run5.addBreak();
-        run5.setText("Лобанов М.А.");
+        run5.setText("                Лобанов М.А.");
         run5.addCarriageReturn();
         run5.setText("мобильной сети");
         run5.addCarriageReturn();
-        run5.setText("Исполнитель:");
-        run5.addBreak();
+        run5.setText("Исполнитель:                                                       ");
         run5.setText(SZController.getExecutor());
         try {
             if (filePath==null || filePath.equals("")){

@@ -11,6 +11,7 @@
 <div th:if="${nothing}" th:utext="${nothing}"> </div>
 <div th:if="${nopos}" th:utext="${nopos}"> </div>
 <div th:if="${noposonnetwork}" th:utext="${noposonnetwork}"> </div>
+<div th:if="${noExecutor}" th:utext="${noExecutor}"></div>
 <br>
 
 <form th:action="@{/szPos}" th:object="${szFormPos}" method="post">

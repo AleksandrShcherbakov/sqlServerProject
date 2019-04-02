@@ -82,4 +82,12 @@ public class Helper {
         }
         return defPath;
     }
+
+    public static String createDefPath(String path) throws IOException {
+        File fileDir = new File(path);
+        if (!fileDir.exists()){
+            Files.createDirectories(Paths.get(path));
+        }
+        return path;
+    }
 }

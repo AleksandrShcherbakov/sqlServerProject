@@ -7,8 +7,6 @@ import org.apache.poi.xwpf.usermodel.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -68,7 +66,7 @@ public class CreateWord {
         }
         stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),".");
         String res = "В результате анализа объезда на БС "+list.get(0).getPosname() +
-                " ("+list.get(0).getAddress()+") выявлена неправильная ориентация секторов " +
+                " ("+list.get(0).getNameAddress()+") выявлена неправильная ориентация секторов " +
                 "в диапазоне "+stringBuilder.toString();
         return res;
     }
@@ -168,27 +166,16 @@ public class CreateWord {
         run5.setFontSize(14);
         run5.addCarriageReturn();
         run5.setText("Руководитель службы оптимизации");
-        run5.setText("                Лобанов М.А.");
+        run5.setText("                 Лобанов М.А.");
         run5.addCarriageReturn();
-        run5.setText("мобильной сети");
+        run5.setText("мобильной сети:");
         run5.addCarriageReturn();
         run5.setText("Исполнитель:                                                       ");
         run5.setText(SZController.getExecutor());
         try {
-            if (filePath==null || filePath.equals("")){
-                filePath="C://";
-            }
-            File file = new File(filePath);
-            if (!file.exists()) {
-                Files.createDirectory(Paths.get(filePath));
-            }
-            else
-            if (file.isDirectory()) {
-                FileOutputStream fileOutputStream = new FileOutputStream(new File(filePath + "/" + createSZname(numOfSZ)));
-                document.write(fileOutputStream);
-                fileOutputStream.close();
-            }
-
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(filePath + "/" + createSZname(numOfSZ)));
+            document.write(fileOutputStream);
+            fileOutputStream.close();
         }
         catch (IOException e){
 

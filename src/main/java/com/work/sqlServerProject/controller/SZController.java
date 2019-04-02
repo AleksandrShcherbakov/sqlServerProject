@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +87,7 @@ public class SZController {
             this.pathDir=Helper.createDefPath();
         }
         else {
-            this.pathDir=szFormPos.getPathDir();
+            this.pathDir=Helper.createDefPath(szFormPos.getPathDir());
         }
 
         list=cellNameDAO.getBSforSZ(szFormPos.getPosName());
@@ -136,7 +135,6 @@ public class SZController {
     @RequestMapping(value = "/createword", method = RequestMethod.POST)
     @ResponseBody
     public String createword(Model model, @ModelAttribute("szcontr") SZController szController) throws IOException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
         CreateWord.createWordFile(list,szController.getNumOfSZ(),pathDir);
         return "СЗ создана.<br><p><a href='/'>На главную.</a></p>";
     }

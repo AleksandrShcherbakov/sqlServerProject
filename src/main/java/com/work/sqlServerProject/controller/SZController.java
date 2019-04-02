@@ -16,7 +16,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +23,16 @@ import java.util.List;
  */
 @Controller
 public class SZController {
+
+    private String pathDir;
+
+    public String getPathDir() {
+        return pathDir;
+    }
+
+    public void setPathDir(String pathDir) {
+        this.pathDir = pathDir;
+    }
 
     private static String executor;
 
@@ -60,7 +69,7 @@ public class SZController {
     @RequestMapping(value = "/szPos", method = RequestMethod.POST)
     public String getInfoForSZ(Model model, @ModelAttribute("szFormPos") SZFormPos szFormPos,
                                @RequestParam (required=false, name = "system") String system,
-                               @RequestParam (required=false, name="executor") String ex){
+                               @RequestParam (required=false, name="executor") String ex) throws IOException {
         if (ex==null){
             model.addAttribute("noExecutor", "Необходимо указать имя исполнителя.");
             return "checkPos";
@@ -75,6 +84,13 @@ public class SZController {
             model.addAttribute("nothing", "Вы не указали ни одного диапазона.");
             return "checkPos";
         }
+        if (szFormPos.getPathDir().equals("")){
+            this.pathDir=Helper.createDefPath();
+        }
+        else {
+            this.pathDir=szFormPos.getPathDir();
+        }
+
         list=cellNameDAO.getBSforSZ(szFormPos.getPosName());
         if (list.size()==0){
             model.addAttribute("noposonnetwork", "БС с указанным номером не существует.");
@@ -121,8 +137,7 @@ public class SZController {
     @ResponseBody
     public String createword(Model model, @ModelAttribute("szcontr") SZController szController) throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-        String nameOfFolder = sdf.format(new Date());
-        CreateWord.createWordFile(list,szController.getNumOfSZ(),"C://");
+        CreateWord.createWordFile(list,szController.getNumOfSZ(),pathDir);
         return "СЗ создана.<br><p><a href='/'>На главную.</a></p>";
     }
 

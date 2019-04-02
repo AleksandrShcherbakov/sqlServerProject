@@ -1,6 +1,6 @@
 package com.work.sqlServerProject;
 
-import org.springframework.boot.SpringApplication;
+import com.work.sqlServerProject.Helper.Helper;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.awt.*;
@@ -11,8 +11,8 @@ import java.io.IOException;
 public class SqlServerProjectApplication {
 	public static Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 	public static void main(String[] args) throws IOException {
-		SpringApplication.run(SqlServerProjectApplication.class, args);
-
+		//SpringApplication.run(SqlServerProjectApplication.class, args);
+		Helper.createDefPath();
 	}
 
 }

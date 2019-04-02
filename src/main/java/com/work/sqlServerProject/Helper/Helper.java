@@ -4,6 +4,8 @@ import com.work.sqlServerProject.model.CellForSZ;
 import com.work.sqlServerProject.model.CellInfo;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,5 +70,16 @@ public class Helper {
             result.add(i,cellFromList);
         }
         return result;
+    }
+
+    public static String createDefPath() throws IOException {
+        SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        String defPath= "C://Служебные записки/"+sdfYear.format(new Date())+"/"+sdfDate.format(new Date());
+        File fileDir = new File(defPath);
+        if (!fileDir.exists()){
+            Files.createDirectories(Paths.get(defPath));
+        }
+        return defPath;
     }
 }

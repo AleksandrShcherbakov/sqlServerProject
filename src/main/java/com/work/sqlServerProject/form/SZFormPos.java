@@ -5,6 +5,15 @@ package com.work.sqlServerProject.form;
  */
 public class SZFormPos {
     private int posName;
+    private String pathDir;
+
+    public String getPathDir() {
+        return pathDir;
+    }
+
+    public void setPathDir(String pathDir) {
+        this.pathDir = pathDir;
+    }
 
     public SZFormPos() {
     }

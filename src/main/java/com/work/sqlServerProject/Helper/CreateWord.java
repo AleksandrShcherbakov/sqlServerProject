@@ -17,12 +17,15 @@ public class CreateWord {
     public static String createZagolovok(Integer numOfSZ){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         String date = sdf.format(new Date());
-        return "Служебная записка №"+numOfSZ+" от "+date+".";
+        return "Служебная записка №"+numOfSZ+" от "+date;
     }
 
     public static String createSZname(Integer numOfSz){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
         String date = sdf.format(new Date());
+        if (numOfSz<10){
+            return "Mos_"+date+"_"+0+numOfSz+".docx";
+        }
         return "Mos_"+date+"_"+numOfSz+".docx";
     }
 
@@ -64,7 +67,7 @@ public class CreateWord {
         for (String c : set) {
             stringBuilder.append(c + " ,");
         }
-        stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),".");
+        stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),":");
         String res = "В результате анализа объезда на БС "+list.get(0).getPosname() +
                 " ("+list.get(0).getNameAddress()+") выявлена неправильная ориентация секторов " +
                 "в диапазоне "+stringBuilder.toString();
@@ -156,8 +159,7 @@ public class CreateWord {
         run4.setFontSize(14);
         run4.addCarriageReturn();
         run4.setText("Прошу Вас дать указание проверить на станции состояние трансиверов, антенного тракта и правильность подключения трансиверов к антеннам.");
-        run4.addCarriageReturn();
-        run4.setText("О результатах прошу Вас сообщить в службу оптимизации мобильной сети.");
+
 
         //подпись
         XWPFParagraph podpis = document.createParagraph();

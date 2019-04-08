@@ -86,7 +86,7 @@ public class CellMapper implements RowMapper<CellInfo> {
             "b.dlearfcn as CH,\n" +
             "null as BSIC,\n" +
             "null as SCR,   \n" +
-            "b.pci as PCI,\n" +
+            "c.pci as PCI,\n" +
             "b.azimuth as DIR,\n" +
             "a.HEIGHT,\n" +
             "a.TILT,\n" +
@@ -94,8 +94,10 @@ public class CellMapper implements RowMapper<CellInfo> {
             "a.geo_zone as REGION\n" +
             "\n" +
             "from pmc.bs_general_table_cr as a join pmc.LTE_data_Huawei as b on a.ci=b.cellname\n" +
+            "join pmc.Last_CellStatus_4G as c on (c.enodeb_id = b.enodebid and c.ecell_id=b.localcellid)\n"+
             "where \n" +
-            "a.ant_location= 'outdoor';";
+            "a.ant_location= 'outdoor'" +
+            "and c.dt=(select max(dt) from pmc.Last_CellStatus_4G);";
 
     @Override
     public CellInfo mapRow(ResultSet resultSet, int i) throws SQLException {

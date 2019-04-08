@@ -125,12 +125,7 @@ public class SZController {
         return "szTableRes";
     }
 
-    /*@RequestMapping(value = "/copy", method = RequestMethod.GET)
-    public String copyText(Model model, @ModelAttribute("phrase") String phrase){
-        StringSelection stringSelection = new StringSelection(phrase);
-        SqlServerProjectApplication.clpbrd.setContents(stringSelection, null);
-        return "redirect:/setCI";
-    }*/
+
 
     @RequestMapping(value = "/createword", method = RequestMethod.POST)
     @ResponseBody

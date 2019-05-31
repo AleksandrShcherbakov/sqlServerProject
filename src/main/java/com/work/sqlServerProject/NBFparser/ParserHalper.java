@@ -31,6 +31,7 @@ public class ParserHalper {
         for (String s : points){
             resList.add("GPS"+s);
         }
+        resList.remove(0);
 
         return resList;
 

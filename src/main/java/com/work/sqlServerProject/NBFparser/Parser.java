@@ -13,12 +13,15 @@ public class Parser {
        String separator = System.lineSeparator();
        List<Point> points = new ArrayList<>();
        for(String s : pointsInString){
-           String [] k = s.split(s);
+           String [] k = s.split(separator);
            for (String m : k) {
                if (m.startsWith("GPS")) {
                    Point point = new Point();
                    points.add(point);
-                   point.setGPS(getCoorginates(s));
+                   point.setGPS(getCoorginates(m));
+                   System.out.println(point.getLongitude());
+                   System.out.println(point.getLatitude());
+                   System.out.println("");
                }
                if (m.startsWith("FREQSCAN")){
 

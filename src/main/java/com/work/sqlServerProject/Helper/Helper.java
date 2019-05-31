@@ -75,7 +75,9 @@ public class Helper {
     public static String createDefPath() throws IOException {
         SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-        String defPath= "C://Служебные записки/"+sdfYear.format(new Date())+"/"+sdfDate.format(new Date());
+        SimpleDateFormat sdfMonth = new SimpleDateFormat("MMMMMMMMMMMM");
+        Date date = new Date();
+        String defPath= "C://Служебные записки/"+sdfYear.format(date)+"/"+sdfMonth.format(date)+"/"+sdfDate.format(date);
         File fileDir = new File(defPath);
         if (!fileDir.exists()){
             Files.createDirectories(Paths.get(defPath));

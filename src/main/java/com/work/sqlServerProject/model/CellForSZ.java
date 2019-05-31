@@ -1,9 +1,6 @@
 package com.work.sqlServerProject.model;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by a.shcherbakov on 06.03.2019.
@@ -25,7 +22,16 @@ public class CellForSZ {
     private String checkingStr;
     private boolean check;
     private int dlCh; //uarfcnDL
-    private Set <Integer> cells;
+
+    public List<Integer> getCells() {
+        return cells;
+    }
+
+    public void setCells(List<Integer> cells) {
+        this.cells = cells;
+    }
+
+    private List <Integer> cells;
 
     public CellForSZ() {
     }
@@ -63,7 +69,7 @@ public class CellForSZ {
         this.checkingStr=ran+" "+diapazon+" "+carryingFrequency;
         this.checkingStr.intern();
         this.check=false;
-        this.cells=new HashSet<>();
+        this.cells=new ArrayList<>();
     }
 
     public void checking(String[] spisok){
@@ -76,9 +82,14 @@ public class CellForSZ {
     }
 
     public void createSetCells(List<CellForSZ> list){
-        Set<Integer> set = new TreeSet<>();
+        List<Integer> set = new ArrayList<>();
         for (CellForSZ s : list){
             if (this.checkingStr.equals(s.checkingStr)){
+                if (this.CIinGeneral==s.CIinGeneral){
+                    set.add(0,s.CIinGeneral);
+                }
+                if (set.contains(s.CIinGeneral))
+                    continue;
                 set.add(s.CIinGeneral);
             }
         }
@@ -190,11 +201,9 @@ public class CellForSZ {
         this.CIinNetwork = CIinNetwork;
     }
 
-    public Set<Integer> getCells() {
-        return cells;
-    }
 
-    public void setCells(Set<Integer> cells) {
+
+    public void setCells(ArrayList<Integer> cells) {
         this.cells = cells;
     }
 

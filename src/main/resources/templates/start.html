@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BTS</title>
+</head>
+<body>
+<form th:action="@{/createBts}" method="get">
+    <input type="submit" value="Создать БТС-файл"/>
+</form>
+<br>
+<form th:action="@{/szPos}" method="get">
+    <input type="submit" value="создать СЗ на перепутку">
+</form>
+<br>
+<form th:action="@{/exit}" method="get">
+    <input type="submit" value="выключить программу"/>
+</form>
+
+</body>
+</html>

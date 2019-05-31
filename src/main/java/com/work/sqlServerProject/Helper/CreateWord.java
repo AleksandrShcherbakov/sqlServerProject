@@ -61,16 +61,20 @@ public class CreateWord {
     public static String createVvodniyText(List<CellForSZ>list) {
         Set<String> set = new TreeSet<>();
         for (CellForSZ c : list) {
-            set.add(c.getRan() + " " + c.getDiapazon());
+            set.add(c.getRan() + "-" + c.getDiapazon());
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (String c : set) {
-            stringBuilder.append(c + " ,");
+            stringBuilder.append(c + ", ");
         }
-        stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),":");
+        stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),"");
+        String diapazonah="диапазоне";
+        if (set.size()>1){
+            diapazonah="диапазонах";
+        }
         String res = "В результате анализа объезда на БС "+list.get(0).getPosname() +
                 " ("+list.get(0).getNameAddress()+") выявлена неправильная ориентация секторов " +
-                "в диапазоне "+stringBuilder.toString();
+                "в "+diapazonah+" "+stringBuilder.toString();
         return res;
     }
 
@@ -125,7 +129,7 @@ public class CreateWord {
         XWPFRun run3 = vvodnaya.createRun();
         run3.setFontFamily("Times new roman");
         run3.setFontSize(14);
-        run3.setText(createVvodniyText(list));
+        run3.setText(createVvodniyText(list)+":");
         run3.addCarriageReturn();
 
 

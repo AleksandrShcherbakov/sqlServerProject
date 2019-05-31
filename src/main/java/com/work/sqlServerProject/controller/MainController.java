@@ -1,10 +1,12 @@
 package com.work.sqlServerProject.controller;
 
 import com.work.sqlServerProject.Helper.Helper;
+import com.work.sqlServerProject.NBFparser.Parser;
+import com.work.sqlServerProject.NBFparser.ParserHalper;
+import com.work.sqlServerProject.Position.Position;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.BTSForm;
 import com.work.sqlServerProject.form.CellNameForm;
-import com.work.sqlServerProject.model.CellForSZ;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.CellNameInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,15 @@ public class MainController {
     private CellNameDAO cellNameDAO;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String openStartPage(){
+        return "start";
+    }
+
+    @RequestMapping(value = "/createBts", method = RequestMethod.GET)
     public String find(Model model){
-        CellNameForm form = new CellNameForm();
-        model.addAttribute("sendCellInfo",form);
         BTSForm btsForm = new BTSForm();
         model.addAttribute("btsForm", btsForm);
-        return "get cell info";
+        return "createBts";
     }
 
 
@@ -44,6 +49,18 @@ public class MainController {
         model.addAttribute("cellInfos",cellNameInfo);
         Helper.writeToCSV("C://",cellNameInfo.getCellName()+";"+cellNameInfo.getCI());
         return "show result";
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @ResponseBody
+    public String selectPN(Model model, @RequestParam Integer posname) throws IOException {
+        List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
+        Position position = new Position(list);
+        List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\VW81_19May30 103059.1.nmf");
+        StringBuilder stringBuilder=new StringBuilder();
+        String separator = System.lineSeparator();
+        Parser.getPointsFromScan(parsered);
+        return stringBuilder.toString();
     }
 
 

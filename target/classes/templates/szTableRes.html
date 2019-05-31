@@ -5,10 +5,40 @@
     <title>BS for</title>
 </head>
 <body>
-<div th:utext="${phrase}"> </div>
+<div id="div1" th:utext="${phrase}"> </div>
+<button id="button1" onclick="CopyToClipboard('div1')">Копировать текст</button>
+<br>
+<script>
+    function CopyToClipboard(containerid) {
+        try {
+            // современный объект Selection
+            window.getSelection().removeAllRanges();
+        } catch (e) {
+            // для IE8-
+            document.selection.empty();
+        }
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select().createTextRange();
+            document.execCommand("Copy");
+
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().addRange(range);
+            document.execCommand("Copy");
+            //alert("text copied")
+        }}
+</script>
+
+<br>
+<div>Номер БС: </div><div th:utext="${numOfBS}"> </div>
+<br>
+<div>Дата исполнения: </div><div th:utext="${dateOfExecuting}"> </div>
 <!--<br>
-<form th:action="@{/copy}" method="post">
-    <input type="submit" value="копировать">
+<form th:action="@{/setCI}" method="post">
+    <input type="submit" value="копировать"/>
 </form>-->
 <br>
     <div>

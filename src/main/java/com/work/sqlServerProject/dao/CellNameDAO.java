@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,19 @@ public class CellNameDAO extends JdbcDaoSupport {
         CellForSZMapper mapper = new CellForSZMapper();
         List<CellForSZ>list=this.getJdbcTemplate().query(sql,params,mapper);
         return list;
+    }
+
+    public  List<CellInfo> getInfoForBS (int posname){
+        String sql2G3G = CellMapper.All_SQL+" and a.posname="+posname;
+        String sql4GE= CellMapper.SQL_LTE_Ericsson+" and a.posname="+posname;
+        String sql4GH= CellMapper.SQL_LTE_Huawei+" and a.posname="+posname;
+        CellMapper mapper = new CellMapper();
+        Object[]params= new Object[]{};
+        List<CellInfo>result = new ArrayList<>();
+        result.addAll(this.getJdbcTemplate().query(sql2G3G,params,mapper));
+        result.addAll(this.getJdbcTemplate().query(sql4GE,params,mapper));
+        result.addAll(this.getJdbcTemplate().query(sql4GH,params,mapper));
+        return result;
     }
 
     public CellNameInfo findCellNumber(String cellname){

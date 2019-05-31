@@ -2,7 +2,7 @@ package com.work.sqlServerProject.controller;
 
 import com.work.sqlServerProject.Helper.CreateWord;
 import com.work.sqlServerProject.Helper.Helper;
-import com.work.sqlServerProject.SqlServerProjectApplication;
+import com.work.sqlServerProject.Helper.Yandex;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.FormCellForSZ;
 import com.work.sqlServerProject.form.SZFormPos;
@@ -12,8 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,16 @@ public class SZController {
     }
 
     private int numOfSZ;
+
+    private int numOfBS;
+
+    public int getNumOfBS() {
+        return numOfBS;
+    }
+
+    public void setNumOfBS(int numOfBS) {
+        this.numOfBS = numOfBS;
+    }
 
     @Autowired
     CellNameDAO cellNameDAO;
@@ -79,6 +90,7 @@ public class SZController {
             model.addAttribute("nopos", "Номер позиции не может быть \"0\"");
             return "checkPos";
         }
+        numOfBS=szFormPos.getPosName();
         if (system==null) {
             model.addAttribute("nothing", "Вы не указали ни одного диапазона.");
             return "checkPos";
@@ -111,6 +123,7 @@ public class SZController {
         list=resList;
         FormCellForSZ formCellForSZ = new FormCellForSZ(resList);
         model.addAttribute("formForSZ", formCellForSZ);
+        model.addAttribute("numOfBS", numOfBS);
         return "szTable";
     }
 
@@ -119,19 +132,34 @@ public class SZController {
         Helper.setCIfromform(list, formCellForSZ.getList());
         model.addAttribute("listSZ",list);
         model.addAttribute("phrase",CreateWord.createVvodniyText(list));
+        model.addAttribute("dateOfExecuting", CreateWord.createDateIspolneniya());
         model.addAttribute("szcontr",this);
-        StringSelection stringSelection = new StringSelection(CreateWord.createVvodniyText(list));
-        SqlServerProjectApplication.clpbrd.setContents(stringSelection, null);
+        model.addAttribute("numOfBS", numOfBS);
+        //StringSelection stringSelection = new StringSelection(CreateWord.createVvodniyText(list));
+        //SqlServerProjectApplication.clpbrd.setContents(stringSelection, null);
         return "szTableRes";
     }
 
+    /*@RequestMapping(value = "/copy", method = RequestMethod.POST)
+    public String copy() throws IOException {
+        StringSelection stringSelection = new StringSelection(CreateWord.createVvodniyText(list));
+        SqlServerProjectApplication.clpbrd.setContents(stringSelection, null);
+        return "redirect:/setCI";
+    }*/
 
 
     @RequestMapping(value = "/createword", method = RequestMethod.POST)
     @ResponseBody
-    public String createword(Model model, @ModelAttribute("szcontr") SZController szController) throws IOException {
+    public String createword(Model model, @ModelAttribute("szcontr") SZController szController) throws IOException, KeyManagementException, NoSuchAlgorithmException {
         CreateWord.createWordFile(list,szController.getNumOfSZ(),pathDir);
-        return "СЗ создана.<br><p><a href='/'>На главную.</a></p>";
+        String addition="";
+        try {
+            addition="<br><br><p>Последние новости:</p>"+Yandex.news();
+        }
+        catch (Exception e){
+
+        }
+        return "СЗ создана.<br><p><a href='/'>На главную.</a></p>" +addition;
     }
 
 

@@ -39,18 +39,39 @@ public class CellMapper implements RowMapper<CellInfo> {
             " and b.date in\n" +
             "   (SELECT MAX(date) FROM pmc.cellstatus where cellname=b.cellname)\n" +
             "   and (b.ran = '2G' or b.ran = '3G')\n" +
-            "   and a.ant_location = 'outdoor' \n" +
-            "   \n" +
-            "        \n" +
-            "    ";
+            "   and a.ant_location = 'outdoor' \n";
 
-    public static final String SQL_LTE_Ericsson = "select \n" +
-            "distinct\n" +
+    public static final String SQL_LTE_Ericsson = "select distinct\n" +
+            "            case a.ran when '4G' then 'LTE' end as SYSTEM,\n" +
+            "            a.posname as SITE,\n" +
+            "            a.ci as CID,\n" +
+            "            a.latitude as LAT,\n" +
+            "            a.longitude as LON,\n" +
+            "            a.name as CELL,\n" +
+            "            a.LAC as LAC,\n" +
+            "            b.TAC,\n" +
+            "            a.frequency as BAND,\n" +
+            "            a.BSC as BSC,\n" +
+            "            b.earfcndl as CH,\n" +
+            "            null as BSIC,\n" +
+            "            null as SCR,  \n" +
+            "            b.pci as PCI,\n" +
+            "            a.azimuth as DIR,\n" +
+            "            a.HEIGHT,\n" +
+            "            a.TILT,\n" +
+            "            a.BSC as RNCID,\n" +
+            "            a.geo_zone as REGION\n" +
+            "            \n" +
+            " from  pmc.bs_general_table_cr as a join pmc.Last_CellStatus_4G as b\n" +
+            "on (b.enodeb_id = a.enodeb_id and b.ecell_id=a.ecell_id) where a.vendor = 'E' and a.form = 'out'\n" +
+            "and a.geo_zone like 'Mck%'\n";
+
+    public static final String SQL_LTE_Huawei = "select distinct\n" +
             "case a.ran when '4G' then 'LTE' end as SYSTEM,\n" +
-            "b.posname as SITE,\n" +
+            "a.posname as SITE,\n" +
             "a.ci as CID,\n" +
             "a.latitude as LAT,\n" +
-            "a.longitude as LON, \n" +
+            "a.longitude as LON,\n" +
             "a.name as CELL,\n" +
             "a.LAC as LAC,\n" +
             "b.TAC,\n" +
@@ -58,46 +79,18 @@ public class CellMapper implements RowMapper<CellInfo> {
             "a.BSC as BSC,\n" +
             "b.earfcndl as CH,\n" +
             "null as BSIC,\n" +
-            "null as SCR,   \n" +
+            "null as SCR,\n" +
             "b.pci as PCI,\n" +
-            "b.azimuth as DIR,\n" +
-            "b.HEIGHT,\n" +
-            "a.TILT,\n" +
-            "a.BSC as RNCID,\n" +
-            "a.geo_zone as REGION\n" +
-            "\n" +
-            "from pmc.bs_general_table_cr as a join pmc.LTE_data_Ericsson as b on a.CI=b.EUtranCellFDDid\n" +
-            "where \n" +
-            "a.ant_location= 'outdoor'\n" +
-            ";";
-
-    public static final String SQL_LTE_Huawei = "select \n" +
-            "distinct\n" +
-            "case a.ran when '4G' then 'LTE' end as SYSTEM,\n" +
-            "b.site_number as SITE,\n" +
-            "a.ci as CID,\n" +
-            "a.latitude as LAT,\n" +
-            "a.longitude as LON, \n" +
-            "a.name as CELL,\n" +
-            "a.LAC as LAC,\n" +
-            "b.TAC,\n" +
-            "a.frequency as BAND,\n" +
-            "a.BSC as BSC,\n" +
-            "b.dlearfcn as CH,\n" +
-            "null as BSIC,\n" +
-            "null as SCR,   \n" +
-            "c.pci as PCI,\n" +
-            "b.azimuth as DIR,\n" +
+            "a.azimuth as DIR,\n" +
             "a.HEIGHT,\n" +
             "a.TILT,\n" +
             "a.BSC as RNCID,\n" +
             "a.geo_zone as REGION\n" +
-            "\n" +
-            "from pmc.bs_general_table_cr as a join pmc.LTE_data_Huawei as b on a.ci=b.cellname\n" +
-            "join pmc.Last_CellStatus_4G as c on (c.enodeb_id = b.enodebid and c.ecell_id=b.localcellid)\n"+
-            "where \n" +
-            "a.ant_location= 'outdoor'" +
-            "and c.dt=(select max(dt) from pmc.Last_CellStatus_4G);";
+            "from  pmc.bs_general_table_cr as a join pmc.Last_CellStatus_4G as b\n" +
+            "on (b.enodeb_id = a.enodeb_id and b.ecell_id=a.ecell_id) \n" +
+            "where a.vendor = 'H' \n" +
+            "and a.form = 'out'\n" +
+            "and a.geo_zone like 'Mck%'\n";
 
     @Override
     public CellInfo mapRow(ResultSet resultSet, int i) throws SQLException {

@@ -5,6 +5,8 @@
     <title>BS for</title>
 </head>
 <body>
+<div>Номер БС: </div><div th:utext="${numOfBS}"> </div>
+<br>
 <form th:action="@{/setCI}" th:object="${formForSZ}" method="post">
 <div>
     <table border="1">

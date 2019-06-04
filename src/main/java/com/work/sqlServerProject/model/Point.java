@@ -1,5 +1,6 @@
 package com.work.sqlServerProject.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,9 +32,21 @@ public class Point {
         this.setLatitude(lat);
     }
 
-    public void fillInMaps(String in){
+    public void setGSM900(String[] chBsicRxL){
+        RxLevel900=new HashMap<>();
+        for (String s : chBsicRxL){
+            String [] temp = s.split(",");
+            if (temp[1].equals("")){
+                continue;
+            }
+            Double rxLev = Double.parseDouble(temp[2]);
+            String ChBsic = temp[0]+" "+temp[1];
 
+            RxLevel900.put(ChBsic,rxLev);
+        }
     }
+
+
 
     public String getInput() {
         return input;

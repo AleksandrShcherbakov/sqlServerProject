@@ -23,16 +23,17 @@ public class Parser {
                    point.setGPS(getCoorginates(m));
                }
                if (m.startsWith("FREQSCAN") && m.contains("10900")){
-                   point.setGSM900(getChBsicRxL(m));
-                   System.out.println(point.getLongitude());
-                   System.out.println(point.getLatitude());
-                   System.out.println(point.getRxLevel900());
-                   System.out.println("");
+                   point.setGSM900(getChBsicRxL900(m));
+               }
+               if (m.startsWith("FREQSCAN") && m.contains("11800")){
+                   point.setGSM1800(getChBsicRxL1800(m));
+               }
+               if (m.startsWith("PILOTSCAN") && m.contains("50001")){
+                   point.setUMTS2100(getScrRscp2100(m));
                }
            }
-
        }
-       return null;
+       return points;
    }
 
    public static String getCoorginates(String s){
@@ -41,15 +42,42 @@ public class Parser {
        return res;
    }
 
-   public static String[] getChBsicRxL(String s){
+   public static String[] getChBsicRxL900(String s){
        String channelString = s.split("10900,")[1];
        String [] channels = channelString.split(",,,");
        String[]temp = channels[0].split(",");
        channels[0]=temp[2]+","+temp[3]+","+temp[4];
-       //channels[channels.length-1]=channels[channels.length-1].substring(0,channels[channels.length-1].length()-2);
        return channels;
 
    }
+
+    public static String[] getChBsicRxL1800(String s){
+        String channelString = s.split("11800,")[1];
+        String [] channels = channelString.split(",,,");
+        String[]temp = channels[0].split(",");
+        channels[0]=temp[2]+","+temp[3]+","+temp[4];
+        return channels;
+
+    }
+
+    public static String[] getScrRscp2100(String s){
+        String channelString = s.split("50001,")[1];
+        if (channelString.split(",").length<=2){
+            return null;
+        }
+        String [] channels = channelString.split(",,,,");
+        String[]temp = channels[0].split(",");
+        if (s.contains("10788")) {
+            channels[0] ="10788 "+ temp[2] + "," + temp[3] + "," + temp[4];
+        }
+        if (s.contains("10813")) {
+            channels[0] ="10813 "+ temp[2] + "," + temp[3] + "," + temp[4];
+        }
+        if (s.contains("10836")) {
+            channels[0] ="10836 "+ temp[2] + "," + temp[3] + "," + temp[4];
+        }
+        return channels;
+    }
 
 
 }

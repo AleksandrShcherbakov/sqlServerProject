@@ -9,6 +9,7 @@ import com.work.sqlServerProject.form.BTSForm;
 import com.work.sqlServerProject.form.CellNameForm;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.CellNameInfo;
+import com.work.sqlServerProject.model.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,7 +60,10 @@ public class MainController {
         List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\VW81_19May30 103059.1.nmf");
         StringBuilder stringBuilder=new StringBuilder();
         String separator = System.lineSeparator();
-        Parser.getPointsFromScan(parsered);
+        List<Point> points = Parser.getPointsFromScan(parsered);
+        for (Point p : points){
+            stringBuilder.append(p+"<br><br>");
+        }
         return stringBuilder.toString();
     }
 

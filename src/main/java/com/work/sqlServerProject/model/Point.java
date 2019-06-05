@@ -41,8 +41,54 @@ public class Point {
             }
             Double rxLev = Double.parseDouble(temp[2]);
             String ChBsic = temp[0]+" "+temp[1];
-
             RxLevel900.put(ChBsic,rxLev);
+        }
+    }
+
+    public void setGSM1800(String[] chBsicRxL){
+        RxLevel1800=new HashMap<>();
+        for (String s : chBsicRxL){
+            String [] temp = s.split(",");
+            if (temp[1].equals("")){
+                continue;
+            }
+            Double rxLev = Double.parseDouble(temp[2]);
+            String ChBsic = temp[0]+" "+temp[1];
+            RxLevel1800.put(ChBsic,rxLev);
+        }
+    }
+
+    public void setUMTS2100(String[] scrEcNoRscp){
+        if (scrEcNoRscp!=null) {
+            String freq = scrEcNoRscp[0].split(" ")[0];
+            scrEcNoRscp[0] = scrEcNoRscp[0].split(" ")[1];
+            if (freq.equals("10813")) {
+                RSCP10813 = new HashMap<>();
+                for (String s : scrEcNoRscp) {
+                    String[] temp = s.split(",");
+                    Integer scr = Integer.parseInt(temp[0]);
+                    Double rscp = Double.parseDouble(temp[2]);
+                    RSCP10813.put(scr, rscp);
+                }
+            }
+            if (freq.equals("10788")) {
+                RSCP10788 = new HashMap<>();
+                for (String s : scrEcNoRscp) {
+                    String[] temp = s.split(",");
+                    Integer scr = Integer.parseInt(temp[0]);
+                    Double rscp = Double.parseDouble(temp[2]);
+                    RSCP10788.put(scr, rscp);
+                }
+            }
+            if (freq.equals("10836")) {
+                RSCP10836 = new HashMap<>();
+                for (String s : scrEcNoRscp) {
+                    String[] temp = s.split(",");
+                    Integer scr = Integer.parseInt(temp[0]);
+                    Double rscp = Double.parseDouble(temp[2]);
+                    RSCP10836.put(scr, rscp);
+                }
+            }
         }
     }
 
@@ -150,5 +196,11 @@ public class Point {
 
     public void setRSRP1351(Map<Integer, Double> RSRP1351) {
         this.RSRP1351 = RSRP1351;
+    }
+
+    @Override
+    public String toString() {
+        return longitude+" "+latitude+"<br>"+RxLevel900+"<br>"+RxLevel1800+"<br>"+RSCP10813+
+                "<br>"+RSCP10788+"<br>"+RSCP10836;
     }
 }

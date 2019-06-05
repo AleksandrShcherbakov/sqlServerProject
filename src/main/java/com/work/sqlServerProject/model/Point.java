@@ -16,7 +16,7 @@ public class Point {
     Map<Integer, Double> RSCP10788;
     Map<Integer, Double> RSCP10836;
     Map<Integer, Double> RSCP3036;
-    Map<Integer, Double> RSCP3013;
+    Map<Integer, Double> RSCP3012;
     Map<Integer, Double> RSRP3300;
     Map<Integer, Double> RSRP6413;
     Map<Integer, Double> RSRP1351;
@@ -30,6 +30,41 @@ public class Point {
         double lat = Double.parseDouble(coord[1]);
         this.setLongitude(lon);
         this.setLatitude(lat);
+    }
+
+    public void setLTE(String[] PciRsrp){
+        if (PciRsrp!=null) {
+            for (String s : PciRsrp){
+                System.out.println(s);
+            }
+            if (PciRsrp[0].startsWith("3300")) {
+                RSRP3300 = new HashMap<>();
+                for (int i = 0; i < PciRsrp.length - 2; i++) {
+                    String[] temp = PciRsrp[i].split(",");
+                    Integer pci = Integer.parseInt(temp[3]);
+                    Double rsrp = Double.parseDouble(temp[6]);
+                    RSRP3300.put(pci, rsrp);
+                }
+            }
+            if (PciRsrp[0].startsWith("1351")) {
+                RSRP1351 = new HashMap<>();
+                for (int i = 0; i < PciRsrp.length - 2; i++) {
+                    String[] temp = PciRsrp[i].split(",");
+                    Integer pci = Integer.parseInt(temp[3]);
+                    Double rsrp = Double.parseDouble(temp[6]);
+                    RSRP1351.put(pci, rsrp);
+                }
+            }
+            if (PciRsrp[0].startsWith("6413")) {
+                RSRP6413 = new HashMap<>();
+                for (int i = 0; i < PciRsrp.length - 2; i++) {
+                    String[] temp = PciRsrp[i].split(",");
+                    Integer pci = Integer.parseInt(temp[3]);
+                    Double rsrp = Double.parseDouble(temp[6]);
+                    RSRP6413.put(pci, rsrp);
+                }
+            }
+        }
     }
 
     public void setGSM900(String[] chBsicRxL){
@@ -58,7 +93,7 @@ public class Point {
         }
     }
 
-    public void setUMTS2100(String[] scrEcNoRscp){
+    public void setUMTS(String[] scrEcNoRscp){
         if (scrEcNoRscp!=null) {
             String freq = scrEcNoRscp[0].split(" ")[0];
             scrEcNoRscp[0] = scrEcNoRscp[0].split(" ")[1];
@@ -87,6 +122,24 @@ public class Point {
                     Integer scr = Integer.parseInt(temp[0]);
                     Double rscp = Double.parseDouble(temp[2]);
                     RSCP10836.put(scr, rscp);
+                }
+            }
+            if (freq.equals("3036")) {
+                RSCP3036 = new HashMap<>();
+                for (String s : scrEcNoRscp) {
+                    String[] temp = s.split(",");
+                    Integer scr = Integer.parseInt(temp[0]);
+                    Double rscp = Double.parseDouble(temp[2]);
+                    RSCP3036.put(scr, rscp);
+                }
+            }
+            if (freq.equals("3012")) {
+                RSCP3012 = new HashMap<>();
+                for (String s : scrEcNoRscp) {
+                    String[] temp = s.split(",");
+                    Integer scr = Integer.parseInt(temp[0]);
+                    Double rscp = Double.parseDouble(temp[2]);
+                    RSCP3012.put(scr, rscp);
                 }
             }
         }
@@ -166,12 +219,12 @@ public class Point {
         this.RSCP3036 = RSCP3036;
     }
 
-    public Map<Integer, Double> getRSCP3013() {
-        return RSCP3013;
+    public Map<Integer, Double> getRSCP3012() {
+        return RSCP3012;
     }
 
-    public void setRSCP3013(Map<Integer, Double> RSCP3013) {
-        this.RSCP3013 = RSCP3013;
+    public void setRSCP3012(Map<Integer, Double> RSCP3012) {
+        this.RSCP3012 = RSCP3012;
     }
 
     public Map<Integer, Double> getRSRP3300() {
@@ -201,6 +254,10 @@ public class Point {
     @Override
     public String toString() {
         return longitude+" "+latitude+"<br>"+RxLevel900+"<br>"+RxLevel1800+"<br>"+RSCP10813+
-                "<br>"+RSCP10788+"<br>"+RSCP10836;
+                "<br>"+RSCP10788+"<br>"+RSCP10836+"<br>"+
+                RSCP3036+"<br>"+RSCP3012+"<br>"+
+                RSRP3300+"<br>"+
+                RSRP6413+"<br>"+
+                RSRP1351;
     }
 }

@@ -47,10 +47,15 @@ public class Point {
                 map=RSRP1351;
             }
             for (String s : PciRsrp){
-                String[] temp = s.split(",");
-                Integer pci = Integer.parseInt(temp[3]);
-                Double rsrp = Double.parseDouble(temp[6]);
-                map.put(pci,rsrp);
+                try {
+                    String[] temp = s.split(",");
+                    Integer pci = Integer.parseInt(temp[3]);
+                    Double rsrp = Double.parseDouble(temp[6]);
+                    map.put(pci, rsrp);
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("ошибка нет уровня в "+s);
+                }
             }
         }
     }
@@ -88,9 +93,9 @@ public class Point {
                 scrEcNoRscp[0] = scrEcNoRscp[0].split(" ")[1];
             }
             catch (ArrayIndexOutOfBoundsException e){
-                /*for (String k : scrEcNoRscp){
+                for (String k : scrEcNoRscp){
                     System.out.println(k);
-                }*/
+                }
 
             }
             if (freq.equals("10813")) {

@@ -63,20 +63,16 @@ public class Parser {
         }
         else
         if (s.contains(",1351,1,")){
-            try {
-                m = s.split("70003,")[1];
-                band = "1351";
-            }
-            catch (ArrayIndexOutOfBoundsException e){
-                System.out.println("ошибка "+s);
-            }
+            m = s.split("70003,")[1];
+            band = "1351";
         }
+        else return null;
         String[]u=null;
         try {
             u = m.split(",");
         }
         catch (NullPointerException e){
-            //System.out.println(m);
+            System.out.println(m);
             return null;
         }
         StringBuilder stringBuilder = new StringBuilder(band+",");
@@ -141,6 +137,7 @@ public class Parser {
         if (s.contains("10836")) {
             channels[0] = "10836 " + temp[2] + "," + temp[3] + "," + temp[4];
         }
+        else return null;
         return channels;
     }
 
@@ -169,6 +166,7 @@ public class Parser {
                 System.out.println("ошибка нет уровня"+s);
             }
         }
+        else return null;
         return channels;
     }
 

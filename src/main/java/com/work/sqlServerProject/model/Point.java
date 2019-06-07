@@ -1,7 +1,6 @@
 package com.work.sqlServerProject.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by a.shcherbakov on 30.05.2019.
@@ -25,44 +24,33 @@ public class Point {
         this.input = input;
     }*/
     public void setGPS(String gpsinstring){
-        String[]coord = gpsinstring.split(" ");
+        String[] coord = gpsinstring.split(" ");
         double lon = Double.parseDouble(coord[0]);
         double lat = Double.parseDouble(coord[1]);
         this.setLongitude(lon);
         this.setLatitude(lat);
     }
 
-    public void setLTE(String[] PciRsrp){
-        if (PciRsrp!=null) {
+    public void setLTE(List<String>PciRsrp){
+        Map<Integer, Double> map=null;
+        if (PciRsrp!=null && PciRsrp.size()>0){
+            if (PciRsrp.get(0).startsWith("3300")){
+                RSRP3300=new HashMap<>();
+                map=RSRP3300;
+            }
+            if (PciRsrp.get(0).startsWith("6413")){
+                RSRP6413=new HashMap<>();
+                map=RSRP6413;
+            }
+            if (PciRsrp.get(0).startsWith("1351")){
+                RSRP1351=new HashMap<>();
+                map=RSRP1351;
+            }
             for (String s : PciRsrp){
-                System.out.println(s);
-            }
-            if (PciRsrp[0].startsWith("3300")) {
-                RSRP3300 = new HashMap<>();
-                for (int i = 0; i < PciRsrp.length - 2; i++) {
-                    String[] temp = PciRsrp[i].split(",");
-                    Integer pci = Integer.parseInt(temp[3]);
-                    Double rsrp = Double.parseDouble(temp[6]);
-                    RSRP3300.put(pci, rsrp);
-                }
-            }
-            if (PciRsrp[0].startsWith("1351")) {
-                RSRP1351 = new HashMap<>();
-                for (int i = 0; i < PciRsrp.length - 2; i++) {
-                    String[] temp = PciRsrp[i].split(",");
-                    Integer pci = Integer.parseInt(temp[3]);
-                    Double rsrp = Double.parseDouble(temp[6]);
-                    RSRP1351.put(pci, rsrp);
-                }
-            }
-            if (PciRsrp[0].startsWith("6413")) {
-                RSRP6413 = new HashMap<>();
-                for (int i = 0; i < PciRsrp.length - 2; i++) {
-                    String[] temp = PciRsrp[i].split(",");
-                    Integer pci = Integer.parseInt(temp[3]);
-                    Double rsrp = Double.parseDouble(temp[6]);
-                    RSRP6413.put(pci, rsrp);
-                }
+                String[] temp = s.split(",");
+                Integer pci = Integer.parseInt(temp[3]);
+                Double rsrp = Double.parseDouble(temp[6]);
+                map.put(pci,rsrp);
             }
         }
     }
@@ -96,7 +84,15 @@ public class Point {
     public void setUMTS(String[] scrEcNoRscp){
         if (scrEcNoRscp!=null) {
             String freq = scrEcNoRscp[0].split(" ")[0];
-            scrEcNoRscp[0] = scrEcNoRscp[0].split(" ")[1];
+            try {
+                scrEcNoRscp[0] = scrEcNoRscp[0].split(" ")[1];
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                /*for (String k : scrEcNoRscp){
+                    System.out.println(k);
+                }*/
+
+            }
             if (freq.equals("10813")) {
                 RSCP10813 = new HashMap<>();
                 for (String s : scrEcNoRscp) {

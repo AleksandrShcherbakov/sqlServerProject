@@ -57,7 +57,7 @@ public class MainController {
     public String selectPN(Model model, @RequestParam Integer posname) throws IOException {
         List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
         Position position = new Position(list);
-        List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\VW81_19May30 103059.1.nmf");
+        List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\VW80_19Apr23 093716.10.nmf");
         StringBuilder stringBuilder=new StringBuilder();
         String separator = System.lineSeparator();
         List<Point> points = Parser.getPointsFromScan(parsered);

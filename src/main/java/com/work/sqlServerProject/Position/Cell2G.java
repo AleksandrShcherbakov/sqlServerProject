@@ -6,7 +6,6 @@ import com.work.sqlServerProject.model.CellInfo;
  * Created by a.shcherbakov on 29.05.2019.
  */
 public class Cell2G extends Cell {
-    private int Band;
     private int BCCH;
     private Object BSIC;
 
@@ -14,16 +13,10 @@ public class Cell2G extends Cell {
         super(cellInfo);
         this.BCCH=cellInfo.getCh();
         this.BSIC=cellInfo.getBsic();
-        this.Band=cellInfo.getBand();
+
     }
 
-    public int getBand() {
-        return Band;
-    }
 
-    public void setBand(int band) {
-        Band = band;
-    }
 
     public int getBCCH() {
         return BCCH;

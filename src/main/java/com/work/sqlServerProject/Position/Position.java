@@ -28,6 +28,9 @@ public class Position {
                 cells.add(new Cell4G(cell));
             }
         }
+        for (Cell cell : cells){
+            cell.setLeftAndRightNeibor(cells);
+        }
     }
 
     public List<Cell> getCells() {
@@ -42,7 +45,8 @@ public class Position {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Cell c: cells){
-            stringBuilder.append(c.toString());
+            stringBuilder.append(c.toString()+"<br>");
+
         }
         return stringBuilder.toString();
     }

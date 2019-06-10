@@ -19,6 +19,5 @@ public class BS {
     public BS(int posName) {
         List<CellInfo>list = cellNameDAO.getInfoForBS(posName);
 
-
     }
 }

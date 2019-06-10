@@ -54,10 +54,13 @@ public class MainController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseBody
-    public String selectPN(Model model, @RequestParam Integer posname) throws IOException {
-        List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
-        Position position = new Position(list);
-        List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\VW81_19May30 103059.1.nmf");
+    public String selectPN(Model model,@RequestParam (required = false) Integer posname, @RequestParam String filename) throws IOException {
+        Position position=null;
+        if (posname!=null) {
+            List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
+            position = new Position(list);
+        }
+        List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\" +filename);
         StringBuilder stringBuilder=new StringBuilder();
         String separator = System.lineSeparator();
         List<Point> points = Parser.getPointsFromScan(parsered);

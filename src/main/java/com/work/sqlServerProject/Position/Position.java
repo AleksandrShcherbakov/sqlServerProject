@@ -29,7 +29,7 @@ public class Position {
             }
         }
         for (Cell cell : cells){
-            cell.setLeftAndRightNeibor(cells);
+            cell.setAllCellsInBand(cells);
         }
     }
 
@@ -40,6 +40,8 @@ public class Position {
     public void setCells(List<Cell> cells) {
         this.cells = cells;
     }
+
+
 
     @Override
     public String toString() {

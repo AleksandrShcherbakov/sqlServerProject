@@ -1,0 +1,41 @@
+<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+    var myMap;
+    ymaps.ready(init); // Ожидание загрузки API с сервера Яндекса
+    function init () {
+        myMap = new ymaps.Map("map", {
+            center: [55.76, 37.64], // Координаты центра карты
+            zoom: 7 // Zoom
+        });
+        var zoomControl = new ymaps.control.ZoomControl({
+            options: {
+                size: "small"
+            }
+        });
+        myMap.behaviors.enable('scrollZoom');
+        myMap.controls.add(zoomControl);
+
+        var myPlacemark = new ymaps.Placemark(
+                // Координаты метки
+                [55.76, 37.64]
+        );
+
+        // Добавление метки на карту
+        myMap.geoObjects.add(myPlacemark);
+    }
+</script>
+<div id="map" style="width: 500px; height: 500px"></div>
+
+
+
+<div id="map"></div>
+</body>
+
+</html>

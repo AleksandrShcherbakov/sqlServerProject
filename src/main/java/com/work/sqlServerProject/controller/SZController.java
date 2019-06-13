@@ -159,7 +159,9 @@ public class SZController {
         catch (Exception e){
 
         }
-        return "СЗ создана.<br><p><a href='/'>На главную.</a></p>" +addition;
+        return "СЗ создана.<br>" +
+                "<p><a href='/'>На главную.</a></p><br>" +
+                "<p><a href-'/szPoz'>Создать еще одну СЗ.</a>" +addition;
     }
 
 

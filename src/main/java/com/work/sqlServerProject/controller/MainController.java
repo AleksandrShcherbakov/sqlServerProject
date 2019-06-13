@@ -3,6 +3,7 @@ package com.work.sqlServerProject.controller;
 import com.work.sqlServerProject.Helper.Helper;
 import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
+import com.work.sqlServerProject.Position.Cell;
 import com.work.sqlServerProject.Position.Position;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.BTSForm;
@@ -21,6 +22,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by AlVlShcherbakov on 14.02.2019.
@@ -54,12 +56,21 @@ public class MainController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseBody
-    public String selectPN(Model model,@RequestParam (required = false) Integer posname, @RequestParam String filename) throws IOException {
+    public String selectPN(Model model,@RequestParam (required = false) Integer posname, @RequestParam (required = false) String filename) throws IOException {
         Position position=null;
         if (posname!=null) {
             List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
             position = new Position(list);
         }
+
+
+        Cell cell = position.getCells().get(0);
+        Set<Cell>set = cell.getCellsInBand();
+        for (Cell c : set){
+            System.out.println(c.getAzimuth()+" "+c.getSystem()+" "+c.getBand()+" "+c.getChannel());
+        }
+
+
         List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\" +filename);
         StringBuilder stringBuilder=new StringBuilder();
         String separator = System.lineSeparator();
@@ -69,6 +80,13 @@ public class MainController {
         }
         return stringBuilder.toString();
     }
+
+    @RequestMapping(value = "/map", method = RequestMethod.GET)
+    public String getMap(){
+        return "map";
+    }
+
+
 
 
 

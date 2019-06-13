@@ -2,7 +2,9 @@ package com.work.sqlServerProject.Position;
 
 import com.work.sqlServerProject.model.CellInfo;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by a.shcherbakov on 29.05.2019.
@@ -20,6 +22,58 @@ public class Cell {
     private Cell rightNeibor;
     private int leftBorderAzimuth;
     private int rightBorderAzimuth;
+    private int channel;
+
+    public int getChannel() {
+        return channel;
+    }
+
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
+
+    Comparator<Cell> comparator = new Comparator<Cell>() {
+        @Override
+        public int compare(Cell o1, Cell o2) {
+            if (o1.azimuth>o2.azimuth)
+                return 1;
+            else
+            if (o1.azimuth==o2.azimuth)
+                return 0;
+            else return -1;
+        }
+    };
+
+    public TreeSet<Cell> getCellsInBand() {
+        return cellsInBand;
+    }
+
+    public void setCellsInBand(TreeSet<Cell> cellsInBand) {
+        this.cellsInBand = cellsInBand;
+    }
+
+    TreeSet<Cell> cellsInBand;
+
+        public void setAllCellsInBand(List<Cell> cellsInBand) {
+        for (Cell c : cellsInBand){
+            if (c.system.equals(this.system) && c.band==this.band){
+                if (c.system.equals("UMTS")){
+                    if (c.channel==this.channel){
+                        this.cellsInBand.add(c);
+                    }
+                }
+                else
+                    this.cellsInBand.add(c);
+            }
+        }
+    }
+
+    public void setLeftAndRightBorder(){
+
+
+    }
+
+
 
     public Cell(CellInfo cellInfo) {
         this.cellInfo = cellInfo;
@@ -30,7 +84,11 @@ public class Cell {
         this.azimuth=cellInfo.getDir();
         this.band=cellInfo.getBand();
         this.system=cellInfo.getSystem();
+        this.cellsInBand=new TreeSet<>(comparator);
+        this.channel=cellInfo.getCh();
     }
+
+
 
     public String getSystem() {
         return system;
@@ -128,7 +186,5 @@ public class Cell {
         this.lalitude = lalitude;
     }
 
-    public void setLeftAndRightNeibor(List<Cell> cells) {
-        
-    }
+
 }

@@ -1,6 +1,7 @@
 package com.work.sqlServerProject.Position;
 
 import com.work.sqlServerProject.model.CellInfo;
+import com.work.sqlServerProject.model.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,13 @@ public class Position {
         }
         for (Cell cell : cells){
             cell.setAllCellsInBand(cells);
+            cell.setPreviousAndNextCells();
+        }
+    }
+
+    public void setPointsInPosition(List<Point> allPoints){
+        for (Cell c : cells){
+            c.setPointsInCellFromNBF(allPoints);
         }
     }
 

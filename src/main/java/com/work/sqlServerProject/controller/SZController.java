@@ -153,7 +153,7 @@ public class SZController {
         CreateWord.createWordFile(list,szController.getNumOfSZ(),pathDir);
         return "СЗ создана.<br>" +
                 "<p><a href='/'>На главную.</a></p>" +
-                "<p><a href='/szPoz'>Создать еще одну СЗ.</a>";
+                "<p><a href='/szPos'>Создать еще одну СЗ.</a>";
     }
 
 

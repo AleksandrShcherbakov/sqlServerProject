@@ -22,7 +22,6 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by AlVlShcherbakov on 14.02.2019.
@@ -62,32 +61,28 @@ public class MainController {
             List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
             position = new Position(list);
         }
-
-
-        Cell cell = position.getCells().get(0);
-        Set<Cell>set = cell.getCellsInBand();
-        for (Cell c : set){
-            System.out.println(c.getAzimuth()+" "+c.getSystem()+" "+c.getBand()+" "+c.getChannel());
-        }
-
-
         List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\" +filename);
-        StringBuilder stringBuilder=new StringBuilder();
         String separator = System.lineSeparator();
         List<Point> points = Parser.getPointsFromScan(parsered);
-        for (Point p : points){
-            stringBuilder.append(p+"<br><br>");
+        StringBuilder stringB = new StringBuilder();
+        position.setPointsInPosition(points);
+        for (Cell c : position.getCells()){
+            try {
+                for (Point p : c.getPointsInCell()) {
+                    stringB.append(p.getLatitude() + " " + p.getLongitude() + "<br>");
+                }
+            }
+            catch (NullPointerException e){
+                System.out.println("Для сектора с азимутом "+c.getAzimuth()+" точек со сканера нет");
+            }
         }
-        return stringBuilder.toString();
+        return stringB.toString();
     }
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
     public String getMap(){
         return "map";
     }
-
-
-
 
 
 

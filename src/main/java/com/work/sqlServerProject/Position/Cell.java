@@ -1,7 +1,9 @@
 package com.work.sqlServerProject.Position;
 
 import com.work.sqlServerProject.model.CellInfo;
+import com.work.sqlServerProject.model.Point;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
@@ -18,19 +20,14 @@ public class Cell {
     private double longitude;
     private double lalitude;
     private int azimuth;
-    private Cell leftNeibor;
-    private Cell rightNeibor;
+    private Cell previous;
+    private Cell next;
     private int leftBorderAzimuth;
     private int rightBorderAzimuth;
     private int channel;
-
-    public int getChannel() {
-        return channel;
-    }
-
-    public void setChannel(int channel) {
-        this.channel = channel;
-    }
+    private TreeSet<Cell> cellsInBand;
+    private List<Point> pointsInCell;
+    private double distance;
 
     Comparator<Cell> comparator = new Comparator<Cell>() {
         @Override
@@ -44,17 +41,9 @@ public class Cell {
         }
     };
 
-    public TreeSet<Cell> getCellsInBand() {
-        return cellsInBand;
-    }
 
-    public void setCellsInBand(TreeSet<Cell> cellsInBand) {
-        this.cellsInBand = cellsInBand;
-    }
 
-    TreeSet<Cell> cellsInBand;
-
-        public void setAllCellsInBand(List<Cell> cellsInBand) {
+    public void setAllCellsInBand(List<Cell> cellsInBand) {
         for (Cell c : cellsInBand){
             if (c.system.equals(this.system) && c.band==this.band){
                 if (c.system.equals("UMTS")){
@@ -68,7 +57,71 @@ public class Cell {
         }
     }
 
-    public void setLeftAndRightBorder(){
+
+    public void setPreviousAndNextCells(){
+        List<Cell>list = new ArrayList<>();
+        int m=0;
+        int indexOfSelfCell=0;
+        for (Cell c : cellsInBand){
+            list.add(c);
+            if (c.azimuth==this.azimuth){
+                indexOfSelfCell=m;
+            }
+            m++;
+        }
+        if (indexOfSelfCell==m-1){
+            this.next=list.get(0);
+            this.previous=list.get(indexOfSelfCell-1);
+        }
+        else
+        if (indexOfSelfCell==0){
+            this.next=list.get(indexOfSelfCell+1);
+            this.previous=list.get(m-1);
+        }
+        else
+        {
+            this.next=list.get(indexOfSelfCell+1);
+            this.previous=list.get(indexOfSelfCell-1);
+        }
+        leftBorderAzimuth=((this.azimuth+previous.azimuth)%360)/2;
+        rightBorderAzimuth=((this.azimuth+next.azimuth)%360)/2;
+    }
+
+    public void setPointsInCellFromNBF(List<Point>allPointsFromNBF){
+        pointsInCell=new ArrayList<>();
+        for (Point p : allPointsFromNBF){
+            double dist = toDist(this.lalitude,this.longitude,p.getLatitude(),p.getLongitude());
+            if (dist<=distance){
+                System.out.println(dist+" "+p.getLatitude()+" "+p.getLongitude());
+                pointsInCell.add(p);
+            }
+        }
+
+    }
+
+    final static double pi=3.1415926535898;
+    final static double EarthRadius= 6372795.0;
+
+    public static double toDist(double latA, double lonA, double latB, double lonB){
+        double latArad=latA*pi/180;
+        double latBrad=latB*pi/180;
+        double lonArad=lonA*pi/180;
+        double lonBrad=lonB*pi/180;
+
+        double cl1= Math.cos(latArad);
+        double cl2= Math.cos(latBrad);
+        double sl1=Math.sin(latArad);
+        double sl2=Math.sin(latBrad);
+        double delta = lonBrad-lonArad;
+        double cdelta = Math.cos(delta);
+        double sdelta = Math.sin(delta);
+
+        double y = Math.sqrt(Math.pow(cl2 * sdelta, 2) + Math.pow(cl1 * sl2 - sl1 * cl2 * cdelta, 2));
+        double x = sl1 * sl2 + cl1 * cl2 * cdelta;
+
+        double ad = Math.atan2(y,x);
+        double dist=ad*EarthRadius;
+        return dist;
 
 
     }
@@ -86,9 +139,56 @@ public class Cell {
         this.system=cellInfo.getSystem();
         this.cellsInBand=new TreeSet<>(comparator);
         this.channel=cellInfo.getCh();
+        this.distance=2000; //2 км
     }
 
+    public double getDistance() {
+        return distance;
+    }
 
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public List<Point> getPointsInCell() {
+        return pointsInCell;
+    }
+
+    public void setPointsInCell(List<Point> pointsInCell) {
+        this.pointsInCell = pointsInCell;
+    }
+
+    public TreeSet<Cell> getCellsInBand() {
+        return cellsInBand;
+    }
+
+    public void setCellsInBand(TreeSet<Cell> cellsInBand) {
+        this.cellsInBand = cellsInBand;
+    }
+
+    public int getChannel() {
+        return channel;
+    }
+
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
+
+    public Cell getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(Cell previous) {
+        this.previous = previous;
+    }
+
+    public Cell getNext() {
+        return next;
+    }
+
+    public void setNext(Cell next) {
+        this.next = next;
+    }
 
     public String getSystem() {
         return system;
@@ -104,22 +204,6 @@ public class Cell {
 
     public void setBand(int band) {
         this.band = band;
-    }
-
-    public Cell getLeftNeibor() {
-        return leftNeibor;
-    }
-
-    public void setLeftNeibor(Cell leftNeibor) {
-        this.leftNeibor = leftNeibor;
-    }
-
-    public Cell getRightNeibor() {
-        return rightNeibor;
-    }
-
-    public void setRightNeibor(Cell rightNeibor) {
-        this.rightNeibor = rightNeibor;
     }
 
     public int getLeftBorderAzimuth() {

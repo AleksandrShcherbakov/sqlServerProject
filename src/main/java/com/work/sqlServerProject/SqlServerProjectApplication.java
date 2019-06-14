@@ -12,7 +12,6 @@ public class SqlServerProjectApplication {
 	public static Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(SqlServerProjectApplication.class, args);
-
 	}
 
 }

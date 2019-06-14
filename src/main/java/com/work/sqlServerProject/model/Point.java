@@ -25,8 +25,8 @@ public class Point {
     }*/
     public void setGPS(String gpsinstring){
         String[] coord = gpsinstring.split(" ");
-        double lon = Double.parseDouble(coord[0]);
-        double lat = Double.parseDouble(coord[1]);
+        double lon = Double.parseDouble(coord[1]);
+        double lat = Double.parseDouble(coord[0]);
         this.setLongitude(lon);
         this.setLatitude(lat);
     }

@@ -2,7 +2,6 @@ package com.work.sqlServerProject.controller;
 
 import com.work.sqlServerProject.Helper.CreateWord;
 import com.work.sqlServerProject.Helper.Helper;
-import com.work.sqlServerProject.Helper.Yandex;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.FormCellForSZ;
 import com.work.sqlServerProject.form.SZFormPos;
@@ -152,16 +151,9 @@ public class SZController {
     @ResponseBody
     public String createword(Model model, @ModelAttribute("szcontr") SZController szController) throws IOException, KeyManagementException, NoSuchAlgorithmException {
         CreateWord.createWordFile(list,szController.getNumOfSZ(),pathDir);
-        String addition="";
-        try {
-            addition="<br><br><p>Последние новости:</p>"+Yandex.news();
-        }
-        catch (Exception e){
-
-        }
         return "СЗ создана.<br>" +
-                "<p><a href='/'>На главную.</a></p><br>" +
-                "<p><a href-'/szPoz'>Создать еще одну СЗ.</a>" +addition;
+                "<p><a href='/'>На главную.</a></p>" +
+                "<p><a href='/szPoz'>Создать еще одну СЗ.</a>";
     }
 
 

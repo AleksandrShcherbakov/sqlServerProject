@@ -53,6 +53,8 @@ public class MainController {
         return "show result";
     }
 
+    List<Point>pointss;
+
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseBody
     public String selectPN(Model model,@RequestParam (required = false) Integer posname, @RequestParam (required = false) String filename) throws IOException {
@@ -67,6 +69,7 @@ public class MainController {
         StringBuilder stringB = new StringBuilder();
         position.setPointsInPosition(points);
         for (Cell c : position.getCells()){
+            pointss=c.getPointsInCell();
             try {
                 for (Point p : c.getPointsInCell()) {
                     stringB.append(p.getLatitude() + " " + p.getLongitude() + "<br>");
@@ -79,8 +82,10 @@ public class MainController {
         return stringB.toString();
     }
 
+
     @RequestMapping(value = "/map", method = RequestMethod.GET)
-    public String getMap(){
+    public String getMap(Model model){
+        model.addAttribute("points",pointss);
         return "map";
     }
 

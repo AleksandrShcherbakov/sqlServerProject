@@ -91,9 +91,12 @@ public class Cell {
         pointsInCell=new ArrayList<>();
         for (Point p : allPointsFromNBF){
             double dist = toDist(this.lalitude,this.longitude,p.getLatitude(),p.getLongitude());
+            double az = toAzimuth(dist, p);
             if (dist<=distance){
-                System.out.println(dist+" "+p.getLatitude()+" "+p.getLongitude());
-                pointsInCell.add(p);
+                //if (az>leftBorderAzimuth && az<rightBorderAzimuth) {
+                    System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
+                    pointsInCell.add(p);
+                //}
             }
         }
 
@@ -122,8 +125,27 @@ public class Cell {
         double ad = Math.atan2(y,x);
         double dist=ad*EarthRadius;
         return dist;
+    }
 
-
+    public double toAzimuth(Double dist, Point point){
+        double x= toDist(this.lalitude, this.longitude, this.lalitude, point.getLongitude());
+        double h= dist;
+        double azimuth=Math.asin(x/h)*180/pi;
+        double lonDif=point.getLongitude()-this.longitude;
+        double latDif=point.getLatitude()-this.lalitude;
+        if (lonDif>0 && latDif>0){
+            return azimuth;
+        }
+        else
+        if (lonDif>0 && latDif<0){
+            return 180-azimuth;
+        }
+        else
+        if (lonDif<0 && latDif<0){
+            return 180+azimuth;
+        }
+        else
+        return 360-azimuth;
     }
 
 

@@ -26,7 +26,7 @@ public class Cell2G extends Cell {
 
     }
 
-    private Double getAverRxLev(String bcchBsic, int band){//BCCH+" "+Bsic
+    public Double getAverRxLev(String bcchBsic, int band){//BCCH+" "+Bsic
         Double temp=null;
         double common=0;
         int count=0;

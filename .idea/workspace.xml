@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c93df8d-53b2-475b-8f11-00b6705208bb" name="Default" comment="commit">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell.java" afterPath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java" afterPath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/SqlServerProjectApplication.java" afterPath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/SqlServerProjectApplication.java" />
     </list>
     <ignored path="sqlServerProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -65,7 +63,7 @@
       <file leaf-file-name="Cell.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-765">
+            <state relative-caret-position="255">
               <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
               <folding />
             </state>
@@ -75,7 +73,7 @@
       <file leaf-file-name="Cell2G.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="294">
               <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -998,12 +996,12 @@
       <workItem from="1560254275212" duration="6315000" />
       <workItem from="1560436309331" duration="22116000" />
       <workItem from="1560752413960" duration="6898000" />
-      <workItem from="1560800351067" duration="2544000" />
+      <workItem from="1560800351067" duration="3697000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="366100000" />
+    <option name="totallyTimeSpent" value="367253000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1538,7 +1536,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-765">
+        <state relative-caret-position="255">
           <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
           <folding />
         </state>
@@ -1546,7 +1544,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
+        <state relative-caret-position="294">
           <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />

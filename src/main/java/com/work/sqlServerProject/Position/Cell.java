@@ -13,7 +13,7 @@ import java.util.TreeSet;
  */
 public class Cell {
     private String system;
-    private int band;
+    int band;
     private CellInfo cellInfo;
     private int posname;
     private int ci;
@@ -25,8 +25,8 @@ public class Cell {
     private int leftBorderAzimuth;
     private int rightBorderAzimuth;
     private int channel;
-    private TreeSet<Cell> cellsInBand;
-    private List<Point> pointsInCell;
+    TreeSet<Cell> cellsInBand;
+    List<Point> pointsInCell;
     private double distance;
 
     Comparator<Cell> comparator = new Comparator<Cell>() {
@@ -93,13 +93,19 @@ public class Cell {
             double dist = toDist(this.lalitude,this.longitude,p.getLatitude(),p.getLongitude());
             double az = toAzimuth(dist, p);
             if (dist<=distance){
-                //if (az>leftBorderAzimuth && az<rightBorderAzimuth) {
-                    System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
-                    pointsInCell.add(p);
-                //}
+                if (rightBorderAzimuth>leftBorderAzimuth) {
+                    if (az > leftBorderAzimuth && az < rightBorderAzimuth) {
+                        System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
+                        pointsInCell.add(p);
+                    }
+                }
+                else
+                    if ((az>=0 && az<rightBorderAzimuth) || (az<360 && az>leftBorderAzimuth)){
+                        System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
+                        pointsInCell.add(p);
+                    }
             }
         }
-
     }
 
     final static double pi=3.1415926535898;

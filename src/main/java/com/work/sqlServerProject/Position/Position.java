@@ -41,6 +41,7 @@ public class Position {
         }
     }
 
+
     public List<Cell> getCells() {
         return cells;
     }

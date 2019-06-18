@@ -69,11 +69,7 @@ public class MainController {
         StringBuilder stringB = new StringBuilder();
         position.setPointsInPosition(points);
         for (Cell c : position.getCells()){
-            if (c.getAzimuth()==25){
-                for (Point p : c.getPointsInCell()){
-                    System.out.println();
-                }
-            }
+            System.out.println(c.getCi()+" "+c.getSystem()+" "+c.getBand()+" "+c.getAzimuth()+" "+c.getPointsInCell().size());
         }
         return stringB.toString();
     }

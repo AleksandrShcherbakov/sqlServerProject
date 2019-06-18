@@ -3,17 +3,14 @@ package com.work.sqlServerProject.Position;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.Point;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by a.shcherbakov on 29.05.2019.
  */
 public class Cell {
     private String system;
-    int band;
+    private int band;
     private CellInfo cellInfo;
     private int posname;
     private int ci;
@@ -25,8 +22,8 @@ public class Cell {
     private int leftBorderAzimuth;
     private int rightBorderAzimuth;
     private int channel;
-    TreeSet<Cell> cellsInBand;
-    List<Point> pointsInCell;
+    private TreeSet<Cell> cellsInBand;
+    private List<Point> pointsInCell;
     private double distance;
 
     Comparator<Cell> comparator = new Comparator<Cell>() {
@@ -40,6 +37,7 @@ public class Cell {
             else return -1;
         }
     };
+
 
 
 
@@ -101,7 +99,7 @@ public class Cell {
                 }
                 else
                     if ((az>=0 && az<rightBorderAzimuth) || (az<360 && az>leftBorderAzimuth)){
-                        System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
+                        //System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
                         pointsInCell.add(p);
                     }
             }

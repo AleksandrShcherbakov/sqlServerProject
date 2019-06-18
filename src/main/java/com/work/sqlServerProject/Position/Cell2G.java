@@ -1,10 +1,7 @@
 package com.work.sqlServerProject.Position;
 
 import com.work.sqlServerProject.model.CellInfo;
-import com.work.sqlServerProject.model.Point;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +11,9 @@ public class Cell2G extends Cell {
     private int BCCH;
     private Object BSIC;
     private Map<String,Double> rxLevperBCCH;
+    private int bestScanBCCH;
+    private int bestCellID;
+    private boolean rightAzimuth;
 
     public Cell2G(CellInfo cellInfo) {
         super(cellInfo);
@@ -22,34 +22,23 @@ public class Cell2G extends Cell {
 
     }
 
-    public void findBestBCCH(){
 
+
+    public int getBestScanBCCH() {
+        return bestScanBCCH;
     }
 
-    public Double getAverRxLev(String bcchBsic, int band){//BCCH+" "+Bsic
-        Double temp=null;
-        double common=0;
-        int count=0;
-        Map<String, Double> map=null;
-
-        for (Point p : pointsInCell){
-            if (band==900){
-                map=p.getRxLevel900();
-            }
-            else
-            if (band==1800){
-                map=p.getRxLevel1800();
-            }
-            temp=map.get(bcchBsic);
-            if (temp!=null){
-                common=common+temp;
-                count++;
-            }
-        }
-        double res = common/count;
-        return res;
+    public void setBestScanBCCH(int bestScanBCCH) {
+        this.bestScanBCCH = bestScanBCCH;
     }
 
+    public boolean isRightAzimuth() {
+        return rightAzimuth;
+    }
+
+    public void setRightAzimuth(boolean rightAzimuth) {
+        this.rightAzimuth = rightAzimuth;
+    }
 
     public int getBCCH() {
         return BCCH;

@@ -69,14 +69,10 @@ public class MainController {
         StringBuilder stringB = new StringBuilder();
         position.setPointsInPosition(points);
         for (Cell c : position.getCells()){
-            pointss=c.getPointsInCell();
-            try {
-                for (Point p : c.getPointsInCell()) {
-                    stringB.append(p.getLatitude() + " " + p.getLongitude() + "<br>");
+            if (c.getAzimuth()==25){
+                for (Point p : c.getPointsInCell()){
+                    System.out.println();
                 }
-            }
-            catch (NullPointerException e){
-                System.out.println("Для сектора с азимутом "+c.getAzimuth()+" точек со сканера нет");
             }
         }
         return stringB.toString();

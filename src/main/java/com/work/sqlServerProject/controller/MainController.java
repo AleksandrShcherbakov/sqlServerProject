@@ -4,6 +4,7 @@ import com.work.sqlServerProject.Helper.Helper;
 import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
 import com.work.sqlServerProject.Position.Cell;
+import com.work.sqlServerProject.Position.Cell2G;
 import com.work.sqlServerProject.Position.Position;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.BTSForm;
@@ -64,14 +65,21 @@ public class MainController {
             position = new Position(list);
         }
         List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\" +filename);
-        String separator = System.lineSeparator();
         List<Point> points = Parser.getPointsFromScan(parsered);
-        StringBuilder stringB = new StringBuilder();
         position.setPointsInPosition(points);
         for (Cell c : position.getCells()){
-            System.out.println(c.getCi()+" "+c.getSystem()+" "+c.getBand()+" "+c.getAzimuth()+" "+c.getPointsInCell().size());
+            if (c.getClass().getSimpleName().equals("Cell2G")){
+                Cell2G p = (Cell2G)c;
+                p.putBCCHinband();
+                System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getBSIC()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRxLevPerBCCHBSIC(p.getBcchBsic()));
+                for (String s : p.getBCCHBsicinband()){
+                    System.out.println(s+" "+p.findAverRxLevPerBCCHBSIC(s)+" "+p.getCountOfPoints());
+                }
+            }
+            else
+            System.out.println(c.getClass().getSimpleName()+" "+c.getCi()+" "+c.getSystem()+" "+c.getBand()+" "+c.getAzimuth()+" "+c.getPointsInCell().size());
         }
-        return stringB.toString();
+        return "готово";
     }
 
 

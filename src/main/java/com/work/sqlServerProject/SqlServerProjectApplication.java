@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootApplication
 public class SqlServerProjectApplication {

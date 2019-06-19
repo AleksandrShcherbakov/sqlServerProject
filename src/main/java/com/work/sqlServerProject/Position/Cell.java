@@ -93,16 +93,58 @@ public class Cell {
             if (dist<=distance){
                 if (rightBorderAzimuth>leftBorderAzimuth) {
                     if (az > leftBorderAzimuth && az < rightBorderAzimuth) {
-                        System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
-                        pointsInCell.add(p);
+                        //System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
+                        checkNotNullAndAdd(p);
                     }
                 }
                 else
                     if ((az>=0 && az<rightBorderAzimuth) || (az<360 && az>leftBorderAzimuth)){
                         //System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
-                        pointsInCell.add(p);
+                        checkNotNullAndAdd(p);
                     }
             }
+        }
+    }
+
+    public void checkNotNullAndAdd(Point p){
+        if (this.system.equals("GSM") && this.band==900 && p.getRxLevel900()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("GSM") && this.band==1800 && p.getRxLevel1800()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("UMTS") && this.band==2100 && this.channel==10813 && p.getRSCP10813()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("UMTS") && this.band==2100 && this.channel==10836 && p.getRSCP10836()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("UMTS") && this.band==2100 && this.channel==10788 && p.getRSCP10788()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("UMTS") && this.band==900 && this.channel==3036 && p.getRSCP3036()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("UMTS") && this.band==900 && this.channel==3012 && p.getRSCP3012()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("LTE") && this.band==2600 && p.getRSRP3300()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("LTE") && this.band==800 && p.getRSRP6413()!=null) {
+            pointsInCell.add(p);
+        }
+        else
+        if (this.system.equals("LTE") && this.band==1800 && p.getRSRP1351()!=null) {
+            pointsInCell.add(p);
         }
     }
 
@@ -165,7 +207,7 @@ public class Cell {
         this.system=cellInfo.getSystem();
         this.cellsInBand=new TreeSet<>(comparator);
         this.channel=cellInfo.getCh();
-        this.distance=2000; //2 км
+        this.distance=200; //2 км
     }
 
     public double getDistance() {

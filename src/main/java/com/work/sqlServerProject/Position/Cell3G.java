@@ -32,11 +32,11 @@ public class Cell3G extends Cell {
 
     public double findAverRSCPPerSCr(Integer scr){
         Map<Integer, Double> map=null;
-        Double tempRxLev=null;
+        Double tempRSCP=null;
         Double common=0.0;
         int count=0;
-        if (super.getBand()==2100){
-            for (Point p : super.getPointsInCell()){
+        for (Point p : super.getPointsInCell()){
+            if (super.getBand()==2100){
                 if (this.carrierFrequency==10813) {
                     map = p.getRSCP10813();
                 }
@@ -48,16 +48,9 @@ public class Cell3G extends Cell {
                 if (this.carrierFrequency==10836) {
                     map = p.getRSCP10836();
                 }
-                tempRxLev = map.get(scr);
-                if (tempRxLev!=null){
-                    common=common+tempRxLev;
-                    count++;
-                }
             }
-        }
-        else
-        if (super.getBand()==900){
-            for (Point p : super.getPointsInCell()){
+            else
+            if (super.getBand()==900){
                 if (this.carrierFrequency==3036) {
                     map = p.getRSCP3036();
                 }
@@ -65,11 +58,11 @@ public class Cell3G extends Cell {
                 if (this.carrierFrequency==3012) {
                     map = p.getRSCP3012();
                 }
-                tempRxLev = map.get(scr);
-                if (tempRxLev!=null){
-                    common=common+tempRxLev;
-                    count++;
-                }
+            }
+            tempRSCP = map.get(scr);
+            if (tempRSCP!=null){
+                common=common+tempRSCP;
+                count++;
             }
         }
         countOfPoints=count;

@@ -38,31 +38,24 @@ public class Cell2G extends Cell {
 
 
     public double findAverRxLevPerBCCHBSIC(String bcchBsic){
-        Map<String, Double> map;
+        Map<String, Double> map=null;
         Double tempRxLev=null;
         Double common=0.0;
         int count=0;
-        if (super.getBand()==900){
-            for (Point p : super.getPointsInCell()){
-                map=p.getRxLevel900();
-                tempRxLev=map.get(bcchBsic);
-                if (tempRxLev!=null){
-                    common=common+tempRxLev;
-                    count++;
-                }
+        for (Point p : super.getPointsInCell()) {
+            if (super.getBand() == 900) {
+                map = p.getRxLevel900();
             }
-        }
-        else
-        if (super.getBand()==1800){
-            for (Point p : super.getPointsInCell()){
-                map=p.getRxLevel1800();
-                tempRxLev=map.get(bcchBsic);
-                if (tempRxLev!=null){
-                    common=common+tempRxLev;
-                    count++;
-                }
+            else
+            if (super.getBand() == 1800) {
+                map = p.getRxLevel1800();
             }
-        }
+            if (tempRxLev != null) {
+                tempRxLev = map.get(bcchBsic);
+                common = common + tempRxLev;
+                count++;
+            }
+        }        
         countOfPoints=count;
         return common/count;
     }

@@ -24,7 +24,9 @@ public class Cell {
     private int channel;
     private TreeSet<Cell> cellsInBand;
     private List<Point> pointsInCell;
-    private double distance;
+    private double maxDistance;
+    private double minDistance;
+    private int sectorOfFinding;
 
     Comparator<Cell> comparator = new Comparator<Cell>() {
         @Override
@@ -81,8 +83,10 @@ public class Cell {
             this.next=list.get(indexOfSelfCell+1);
             this.previous=list.get(indexOfSelfCell-1);
         }
-        leftBorderAzimuth=((this.azimuth+previous.azimuth)%360)/2;
-        rightBorderAzimuth=((this.azimuth+next.azimuth)%360)/2;
+        //leftBorderAzimuth=((this.azimuth+previous.azimuth+sectorOfFinding)%360)/2;
+        //rightBorderAzimuth=((this.azimuth+next.azimuth-sectorOfFinding)%360)/2;
+        leftBorderAzimuth=((this.azimuth-sectorOfFinding/2)%360);
+        rightBorderAzimuth=((this.azimuth+sectorOfFinding/2)%360);
     }
 
     public void setPointsInCellFromNBF(List<Point>allPointsFromNBF){
@@ -90,7 +94,7 @@ public class Cell {
         for (Point p : allPointsFromNBF){
             double dist = toDist(this.lalitude,this.longitude,p.getLatitude(),p.getLongitude());
             double az = toAzimuth(dist, p);
-            if (dist<=distance){
+            if (dist<=maxDistance && dist>=minDistance){
                 if (rightBorderAzimuth>leftBorderAzimuth) {
                     if (az > leftBorderAzimuth && az < rightBorderAzimuth) {
                         //System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
@@ -207,15 +211,20 @@ public class Cell {
         this.system=cellInfo.getSystem();
         this.cellsInBand=new TreeSet<>(comparator);
         this.channel=cellInfo.getCh();
-        this.distance=200; //2 км
+        this.maxDistance=1200; //2 км
+        this.minDistance=0;
+        this.sectorOfFinding=60;
+
     }
 
+
+
     public double getDistance() {
-        return distance;
+        return maxDistance;
     }
 
     public void setDistance(double distance) {
-        this.distance = distance;
+        this.maxDistance = distance;
     }
 
     public List<Point> getPointsInCell() {

@@ -5,6 +5,7 @@ import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
 import com.work.sqlServerProject.Position.Cell;
 import com.work.sqlServerProject.Position.Cell2G;
+import com.work.sqlServerProject.Position.Cell3G;
 import com.work.sqlServerProject.Position.Position;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.BTSForm;
@@ -71,9 +72,18 @@ public class MainController {
             if (c.getClass().getSimpleName().equals("Cell2G")){
                 Cell2G p = (Cell2G)c;
                 p.putBCCHinband();
-                System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getBSIC()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRxLevPerBCCHBSIC(p.getBcchBsic()));
+                System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getBcchBsic()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRxLevPerBCCHBSIC(p.getBcchBsic()));
                 for (String s : p.getBCCHBsicinband()){
                     System.out.println(s+" "+p.findAverRxLevPerBCCHBSIC(s)+" "+p.getCountOfPoints());
+                }
+            }
+            else
+            if (c.getClass().getSimpleName().equals("Cell3G")){
+                Cell3G p = (Cell3G)c;
+                p.putScrinband();
+                System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getScr()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRSCPPerSCr(Integer.parseInt(p.getScr()+"")));
+                for (Integer s : p.getScrInband()){
+                    System.out.println(s+" "+p.findAverRSCPPerSCr(s)+" "+p.getCountOfPoints());
                 }
             }
             else

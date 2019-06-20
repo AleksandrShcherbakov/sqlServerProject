@@ -69,6 +69,11 @@ public class Cell {
             }
             m++;
         }
+        if (m==1){
+            this.next=this;
+            this.previous=this;
+        }
+        else
         if (indexOfSelfCell==m-1){
             this.next=list.get(0);
             this.previous=list.get(indexOfSelfCell-1);
@@ -213,7 +218,7 @@ public class Cell {
         this.channel=cellInfo.getCh();
         this.maxDistance=1200; //2 км
         this.minDistance=0;
-        this.sectorOfFinding=60;
+        this.sectorOfFinding=40;
 
     }
 

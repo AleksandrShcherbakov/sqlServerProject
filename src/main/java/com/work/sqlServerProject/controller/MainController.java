@@ -3,10 +3,7 @@ package com.work.sqlServerProject.controller;
 import com.work.sqlServerProject.Helper.Helper;
 import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
-import com.work.sqlServerProject.Position.Cell;
-import com.work.sqlServerProject.Position.Cell2G;
-import com.work.sqlServerProject.Position.Cell3G;
-import com.work.sqlServerProject.Position.Position;
+import com.work.sqlServerProject.Position.*;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.BTSForm;
 import com.work.sqlServerProject.form.CellNameForm;
@@ -68,16 +65,21 @@ public class MainController {
         List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\" +filename);
         List<Point> points = Parser.getPointsFromScan(parsered);
         position.setPointsInPosition(points);
+        StringBuilder builder = new StringBuilder(posname+"<br><br>");
         for (Cell c : position.getCells()){
             if (c.getClass().getSimpleName().equals("Cell2G")){
                 Cell2G p = (Cell2G)c;
-                p.putBCCHinband();
+                p.putAllrxLevinband();
+                p.findBestCI();
+                p.checkCell();
+                builder.append("self CI: "+p.getCi()+" bestScanCI: "+p.getBestCellID()+" "+p.isCheck());
+                builder.append("<br>");
                 System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getBcchBsic()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRxLevPerBCCHBSIC(p.getBcchBsic()));
-                for (String s : p.getBCCHBsicinband()){
-                    System.out.println(s+" "+p.findAverRxLevPerBCCHBSIC(s)+" "+p.getCountOfPoints());
+                for (Integer s : p.getAllRxLev().keySet()){
+                    System.out.println(s+" "+p.getAllRxLev().get(s));
                 }
             }
-            else
+            /*else
             if (c.getClass().getSimpleName().equals("Cell3G")){
                 Cell3G p = (Cell3G)c;
                 p.putScrinband();
@@ -87,9 +89,17 @@ public class MainController {
                 }
             }
             else
-            System.out.println(c.getClass().getSimpleName()+" "+c.getCi()+" "+c.getSystem()+" "+c.getBand()+" "+c.getAzimuth()+" "+c.getPointsInCell().size());
+            if (c.getClass().getSimpleName().equals("Cell4G")){
+                Cell4G p = (Cell4G)c;
+                p.putPciinband();;
+                System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getPCI()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")));
+                for (Integer s : p.getPciInBand()){
+                    System.out.println(s+" "+p.findAverRSRPerPCI(s)+" "+p.getCountOfPoints());
+                }
+            }*/
+            //System.out.println(c.getClass().getSimpleName()+" "+c.getCi()+" "+c.getSystem()+" "+c.getBand()+" "+c.getAzimuth()+" "+c.getPointsInCell().size());
         }
-        return "готово";
+        return builder.toString();
     }
 
 

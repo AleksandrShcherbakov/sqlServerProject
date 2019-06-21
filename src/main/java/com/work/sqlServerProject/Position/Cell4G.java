@@ -30,7 +30,7 @@ public class Cell4G extends Cell {
         }
     }
 
-    public double findAverRSCPPerSCr(Integer pci){
+    public double findAverRSRPerPCI(Integer pci){
         Map<Integer, Double> map=null;
         Double tempRSCP=null;
         Double common=0.0;
@@ -55,6 +55,14 @@ public class Cell4G extends Cell {
         }
         countOfPoints = count;
         return common/count;
+    }
+
+    public List<Integer> getPciInBand() {
+        return pciInBand;
+    }
+
+    public void setPciInBand(List<Integer> pciInBand) {
+        this.pciInBand = pciInBand;
     }
 
     public int getCountOfPoints() {

@@ -3,8 +3,7 @@ package com.work.sqlServerProject.Position;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.Point;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,12 +13,12 @@ public class Cell2G extends Cell {
     private int BCCH;
     private Object BSIC;
     private Map<String,Double> rxLevperBCCH;
-    private String bestScanBCCH;
     private int bestCellID;
     private boolean rightAzimuth;
     private String bcchBsic;
-    private List<String>BCCHBsicinband;
+    private Map<Integer, Double> allRxLev;
     private int countOfPoints;
+    private boolean check;
 
     public Cell2G(CellInfo cellInfo) {
         super(cellInfo);
@@ -28,14 +27,36 @@ public class Cell2G extends Cell {
         this.bcchBsic=BCCH+" "+BSIC;
     }
 
-    public void putBCCHinband(){
-        BCCHBsicinband=new ArrayList<>();
+    public void putAllrxLevinband(){
+        allRxLev= new HashMap<>();
         for (Cell c : super.getCellsInBand()){
             Cell2G p=(Cell2G)c;
-            BCCHBsicinband.add(p.getBcchBsic());
+            allRxLev.put(c.getCi(), this.findAverRxLevPerBCCHBSIC(p.getBcchBsic()));
         }
     }
 
+    public int findBestCI(){
+        int bestCI=0;
+        double maxRxLev=-200;
+        double temp=0;
+        for (Integer i : allRxLev.keySet()){
+            temp=allRxLev.get(i);
+            if (temp==0)
+                continue;
+            if (temp>maxRxLev){
+                maxRxLev=temp;
+                bestCI=i;
+            }
+        }
+        bestCellID=bestCI;
+        return bestCI;
+    }
+
+    public void checkCell(){
+        if (super.getCi()==bestCellID){
+            check=true;
+        }
+    }
 
     public double findAverRxLevPerBCCHBSIC(String bcchBsic){
         Map<String, Double> map=null;
@@ -50,14 +71,41 @@ public class Cell2G extends Cell {
             if (super.getBand() == 1800) {
                 map = p.getRxLevel1800();
             }
+            tempRxLev = map.get(bcchBsic);
             if (tempRxLev != null) {
-                tempRxLev = map.get(bcchBsic);
                 common = common + tempRxLev;
                 count++;
             }
-        }        
+        }
+        if (count==0){
+            return 0.0;
+        }
         countOfPoints=count;
         return common/count;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public Map<Integer, Double> getAllRxLev() {
+        return allRxLev;
+    }
+
+    public void setAllRxLev(Map<Integer, Double> allRxLev) {
+        this.allRxLev = allRxLev;
+    }
+
+    public int getBestCellID() {
+        return bestCellID;
+    }
+
+    public void setBestCellID(int bestCellID) {
+        this.bestCellID = bestCellID;
     }
 
     public int getCountOfPoints() {
@@ -66,14 +114,6 @@ public class Cell2G extends Cell {
 
     public void setCountOfPoints(int countOfPoints) {
         this.countOfPoints = countOfPoints;
-    }
-
-    public List<String> getBCCHBsicinband() {
-        return BCCHBsicinband;
-    }
-
-    public void setBCCHBsicinband(List<String> BCCHBsicinband) {
-        this.BCCHBsicinband = BCCHBsicinband;
     }
 
     public Map<String, Double> getRxLevperBCCH() {
@@ -90,14 +130,6 @@ public class Cell2G extends Cell {
 
     public void setBcchBsic(String bcchBsic) {
         this.bcchBsic = bcchBsic;
-    }
-
-    public String getBestScanBCCH() {
-        return bestScanBCCH;
-    }
-
-    public void setBestScanBCCH(String bestScanBCCH) {
-        this.bestScanBCCH = bestScanBCCH;
     }
 
     public boolean isRightAzimuth() {

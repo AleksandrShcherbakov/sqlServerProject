@@ -217,8 +217,8 @@ public class Cell {
         this.cellsInBand=new TreeSet<>(comparator);
         this.channel=cellInfo.getCh();
         this.maxDistance=1200; //2 км
-        this.minDistance=0;
-        this.sectorOfFinding=40;
+        this.minDistance=50;
+        this.sectorOfFinding=60;
 
     }
 

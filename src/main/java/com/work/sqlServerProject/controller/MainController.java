@@ -1,19 +1,18 @@
 package com.work.sqlServerProject.controller;
 
 import com.work.sqlServerProject.Helper.Helper;
-import com.work.sqlServerProject.NBFparser.Parser;
-import com.work.sqlServerProject.NBFparser.ParserHalper;
-import com.work.sqlServerProject.Position.*;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.BTSForm;
 import com.work.sqlServerProject.form.CellNameForm;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.CellNameInfo;
-import com.work.sqlServerProject.model.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -51,64 +50,6 @@ public class MainController {
         Helper.writeToCSV("C://",cellNameInfo.getCellName()+";"+cellNameInfo.getCI());
         return "show result";
     }
-
-    List<Point>pointss;
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    @ResponseBody
-    public String selectPN(Model model,@RequestParam (required = false) Integer posname, @RequestParam (required = false) String filename) throws IOException {
-        Position position=null;
-        if (posname!=null) {
-            List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
-            position = new Position(list);
-        }
-        List<String> parsered = ParserHalper.createinSrtings("C:\\Users\\AlVlShcherbakov\\Documents\\" +filename);
-        List<Point> points = Parser.getPointsFromScan(parsered);
-        position.setPointsInPosition(points);
-        StringBuilder builder = new StringBuilder(posname+"<br><br>");
-        for (Cell c : position.getCells()){
-            if (c.getClass().getSimpleName().equals("Cell2G")){
-                Cell2G p = (Cell2G)c;
-                p.putAllrxLevinband();
-                p.findBestCI();
-                p.checkCell();
-                builder.append("self CI: "+p.getCi()+" bestScanCI: "+p.getBestCellID()+" "+p.isCheck());
-                builder.append("<br>");
-                System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getBcchBsic()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRxLevPerBCCHBSIC(p.getBcchBsic()));
-                for (Integer s : p.getAllRxLev().keySet()){
-                    System.out.println(s+" "+p.getAllRxLev().get(s));
-                }
-            }
-            /*else
-            if (c.getClass().getSimpleName().equals("Cell3G")){
-                Cell3G p = (Cell3G)c;
-                p.putScrinband();
-                System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getScr()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRSCPPerSCr(Integer.parseInt(p.getScr()+"")));
-                for (Integer s : p.getScrInband()){
-                    System.out.println(s+" "+p.findAverRSCPPerSCr(s)+" "+p.getCountOfPoints());
-                }
-            }
-            else
-            if (c.getClass().getSimpleName().equals("Cell4G")){
-                Cell4G p = (Cell4G)c;
-                p.putPciinband();;
-                System.out.println(p.getClass().getSimpleName()+" "+p.getCi()+" "+p.getPCI()+" "+p.getSystem()+" "+p.getBand()+" "+p.getAzimuth()+" "+p.getPointsInCell().size()+" "+p.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")));
-                for (Integer s : p.getPciInBand()){
-                    System.out.println(s+" "+p.findAverRSRPerPCI(s)+" "+p.getCountOfPoints());
-                }
-            }*/
-            //System.out.println(c.getClass().getSimpleName()+" "+c.getCi()+" "+c.getSystem()+" "+c.getBand()+" "+c.getAzimuth()+" "+c.getPointsInCell().size());
-        }
-        return builder.toString();
-    }
-
-
-    @RequestMapping(value = "/map", method = RequestMethod.GET)
-    public String getMap(Model model){
-        model.addAttribute("points",pointss);
-        return "map";
-    }
-
 
 
     @RequestMapping(value = "/bts", method = RequestMethod.POST)

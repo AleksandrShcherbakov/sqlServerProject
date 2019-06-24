@@ -4,6 +4,7 @@ import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.Point;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -12,6 +13,36 @@ import java.util.List;
 public class Position {
     private int numberOfPosition;
     private List<Cell>cells;
+    private StringBuilder stringBuilder=new StringBuilder();
+
+    public void findBestScan(){
+        for (Cell c : cells){
+            String classOfCell = c.getClass().getSimpleName();
+            if (classOfCell.equals("Cell2G")){
+                Cell2G p  = (Cell2G) c;
+                p.putAllrxLevinband();
+                p.findBestCI();
+                stringBuilder.append(p.toString());
+                stringBuilder.append("<br>");
+            }
+            else
+            if (classOfCell.equals("Cell3G")){
+                Cell3G p  = (Cell3G) c;
+                p.putAllRSCPinband();
+                p.findBestCI();
+                stringBuilder.append(p.toString());
+                stringBuilder.append("<br>");
+            }
+            else
+            if (classOfCell.equals("Cell4G")){
+                Cell4G p  = (Cell4G) c;
+                p.putAllRSRPinband();
+                p.findBestCI();
+                stringBuilder.append(p.toString());
+                stringBuilder.append("<br>");
+            }
+        }
+    }
 
     public Position(List<CellInfo>cellInfo) {
         cells=new ArrayList<>();
@@ -29,6 +60,27 @@ public class Position {
                 cells.add(new Cell4G(cell));
             }
         }
+        cells.sort(new Comparator<Cell>() {
+            @Override
+            public int compare(Cell o1, Cell o2) {
+                if (o1.getNumID()>o2.getNumID())
+                    return 1;
+                else
+                if (o1.getNumID()<o2.getNumID()){
+                    return -1;
+                }
+                else
+                if (o1.getAzimuth()>o2.getAzimuth()){
+                    return 1;
+                }
+                else
+                if (o1.getAzimuth()<o2.getAzimuth()){
+                    return -1;
+                }
+                else
+                    return 0;
+            }
+        });
         for (Cell cell : cells){
             cell.setAllCellsInBand(cells);
             cell.setPreviousAndNextCells();
@@ -41,6 +93,13 @@ public class Position {
         }
     }
 
+    public int getNumberOfPosition() {
+        return numberOfPosition;
+    }
+
+    public void setNumberOfPosition(int numberOfPosition) {
+        this.numberOfPosition = numberOfPosition;
+    }
 
     public List<Cell> getCells() {
         return cells;
@@ -51,14 +110,8 @@ public class Position {
     }
 
 
-
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Cell c: cells){
-            stringBuilder.append(c.toString()+"<br>");
-
-        }
         return stringBuilder.toString();
     }
 }

@@ -27,6 +27,7 @@ public class Cell {
     private double maxDistance;
     private double minDistance;
     private int sectorOfFinding;
+    private short numID;
 
     Comparator<Cell> comparator = new Comparator<Cell>() {
         @Override
@@ -219,10 +220,52 @@ public class Cell {
         this.maxDistance=1200; //2 км
         this.minDistance=50;
         this.sectorOfFinding=60;
-
+        if (system.equals("GSM")){
+            if (band==900){
+                numID=1;
+            }
+            else numID=2;
+        }
+        else
+        if (system.equals("UMTS")){
+            if (band==2100){
+                if (channel==10813){
+                    numID=3;
+                }
+                else
+                if (channel==10788){
+                    numID=4;
+                }
+                else numID=5;
+            }
+            else
+            if (band==900){
+                if (channel==3036){
+                    numID=6;
+                }
+                else numID=7;
+            }
+        }
+        else
+        if (system.equals("LTE")){
+            if (band==2600){
+                numID=8;
+            }
+            else
+            if (band==1800){
+                numID=9;
+            }
+            else numID=10;
+        }
     }
 
+    public short getNumID() {
+        return numID;
+    }
 
+    public void setNumID(short numID) {
+        this.numID = numID;
+    }
 
     public double getDistance() {
         return maxDistance;

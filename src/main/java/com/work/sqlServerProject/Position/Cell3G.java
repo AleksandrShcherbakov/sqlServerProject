@@ -3,7 +3,7 @@ package com.work.sqlServerProject.Position;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.Point;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +15,9 @@ public class Cell3G extends Cell {
     private int carrierFrequency;
     private int countOfPoints;
     private List<Integer> scrInband;
+    private Map<Integer, Double> allRSCP;
+    private int bestCellID;
+    private boolean ok;
 
     public Cell3G(CellInfo cellInfo) {
         super(cellInfo);
@@ -22,12 +25,32 @@ public class Cell3G extends Cell {
         this.carrierFrequency=cellInfo.getCh();
     }
 
-    public void putScrinband(){
-        scrInband=new ArrayList<>();
+    public void putAllRSCPinband(){
+        allRSCP = new HashMap<>();
         for (Cell c : super.getCellsInBand()){
             Cell3G p=(Cell3G)c;
-            scrInband.add(Integer.parseInt(p.getScr()+""));
+            allRSCP.put(c.getCi(), this.findAverRSCPPerSCr(Integer.parseInt(p.getScr()+"")));
         }
+    }
+
+    public int findBestCI(){
+        int bestCI=0;
+        double maxRSCP=-200;
+        double temp=0;
+        for (Integer i : allRSCP.keySet()){
+            temp= allRSCP.get(i);
+            if (temp==0)
+                continue;
+            if (temp>maxRSCP){
+                maxRSCP=temp;
+                bestCI=i;
+            }
+        }
+        bestCellID=bestCI;
+        if (bestCellID==super.getCi()){
+            ok=true;
+        }
+        return bestCI;
     }
 
     public double findAverRSCPPerSCr(Integer scr){
@@ -67,6 +90,46 @@ public class Cell3G extends Cell {
         }
         countOfPoints=count;
         return common/count;
+    }
+
+    @Override
+    public String toString() {
+        String r =null;
+        if (countOfPoints==0){
+            r=" измерений в зоне этого сектора нет";
+        }
+        else
+            r=" ok: "+ok;
+
+        return "system: "+super.getSystem()+" "+super.getBand()+
+                " selfCI: "+super.getCi()+
+                " bestScanCI: "+bestCellID+
+                " азимут: "+super.getAzimuth()+r;
+
+    }
+
+    public boolean isOk() {
+        return ok;
+    }
+
+    public void setOk(boolean ok) {
+        this.ok = ok;
+    }
+
+    public Map<Integer, Double> getAllRSCP() {
+        return allRSCP;
+    }
+
+    public void setAllRSCP(Map<Integer, Double> allRSCP) {
+        this.allRSCP = allRSCP;
+    }
+
+    public int getBestCellID() {
+        return bestCellID;
+    }
+
+    public void setBestCellID(int bestCellID) {
+        this.bestCellID = bestCellID;
     }
 
     public List<Integer> getScrInband() {

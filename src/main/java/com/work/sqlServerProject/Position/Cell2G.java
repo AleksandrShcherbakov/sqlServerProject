@@ -18,7 +18,8 @@ public class Cell2G extends Cell {
     private String bcchBsic;
     private Map<Integer, Double> allRxLev;
     private int countOfPoints;
-    private boolean check;
+    private boolean ok;
+
 
     public Cell2G(CellInfo cellInfo) {
         super(cellInfo);
@@ -26,6 +27,8 @@ public class Cell2G extends Cell {
         this.BSIC=cellInfo.getBsic();
         this.bcchBsic=BCCH+" "+BSIC;
     }
+
+
 
     public void putAllrxLevinband(){
         allRxLev= new HashMap<>();
@@ -49,14 +52,12 @@ public class Cell2G extends Cell {
             }
         }
         bestCellID=bestCI;
+        if (bestCellID==super.getCi()){
+            ok=true;
+        }
         return bestCI;
     }
 
-    public void checkCell(){
-        if (super.getCi()==bestCellID){
-            check=true;
-        }
-    }
 
     public double findAverRxLevPerBCCHBSIC(String bcchBsic){
         Map<String, Double> map=null;
@@ -84,12 +85,28 @@ public class Cell2G extends Cell {
         return common/count;
     }
 
-    public boolean isCheck() {
-        return check;
+    public boolean isOk() {
+        return ok;
     }
 
-    public void setCheck(boolean check) {
-        this.check = check;
+    public void setOk(boolean ok) {
+        this.ok = ok;
+    }
+
+    @Override
+    public String toString() {
+        String r =null;
+        if (countOfPoints==0){
+            r=" измерений в зоне этого сектора нет";
+        }
+        else
+            r=" ok: "+ok;
+
+        return "system: "+super.getSystem()+" "+super.getBand()+
+                " selfCI: "+super.getCi()+
+                " bestScanCI: "+bestCellID+
+                " азимут: "+super.getAzimuth()+r;
+
     }
 
     public Map<Integer, Double> getAllRxLev() {

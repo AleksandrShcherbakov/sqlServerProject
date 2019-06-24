@@ -3,7 +3,7 @@ package com.work.sqlServerProject.Position;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.Point;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +15,9 @@ public class Cell4G extends Cell {
     private int ch;
     private int countOfPoints;
     private List<Integer> pciInBand;
+    private Map<Integer, Double> allRSRP;
+    private int bestCellID;
+    private boolean ok;
 
     public Cell4G(CellInfo cellInfo) {
         super(cellInfo);
@@ -22,12 +25,32 @@ public class Cell4G extends Cell {
         this.ch=cellInfo.getCh();
     }
 
-    public void putPciinband(){
-        pciInBand=new ArrayList<>();
+    public void putAllRSRPinband(){
+        allRSRP = new HashMap<>();
         for (Cell c : super.getCellsInBand()){
             Cell4G p=(Cell4G)c;
-            pciInBand.add(Integer.parseInt(p.getPCI()+""));
+            allRSRP.put(c.getCi(), this.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")));
         }
+    }
+
+    public int findBestCI(){
+        int bestCI=0;
+        double maxRSRP=-200;
+        double temp=0;
+        for (Integer i : allRSRP.keySet()){
+            temp= allRSRP.get(i);
+            if (temp==0)
+                continue;
+            if (temp>maxRSRP){
+                maxRSRP=temp;
+                bestCI=i;
+            }
+        }
+        bestCellID=bestCI;
+        if (bestCellID==super.getCi()){
+            ok=true;
+        }
+        return bestCI;
     }
 
     public double findAverRSRPerPCI(Integer pci){
@@ -55,6 +78,46 @@ public class Cell4G extends Cell {
         }
         countOfPoints = count;
         return common/count;
+    }
+
+    @Override
+    public String toString() {
+        String r =null;
+        if (countOfPoints==0){
+            r=" измерений в зоне этого сектора нет";
+        }
+        else
+            r=" ok: "+ok;
+
+        return "system: "+super.getSystem()+" "+super.getBand()+
+                " selfCI: "+super.getCi()+
+                " bestScanCI: "+bestCellID+
+                " азимут: "+super.getAzimuth()+r;
+
+    }
+
+    public boolean isOk() {
+        return ok;
+    }
+
+    public void setOk(boolean ok) {
+        this.ok = ok;
+    }
+
+    public Map<Integer, Double> getAllRSRP() {
+        return allRSRP;
+    }
+
+    public void setAllRSRP(Map<Integer, Double> allRSRP) {
+        this.allRSRP = allRSRP;
+    }
+
+    public int getBestCellID() {
+        return bestCellID;
+    }
+
+    public void setBestCellID(int bestCellID) {
+        this.bestCellID = bestCellID;
     }
 
     public List<Integer> getPciInBand() {
@@ -87,13 +150,5 @@ public class Cell4G extends Cell {
 
     public void setCh(int ch) {
         this.ch = ch;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString()+"Cell4G{" +
-                ", PCI=" + PCI +
-                ", ch=" + ch +
-                '}';
     }
 }

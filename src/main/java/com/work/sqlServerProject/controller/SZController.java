@@ -69,7 +69,7 @@ public class SZController {
     }
 
     @RequestMapping(value = "/szPos", method = RequestMethod.GET)
-    public String shoeInfoForSZ(Model model){
+    public String showInfoForSZ(Model model){
         SZFormPos szFormPos = new SZFormPos();
         model.addAttribute("szFormPos", szFormPos);
         return "checkPos";

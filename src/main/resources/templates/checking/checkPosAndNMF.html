@@ -9,10 +9,10 @@
     <form th:action="@{/check}" th:object="${posAndNMF}" th:method="post">
         <p>
             Ввести номера позиций:
-            <input type="text" th:field="*{posnames}">
+            <input type="text" th:field="*{posnames}" style="width: 100%">
             <br>
             Ввести путь к файлу сканнера:
-            <input type="text" th:field="*{url}">
+            <input type="text" th:field="*{url}" style="width: 100%">
             <br>
             <input type="submit" value="проверить">
         </p>

@@ -35,7 +35,7 @@ public class CheckingController {
     @RequestMapping(value = "/check", method = RequestMethod.POST)
     @ResponseBody
     public String selectPN(Model model, @ModelAttribute ("posAndNMF") PosAndNMF posAndNMF) throws IOException {
-        if (posAndNMF.getPosnames()==null){
+        if (posAndNMF.getPosnames().equals("")){
             return "не введена позиция";
         }
         if (posAndNMF.getUrl().equals("")){
@@ -46,9 +46,18 @@ public class CheckingController {
         Integer posname=Integer.parseInt(pos);
         if (posname!=null) {
             List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
+            if (list.size()==0){
+                return "БС с таким номером нет.";
+            }
             position = new Position(list);
         }
-        List<String> parsered = ParserHalper.createinSrtings(posAndNMF.getUrl());
+        List<String> parsered;
+        try {
+            parsered = ParserHalper.createinSrtings(posAndNMF.getUrl());
+        }
+        catch (IOException e){
+            return "Путь к файлу сканера указан не верно.";
+        }
         List<Point> points = Parser.getPointsFromScan(parsered);
         position.setPointsInPosition(points);
         position.findBestScan();

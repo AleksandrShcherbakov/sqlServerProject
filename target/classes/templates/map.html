@@ -7,8 +7,8 @@
 <body>
 <div id="map"></div>
 <button id="destroyButton" value="Удалить кару">Удалить карту</button>
-<button id="returnMap" value="создать карту">Вернуть карту</button>
-<script type="text/javascript">
+<div id="list"></div>
+<script type="text/javascript" th:inline="javascript">
 var myMap;
 // Дождёмся загрузки API и готовности DOM.
 ymaps.ready(init);
@@ -28,6 +28,23 @@ function init () {
 // Для уничтожения используется метод destroy.
         myMap.destroy();
     };
+    var points = [[${points}]];
+    var listVal = [[${list}]];
+    var listDiv = document.getElementById("list");
+
+    for (i = 0; i < listVal.length; i++) {
+        // Создание метки
+        var myPlacemark = new ymaps.Placemark(
+                // Координаты метки
+                [listVal[i].latytude, listVal[i].longitude]
+        );
+
+        // Добавление метки на карту
+        myMap.geoObjects.add(myPlacemark);
+    }
+
+
+
 }
 </script>
 <style>

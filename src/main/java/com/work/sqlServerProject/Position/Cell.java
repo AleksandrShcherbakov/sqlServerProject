@@ -218,7 +218,7 @@ public class Cell {
         this.cellsInBand=new TreeSet<>(comparator);
         this.channel=cellInfo.getCh();
         this.maxDistance=1200; //2 км
-        this.minDistance=50;
+        this.minDistance=10;
         this.sectorOfFinding=60;
         if (system.equals("GSM")){
             if (band==900){

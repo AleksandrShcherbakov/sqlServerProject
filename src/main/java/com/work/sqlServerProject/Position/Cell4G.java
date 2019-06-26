@@ -29,7 +29,15 @@ public class Cell4G extends Cell {
         allRSRP = new HashMap<>();
         for (Cell c : super.getCellsInBand()){
             Cell4G p=(Cell4G)c;
-            allRSRP.put(c.getCi(), this.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")));
+            try {
+                allRSRP.put(c.getCi(), this.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")));
+            }
+            catch (NumberFormatException e){
+                allRSRP.put(c.getCi(), this.findAverRSRPerPCI(0));
+            }
+            if (super.getCi()==7702963){
+                System.out.println(super.getCi()+" "+c.getCi()+" "+this.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")));
+            }
         }
     }
 

@@ -17,7 +17,6 @@ public class Cell2G extends Cell {
     private boolean rightAzimuth;
     private String bcchBsic;
     private Map<Integer, Double> allRxLev;
-    private int countOfPoints;
     private boolean ok;
 
 
@@ -32,6 +31,12 @@ public class Cell2G extends Cell {
 
     public void putAllrxLevinband(){
         allRxLev= new HashMap<>();
+        System.out.println(this.getCi()+" "+super.getPointsInCell().size());
+        for(Point p : super.getPointsInCell()){
+            if (p.getRxLevel900().containsKey("50 58")) {
+                System.out.println(p.toString());
+            }
+        }
         for (Cell c : super.getCellsInBand()){
             Cell2G p=(Cell2G)c;
             allRxLev.put(c.getCi(), this.findAverRxLevPerBCCHBSIC(p.getBcchBsic()));
@@ -81,7 +86,6 @@ public class Cell2G extends Cell {
         if (count==0){
             return 0.0;
         }
-        countOfPoints=count;
         return common/count;
     }
 
@@ -96,7 +100,7 @@ public class Cell2G extends Cell {
     @Override
     public String toString() {
         String r =null;
-        if (countOfPoints==0){
+        if (bestCellID==0){
             r=" измерений в зоне этого сектора нет";
         }
         else
@@ -123,14 +127,6 @@ public class Cell2G extends Cell {
 
     public void setBestCellID(int bestCellID) {
         this.bestCellID = bestCellID;
-    }
-
-    public int getCountOfPoints() {
-        return countOfPoints;
-    }
-
-    public void setCountOfPoints(int countOfPoints) {
-        this.countOfPoints = countOfPoints;
     }
 
     public Map<String, Double> getRxLevperBCCH() {

@@ -28,9 +28,8 @@ function init () {
 // Для уничтожения используется метод destroy.
         myMap.destroy();
     };
-    var points = [[${points}]];
-    var listVal = [[${list}]];
-    var listDiv = document.getElementById("list");
+
+    var listVal = [[${points}]];
 
     for (i = 0; i < listVal.length; i++) {
         // Создание метки
@@ -42,9 +41,6 @@ function init () {
         // Добавление метки на карту
         myMap.geoObjects.add(myPlacemark);
     }
-
-
-
 }
 </script>
 <style>

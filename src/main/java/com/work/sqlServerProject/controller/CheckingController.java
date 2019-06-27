@@ -2,6 +2,7 @@ package com.work.sqlServerProject.controller;
 
 import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
+import com.work.sqlServerProject.Position.Cell;
 import com.work.sqlServerProject.Position.Position;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.model.CellInfo;
@@ -25,7 +26,7 @@ public class CheckingController {
 
     @Autowired
     private CellNameDAO cellNameDAO;
-    List<Point> pointss = new ArrayList<>();
+    private Position pos=null;
 
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)
@@ -64,20 +65,34 @@ public class CheckingController {
         List<Point> points = Parser.getPointsFromScan(parsered);
         position.setPointsInPosition(points);
         position.findBestScan();
-        this.pointss=points;
+        this.pos=position;
+        StringBuilder ssylka= new StringBuilder();
+        for (Cell p : position.getCells()) {
+            ssylka.append("<a href='/map?cell=" + p.getCi() + "'>показать " + p.getCi() + "</a><br>");
+        }
         return posname+"<br>"+
-                position.toString();
+                position.toString()+"<br>"+
+                ssylka.toString();
     }
 
 
+
+
     @RequestMapping(value = "/map", method = RequestMethod.GET)
-    public String getMap(Model model){
-        List<TestPoint>list = new ArrayList<>();
-        for (Point p : pointss){
-            list.add(new TestPoint(p.getLongitude(),p.getLatitude()));
+    public String getMap(Model model, @RequestParam (name = "cell") String cell){
+        Integer i = Integer.parseInt(cell);
+        Cell l=null;
+        for (Cell c : pos.getCells()){
+            if (c.getCi()==i){
+                l=c;
+                break;
+            }
         }
-        model.addAttribute("list",list);
-        model.addAttribute("points",pointss);
+        List<TestPoint>points=new ArrayList<>();
+        for (Point p : l.getPointsInCell()){
+            points.add(new TestPoint(p.getLongitude(),p.getLatitude()));
+        }
+        model.addAttribute("points", points);
         return "map";
     }
 }

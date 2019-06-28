@@ -89,7 +89,7 @@ public class Position {
 
     public void setPointsInPosition(List<Point> allPoints){
         for (Cell c : cells){
-            c.setPointsInCellFromNBF(allPoints);
+            c.setPointsInCell(allPoints, c.getPointsInCell(), c.getLeftBorderAzimuth(),c.getRightBorderAzimuth());
         }
     }
 

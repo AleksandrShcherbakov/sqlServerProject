@@ -6,8 +6,8 @@
 
 <body>
 <div id="map"></div>
-<button id="destroyButton" value="Удалить кару">Удалить карту</button>
-<div id="list"></div>
+<div id="note"></div>
+
 <script type="text/javascript" th:inline="javascript">
 var myMap;
 // Дождёмся загрузки API и готовности DOM.
@@ -24,23 +24,37 @@ function init () {
         searchControlProvider: 'yandex#search'
     });
 
-    document.getElementById('destroyButton').onclick = function () {
-// Для уничтожения используется метод destroy.
-        myMap.destroy();
-    };
-
     var listVal = [[${points}]];
+    var cell = [[${cell}]];
 
     for (i = 0; i < listVal.length; i++) {
         // Создание метки
-        var myPlacemark = new ymaps.Placemark(
+        var myCircle = new ymaps.Circle([
                 // Координаты метки
-                [listVal[i].latytude, listVal[i].longitude]
-        );
-
+                [listVal[i].latitude, listVal[i].longitude],
+                2
+        ]);
         // Добавление метки на карту
-        myMap.geoObjects.add(myPlacemark);
+        myMap.geoObjects.add(myCircle);
     }
+    var myCell  = new ymaps.GeoObject({
+        // Описание геометрии.
+        geometry: {
+            type: "Point",
+            coordinates: [cell.latitude, cell.longitude]
+        },
+        // Свойства.
+        properties: {
+            // Контент метки.
+            iconContent: cell.ci
+        }
+    }, {
+        // Опции.
+        // Иконка метки будет растягиваться под размер ее содержимого.
+        preset: 'twirl#redStretchyIcon'
+
+    });
+    myMap.geoObjects.add(myCell);
 }
 </script>
 <style>

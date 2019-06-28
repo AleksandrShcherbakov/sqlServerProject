@@ -88,6 +88,9 @@ public class Cell3G extends Cell {
                 count++;
             }
         }
+        if (count==0 || count<15){
+            return 0.0;
+        }
         countOfPoints=count;
         return common/count;
     }
@@ -95,7 +98,7 @@ public class Cell3G extends Cell {
     @Override
     public String toString() {
         String r =null;
-        if (countOfPoints==0){
+        if (bestCellID==0){
             r=" измерений в зоне этого сектора нет";
         }
         else

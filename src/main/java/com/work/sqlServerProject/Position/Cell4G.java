@@ -35,9 +35,6 @@ public class Cell4G extends Cell {
             catch (NumberFormatException e){
                 allRSRP.put(c.getCi(), this.findAverRSRPerPCI(0));
             }
-            if (super.getCi()==7702963){
-                System.out.println(super.getCi()+" "+c.getCi()+" "+this.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")));
-            }
         }
     }
 
@@ -84,14 +81,20 @@ public class Cell4G extends Cell {
                 count++;
             }
         }
+        if (count==0 || count<15){
+            return 0.0;
+        }
         countOfPoints = count;
+        if (super.getCi()==7755635){
+            System.out.println(super.getCi()+" "+this.PCI+" "+pci+" "+count);
+        }
         return common/count;
     }
 
     @Override
     public String toString() {
         String r =null;
-        if (countOfPoints==0){
+        if (bestCellID==0){
             r=" измерений в зоне этого сектора нет";
         }
         else

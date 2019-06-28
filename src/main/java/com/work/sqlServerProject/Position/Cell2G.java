@@ -31,12 +31,6 @@ public class Cell2G extends Cell {
 
     public void putAllrxLevinband(){
         allRxLev= new HashMap<>();
-        System.out.println(this.getCi()+" "+super.getPointsInCell().size());
-        for(Point p : super.getPointsInCell()){
-            if (p.getRxLevel900().containsKey("50 58")) {
-                System.out.println(p.toString());
-            }
-        }
         for (Cell c : super.getCellsInBand()){
             Cell2G p=(Cell2G)c;
             allRxLev.put(c.getCi(), this.findAverRxLevPerBCCHBSIC(p.getBcchBsic()));
@@ -83,7 +77,7 @@ public class Cell2G extends Cell {
                 count++;
             }
         }
-        if (count==0){
+        if (count==0 || count<10){
             return 0.0;
         }
         return common/count;

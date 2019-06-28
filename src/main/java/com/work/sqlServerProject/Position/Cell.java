@@ -28,6 +28,7 @@ public class Cell {
     private double minDistance;
     private int sectorOfFinding;
     private short numID;
+    private double averDist;
 
     Comparator<Cell> comparator = new Comparator<Cell>() {
         @Override
@@ -95,66 +96,72 @@ public class Cell {
         rightBorderAzimuth=((this.azimuth+sectorOfFinding/2)%360);
     }
 
-    public void setPointsInCellFromNBF(List<Point>allPointsFromNBF){
-        pointsInCell=new ArrayList<>();
-        for (Point p : allPointsFromNBF){
+    public void setPointsInCell(List<Point>source, List<Point>target, int leftBorderAzimuth,int rightBorderAzimuth){
+        target=new ArrayList<>();
+        double commonDist=0.0;
+        int count=0;
+        for (Point p : source){
             double dist = toDist(this.lalitude,this.longitude,p.getLatitude(),p.getLongitude());
             double az = toAzimuth(dist, p);
             if (dist<=maxDistance && dist>=minDistance){
                 if (rightBorderAzimuth>leftBorderAzimuth) {
                     if (az > leftBorderAzimuth && az < rightBorderAzimuth) {
                         //System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
-                        checkNotNullAndAdd(p);
+                        checkNotNullAndAdd(p, target);
                     }
                 }
                 else
                     if ((az>=0 && az<rightBorderAzimuth) || (az<360 && az>leftBorderAzimuth)){
                         //System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
-                        checkNotNullAndAdd(p);
+                        checkNotNullAndAdd(p, target);
                     }
             }
         }
     }
 
-    public void checkNotNullAndAdd(Point p){
+    public void setPointsInSector(List<Point>target,int leftAz, int rightAz){
+
+    }
+
+    public void checkNotNullAndAdd(Point p, List<Point>target){
         if (this.system.equals("GSM") && this.band==900 && p.getRxLevel900()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("GSM") && this.band==1800 && p.getRxLevel1800()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("UMTS") && this.band==2100 && this.channel==10813 && p.getRSCP10813()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("UMTS") && this.band==2100 && this.channel==10836 && p.getRSCP10836()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("UMTS") && this.band==2100 && this.channel==10788 && p.getRSCP10788()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("UMTS") && this.band==900 && this.channel==3036 && p.getRSCP3036()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("UMTS") && this.band==900 && this.channel==3012 && p.getRSCP3012()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("LTE") && this.band==2600 && p.getRSRP3300()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("LTE") && this.band==800 && p.getRSRP6413()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
         else
         if (this.system.equals("LTE") && this.band==1800 && p.getRSRP1351()!=null) {
-            pointsInCell.add(p);
+            target.add(p);
         }
     }
 
@@ -257,6 +264,14 @@ public class Cell {
             }
             else numID=10;
         }
+    }
+
+    public double getAverDist() {
+        return averDist;
+    }
+
+    public void setAverDist(double averDist) {
+        this.averDist = averDist;
     }
 
     public short getNumID() {

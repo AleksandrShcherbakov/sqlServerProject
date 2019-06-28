@@ -5,18 +5,15 @@ import com.work.sqlServerProject.NBFparser.ParserHalper;
 import com.work.sqlServerProject.Position.Cell;
 import com.work.sqlServerProject.Position.Position;
 import com.work.sqlServerProject.dao.CellNameDAO;
-import com.work.sqlServerProject.model.CellInfo;
-import com.work.sqlServerProject.model.Point;
-import com.work.sqlServerProject.model.PosAndNMF;
-import com.work.sqlServerProject.model.TestPoint;
+import com.work.sqlServerProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by a.shcherbakov on 24.06.2019.
@@ -27,6 +24,7 @@ public class CheckingController {
     @Autowired
     private CellNameDAO cellNameDAO;
     private Position pos=null;
+    private List<Point>allPoints=null;
 
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)
@@ -66,10 +64,12 @@ public class CheckingController {
         position.setPointsInPosition(points);
         position.findBestScan();
         this.pos=position;
+        this.allPoints=points;
         StringBuilder ssylka= new StringBuilder();
         for (Cell p : position.getCells()) {
             ssylka.append("<a href='/map?cell=" + p.getCi() + "'>показать " + p.getCi() + "</a><br>");
         }
+        ssylka.append("<a href='/map'>показать весь маршрут</a>");
         return posname+"<br>"+
                 position.toString()+"<br>"+
                 ssylka.toString();
@@ -79,19 +79,31 @@ public class CheckingController {
 
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
-    public String getMap(Model model, @RequestParam (name = "cell") String cell){
+    public String getMap(Model model, @RequestParam (required = false, name = "cell") String cell){
+        if (cell==null){
+
+            List<PointsToMap>allpoints = allPoints.stream()
+                    .map(p->new PointsToMap(p.getLongitude(),p.getLatitude()))
+                    .collect(Collectors.toList());
+
+            model.addAttribute("points", allpoints);
+            return "map";
+        }
         Integer i = Integer.parseInt(cell);
-        Cell l=null;
-        for (Cell c : pos.getCells()){
-            if (c.getCi()==i){
-                l=c;
-                break;
-            }
-        }
-        List<TestPoint>points=new ArrayList<>();
-        for (Point p : l.getPointsInCell()){
-            points.add(new TestPoint(p.getLongitude(),p.getLatitude()));
-        }
+
+        List<PointsToMap>points = pos.getCells().stream()
+                .filter(p->p.getCi()==i)
+                .flatMap(p->p.getPointsInCell().stream())
+                .map(p->new PointsToMap(p.getLongitude(),p.getLatitude()))
+                .collect(Collectors.toList());
+
+        CellToMap cel=pos.getCells().stream()
+                .filter(p->p.getCi()==i)
+                .map(p->new CellToMap(p.getLongitude(),p.getLalitude(),p.getCi()))
+                .findFirst()
+                .get();
+
+        model.addAttribute("cell", cel);
         model.addAttribute("points", points);
         return "map";
     }

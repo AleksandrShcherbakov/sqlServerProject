@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.work.sqlServerProject.SqlServerProjectApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 10.856 s <<< FAILURE! - in com.work.sqlServerProject.SqlServerProjectApplicationTests
-contextLoads(com.work.sqlServerProject.SqlServerProjectApplicationTests)  Time elapsed: 0 s  <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 2.947 s <<< FAILURE! - in com.work.sqlServerProject.SqlServerProjectApplicationTests
+contextLoads(com.work.sqlServerProject.SqlServerProjectApplicationTests)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.IllegalStateException: Failed to load ApplicationContext
 Caused by: java.lang.IllegalStateException: Cannot load configuration class: com.work.sqlServerProject.SqlServerProjectApplication
 Caused by: java.lang.IllegalStateException: Unable to load cache item

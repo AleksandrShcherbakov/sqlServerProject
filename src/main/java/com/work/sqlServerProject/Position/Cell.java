@@ -23,12 +23,15 @@ public class Cell {
     private int rightBorderAzimuth;
     private int channel;
     private TreeSet<Cell> cellsInBand;
-    private List<Point> pointsInCell;
+    private List<Point> pointsInCell=new ArrayList<>();
     private double maxDistance;
     private double minDistance;
     private int sectorOfFinding;
     private short numID;
-    private double averDist;
+    private String about;
+    private boolean ok;
+    private int bestCellID;
+
 
     Comparator<Cell> comparator = new Comparator<Cell>() {
         @Override
@@ -97,7 +100,7 @@ public class Cell {
     }
 
     public void setPointsInCell(List<Point>source, List<Point>target, int leftBorderAzimuth,int rightBorderAzimuth){
-        target=new ArrayList<>();
+        //target=new ArrayList<>();
         double commonDist=0.0;
         int count=0;
         for (Point p : source){
@@ -224,14 +227,15 @@ public class Cell {
         this.system=cellInfo.getSystem();
         this.cellsInBand=new TreeSet<>(comparator);
         this.channel=cellInfo.getCh();
-        this.maxDistance=1200; //2 км
+        this.maxDistance=1200; //1000 м
         this.minDistance=10;
-        this.sectorOfFinding=60;
+        this.sectorOfFinding=90;
         if (system.equals("GSM")){
             if (band==900){
                 numID=1;
             }
             else numID=2;
+            about=system+" "+band;
         }
         else
         if (system.equals("UMTS")){
@@ -252,6 +256,7 @@ public class Cell {
                 }
                 else numID=7;
             }
+            about=system+" "+band+" "+channel;
         }
         else
         if (system.equals("LTE")){
@@ -263,15 +268,56 @@ public class Cell {
                 numID=9;
             }
             else numID=10;
+            about=system+" "+band;
         }
     }
 
-    public double getAverDist() {
-        return averDist;
+    public int getBestCellID() {
+        return bestCellID;
     }
 
-    public void setAverDist(double averDist) {
-        this.averDist = averDist;
+    public void setBestCellID(int bestCellID) {
+        this.bestCellID = bestCellID;
+    }
+
+    public boolean isOk() {
+        return ok;
+    }
+
+    public void setOk(boolean ok) {
+        this.ok = ok;
+    }
+
+    public double getMaxDistance() {
+        return maxDistance;
+    }
+
+    public void setMaxDistance(double maxDistance) {
+        this.maxDistance = maxDistance;
+    }
+
+    public double getMinDistance() {
+        return minDistance;
+    }
+
+    public void setMinDistance(double minDistance) {
+        this.minDistance = minDistance;
+    }
+
+    public int getSectorOfFinding() {
+        return sectorOfFinding;
+    }
+
+    public void setSectorOfFinding(int sectorOfFinding) {
+        this.sectorOfFinding = sectorOfFinding;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public short getNumID() {

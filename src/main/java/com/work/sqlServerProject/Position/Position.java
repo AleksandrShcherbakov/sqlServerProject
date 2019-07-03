@@ -6,6 +6,8 @@ import com.work.sqlServerProject.model.Point;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by a.shcherbakov on 29.05.2019.
@@ -16,12 +18,17 @@ public class Position {
     private StringBuilder stringBuilder=new StringBuilder();
 
     public void findBestScan(){
+        Set<Short> techAndDiapazon = cells.stream() //имеющиеся диапаоны и технологии
+                .map(p->p.getNumID())
+                .distinct()
+                .collect(Collectors.toSet());
+
         for (Cell c : cells){
             String classOfCell = c.getClass().getSimpleName();
             if (classOfCell.equals("Cell2G")){
                 Cell2G p  = (Cell2G) c;
                 p.putAllrxLevinband();
-                p.findBestCI();
+                p.checkCell();
                 stringBuilder.append(p.toString());
                 stringBuilder.append("<br>");
             }
@@ -29,7 +36,7 @@ public class Position {
             if (classOfCell.equals("Cell3G")){
                 Cell3G p  = (Cell3G) c;
                 p.putAllRSCPinband();
-                p.findBestCI();
+                p.checkCell();
                 stringBuilder.append(p.toString());
                 stringBuilder.append("<br>");
             }
@@ -37,8 +44,36 @@ public class Position {
             if (classOfCell.equals("Cell4G")){
                 Cell4G p  = (Cell4G) c;
                 p.putAllRSRPinband();
-                p.findBestCI();
+                p.checkCell();
                 stringBuilder.append(p.toString());
+                stringBuilder.append("<br>");
+            }
+        }
+        for (Short i : techAndDiapazon){
+            List<Cell>cellsOfOneBand=cells.stream().filter(p->p.getNumID()==i).collect(Collectors.toList());
+            long countOfTrue=cellsOfOneBand.stream().filter(p->p.isOk()==true).count();
+            long countOfFalse= cellsOfOneBand.size()-1;
+            long countOfNoBest=cellsOfOneBand.stream().filter(p->p.getBestCellID()!=0).count();
+            System.out.println(i+" "+countOfNoBest);
+            String res=null;
+            res=cellsOfOneBand.get(0).getAbout();
+            if (countOfNoBest==0){
+                stringBuilder.append(res+" - <span style='color:orange'>скорее всего сектора не в эфире, либо Ch, SCR, PCI на сети не соответствует General, либо чтото еще.</span>");
+                stringBuilder.append("<br>");
+            }
+            else
+            if (countOfTrue>=cellsOfOneBand.size()-1){
+                stringBuilder.append(res+" - <span style='color:green'>сектора сориентированы правильно.</span>");
+                stringBuilder.append("<br>");
+            }
+            else
+            if (countOfNoBest>=countOfFalse-1){
+                stringBuilder.append(res+" - <span style='color:orange'>данных из объезда недостаточно для определения правильности ориентации секторов.</span>");
+                stringBuilder.append("<br>");
+            }
+            else
+            {
+                stringBuilder.append(res+" - <span style='color:red'>сектора перепутаны.</span>");
                 stringBuilder.append("<br>");
             }
         }

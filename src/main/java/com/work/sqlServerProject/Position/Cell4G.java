@@ -16,8 +16,7 @@ public class Cell4G extends Cell {
     private int countOfPoints;
     private List<Integer> pciInBand;
     private Map<Integer, Double> allRSRP;
-    private int bestCellID;
-    private boolean ok;
+    private Map<Integer, Double> allRSRPWeight;
 
     public Cell4G(CellInfo cellInfo) {
         super(cellInfo);
@@ -27,23 +26,29 @@ public class Cell4G extends Cell {
 
     public void putAllRSRPinband(){
         allRSRP = new HashMap<>();
+        allRSRPWeight = new HashMap<>();
         for (Cell c : super.getCellsInBand()){
             Cell4G p=(Cell4G)c;
+            String[] temp=null;
             try {
-                allRSRP.put(c.getCi(), this.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")));
+                temp=this.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")).split(" ");
             }
             catch (NumberFormatException e){
-                allRSRP.put(c.getCi(), this.findAverRSRPerPCI(0));
+                temp=this.findAverRSRPerPCI(0).split(" ");
             }
+            double tempRSRP = Double.parseDouble(temp[0]);
+            double tempRSRPWEight = Double.parseDouble(temp[1]);
+            allRSRP.put(c.getCi(), tempRSRP);
+            allRSRPWeight.put(c.getCi(), tempRSRPWEight);
         }
     }
 
-    public int findBestCI(){
+    public String findBestCI(Map<Integer, Double> map){
         int bestCI=0;
         double maxRSRP=-200;
         double temp=0;
-        for (Integer i : allRSRP.keySet()){
-            temp= allRSRP.get(i);
+        for (Integer i : map.keySet()){
+            temp= map.get(i);
             if (temp==0)
                 continue;
             if (temp>maxRSRP){
@@ -51,14 +56,32 @@ public class Cell4G extends Cell {
                 bestCI=i;
             }
         }
-        bestCellID=bestCI;
-        if (bestCellID==super.getCi()){
-            ok=true;
-        }
-        return bestCI;
+        return bestCI+" "+(bestCI==super.getCi()? "true":"false");
     }
 
-    public double findAverRSRPerPCI(Integer pci){
+    public void checkCell(){
+        String[] checkWithAverRxLev = findBestCI(allRSRP).split(" ");
+        String[] checkWithWeight = findBestCI(allRSRPWeight).split(" ");
+        int best1=Integer.parseInt(checkWithAverRxLev[0]);
+        int best2=Integer.parseInt(checkWithWeight[0]);
+        boolean ok1 = Boolean.parseBoolean(checkWithAverRxLev[1]);
+        boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
+        if (best1==best2 && ok1==ok2){
+            super.setBestCellID(best1);
+            super.setOk(ok1);
+        }
+        else
+        if (ok1 || ok2){
+           super.setOk(true);
+            if (ok1) {
+                super.setBestCellID(best1);
+            }
+            else super.setBestCellID(best2);
+        }
+        else super.setOk(false);
+    }
+
+    public String findAverRSRPerPCI(Integer pci){
         Map<Integer, Double> map=null;
         Double tempRSCP=null;
         Double common=0.0;
@@ -81,39 +104,37 @@ public class Cell4G extends Cell {
                 count++;
             }
         }
-        if (count==0 || count<15){
-            return 0.0;
+        if (count==0){
+            return 0+" "+0;
         }
         countOfPoints = count;
-        if (super.getCi()==7755635){
-            System.out.println(super.getCi()+" "+this.PCI+" "+pci+" "+count);
-        }
-        return common/count;
+        return common/count+" "+(common/count)/count;
     }
 
     @Override
     public String toString() {
         String r =null;
-        if (bestCellID==0){
+        if (super.getBestCellID()==0){
             r=" измерений в зоне этого сектора нет";
         }
         else
-            r=" ok: "+ok;
+            r=" ok: "+super.isOk();
 
         return "system: "+super.getSystem()+" "+super.getBand()+
                 " selfCI: "+super.getCi()+
-                " bestScanCI: "+bestCellID+
+                " bestScanCI: "+super.getBestCellID()+
                 " азимут: "+super.getAzimuth()+r;
 
     }
 
-    public boolean isOk() {
-        return ok;
+    public Map<Integer, Double> getAllRSRPWeight() {
+        return allRSRPWeight;
     }
 
-    public void setOk(boolean ok) {
-        this.ok = ok;
+    public void setAllRSRPWeight(Map<Integer, Double> allRSRPWeight) {
+        this.allRSRPWeight = allRSRPWeight;
     }
+
 
     public Map<Integer, Double> getAllRSRP() {
         return allRSRP;
@@ -121,14 +142,6 @@ public class Cell4G extends Cell {
 
     public void setAllRSRP(Map<Integer, Double> allRSRP) {
         this.allRSRP = allRSRP;
-    }
-
-    public int getBestCellID() {
-        return bestCellID;
-    }
-
-    public void setBestCellID(int bestCellID) {
-        this.bestCellID = bestCellID;
     }
 
     public List<Integer> getPciInBand() {

@@ -51,13 +51,15 @@ public class Position {
         }
         for (Short i : techAndDiapazon){
             List<Cell>cellsOfOneBand=cells.stream().filter(p->p.getNumID()==i).collect(Collectors.toList());
+            List<Cell>cellsOfFalseWithExistBest=cellsOfOneBand.stream().filter(p->p.isOk()==false && p.getBestCellID()!=0).collect(Collectors.toList());
+            long countOfDifBests=cellsOfFalseWithExistBest.stream().map(p->p.getBestCellID()).distinct().count();
             long countOfTrue=cellsOfOneBand.stream().filter(p->p.isOk()==true).count();
-            long countOfFalse= cellsOfOneBand.size()-1;
-            long countOfNoBest=cellsOfOneBand.stream().filter(p->p.getBestCellID()!=0).count();
-            System.out.println(i+" "+countOfNoBest);
+            long countOfExistBest=cellsOfOneBand.stream().filter(p->p.getBestCellID()!=0).count();
+            long countOfNoBest=cellsOfOneBand.size()-countOfExistBest;
+            System.out.println(i+" "+countOfExistBest);
             String res=null;
             res=cellsOfOneBand.get(0).getAbout();
-            if (countOfNoBest==0){
+            if (countOfExistBest==0){
                 stringBuilder.append(res+" - <span style='color:orange'>скорее всего сектора не в эфире, либо Ch, SCR, PCI на сети не соответствует General, либо чтото еще.</span>");
                 stringBuilder.append("<br>");
             }
@@ -67,8 +69,8 @@ public class Position {
                 stringBuilder.append("<br>");
             }
             else
-            if (countOfNoBest>=countOfFalse-1){
-                stringBuilder.append(res+" - <span style='color:orange'>данных из объезда недостаточно для определения правильности ориентации секторов.</span>");
+            if (countOfNoBest>=2 || (cellsOfFalseWithExistBest.size()>=2 &&countOfDifBests<cellsOfFalseWithExistBest.size())){
+                stringBuilder.append(res+" - <span style='color:blue'>данных для определения правильности ориентации секторов недостаточно.</span>");
                 stringBuilder.append("<br>");
             }
             else

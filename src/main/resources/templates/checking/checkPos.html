@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Check Posnames and Scan file</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/checkPos}" th:object="${pos}" th:method="post">
+        <p>
+            Ввести номера позиций:
+            <input type="text" th:field="*{posnames}" style="width: 100%">
+            <br>
+            <input type="submit" value="проверить">
+        </p>
+    </form>
+</div>
+</body>
+</html>

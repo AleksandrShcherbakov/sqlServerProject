@@ -25,26 +25,46 @@ public class CheckingController {
     private CellNameDAO cellNameDAO;
     private Position pos=null;
     private List<Point>allPoints=null;
+    List<Point> points=null;
 
 
-    @RequestMapping(value = "/check", method = RequestMethod.GET)
-    public String showSelectPosAndNBF(Model model){
-        PosAndNMF posAndNMF = new PosAndNMF();
-        model.addAttribute("posAndNMF", posAndNMF);
-        return "checking/checkPosAndNMF";
+    @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
+    public String showSelectScanFilePage(Model model){
+        PathScanFile pathScanFile = new PathScanFile();
+        model.addAttribute("pathScanFile", pathScanFile);
+        return "checking/checkPathFileScan";
     }
 
-    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    @RequestMapping(value = "/inputScan", method = RequestMethod.POST)
+    public String loadScanAndSelectPos(Model model, @ModelAttribute ("pathScanFile") PathScanFile pathScanFile){
+        List<String> parsered;
+        try {
+            parsered = ParserHalper.createinSrtings(pathScanFile.getUrl());
+        }
+        catch (IOException e){
+            return "Путь к файлу сканера указан не верно.";
+        }
+        points = Parser.getPointsFromScan(parsered);
+        return "redirect:/checkPos";
+    }
+
+    @RequestMapping(value = "/checkPos", method = RequestMethod.GET)
+    public String showSelectPos(Model model){
+        PosForCheck posForCheck = new PosForCheck();
+        model.addAttribute("pos", posForCheck);
+        return "checking/checkPos";
+    }
+
+
+
+    @RequestMapping(value = "/checkPos", method = RequestMethod.POST)
     @ResponseBody
-    public String selectPN(Model model, @ModelAttribute ("posAndNMF") PosAndNMF posAndNMF) throws IOException {
-        if (posAndNMF.getPosnames().equals("")){
+    public String selectPN(Model model, @ModelAttribute ("pos") PosForCheck posForCheck) throws IOException {
+        if (posForCheck.getPosnames().equals("")){
             return "не введена позиция";
         }
-        if (posAndNMF.getUrl().equals("")){
-            return "файл сканера не указан";
-        }
         Position position=null;
-        String pos=posAndNMF.getPosnames();
+        String pos= posForCheck.getPosnames();
         Integer posname=Integer.parseInt(pos);
         if (posname!=null) {
             List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
@@ -53,14 +73,6 @@ public class CheckingController {
             }
             position = new Position(list);
         }
-        List<String> parsered;
-        try {
-            parsered = ParserHalper.createinSrtings(posAndNMF.getUrl());
-        }
-        catch (IOException e){
-            return "Путь к файлу сканера указан не верно.";
-        }
-        List<Point> points = Parser.getPointsFromScan(parsered);
         position.setPointsInPosition(points);
         position.findBestScan();
         this.pos=position;

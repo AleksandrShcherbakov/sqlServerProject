@@ -2,75 +2,87 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru-RU" type="text/javascript"></script>
+    <style>
+        body, html {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #map {
+            width: 100%;
+            height: 90%;
+        }
+    </style>
 </head>
 
 <body>
 <div id="map"></div>
 <div id="note"></div>
+<script th:inline="javascript">
 
-<script type="text/javascript" th:inline="javascript">
-var myMap;
-// Дождёмся загрузки API и готовности DOM.
-ymaps.ready(init);
-function init () {
-// Создание экземпляра карты и его привязка к контейнеру с
-// заданным id ("map").
-    myMap = new ymaps.Map('map', {
-// При инициализации карты обязательно нужно указать
-// её центр и коэффициент масштабирования.
-        center: [55.76, 37.64], // Москва
-        zoom: 10
-    }, {
-        searchControlProvider: 'yandex#search'
-    });
+    var precision = 30;
+    var map;
+    var points = [];
+    var polygon;
+    var zoom;
+    var projection;
+    var center;
+    var radius;
 
-    var listVal = [[${points}]];
-    var cell = [[${cell}]];
+    function init() {
+        map = new ymaps.Map("map", {
+            center: [55.50, 37.75],
+            zoom: 10
+        });
+        zoom = map.getZoom();
+        projection = map.options.get('projection');
+        center = projection.toGlobalPixels([55.50, 37.75], zoom);
+        radius = 15;
 
-    for (i = 0; i < listVal.length; i++) {
-        // Создание метки
-        var myCircle = new ymaps.Circle([
-                // Координаты метки
-                [listVal[i].latitude, listVal[i].longitude],
-                2
-        ]);
-        // Добавление метки на карту
-        myMap.geoObjects.add(myCircle);
+        createsectors(0, '#6699ff', '1');
+        createsectors(120, '#005655','2');
+        createsectors(240, '#00FF00', '3');
     }
-    var myCell  = new ymaps.GeoObject({
-        // Описание геометрии.
-        geometry: {
-            type: "Point",
-            coordinates: [cell.latitude, cell.longitude]
-        },
-        // Свойства.
-        properties: {
-            // Контент метки.
-            iconContent: cell.ci
+
+    function createsectors(az, color, number) {
+        // вычисляем точки полигона в глобальных координатах
+        var start = (az-90-45)*Math.PI/180;
+        var end = (az-90+45)*Math.PI/180;
+
+        var delta = end - start;
+        var step = delta / precision;
+
+        points.push(center);
+        for(var i = 0; i <= delta + step; i += step){
+            points.push([
+                center[0] + radius * Math.cos(start + i),
+                center[1] + radius * Math.sin(start + i)
+            ]);
         }
-    }, {
-        // Опции.
-        // Иконка метки будет растягиваться под размер ее содержимого.
-        preset: 'twirl#redStretchyIcon'
+        points.push(center);
 
-    });
-    myMap.geoObjects.add(myCell);
-}
+        // переводим глобальные координаты в широту-долготу
+        points = points.map(function (point) {
+            return projection.fromGlobalPixels(point, zoom);
+        });
+
+        polygon = new ymaps.Polygon([points],{
+            hintContent: number
+        }, {
+            fillColor: color,
+            // Делаем полигон прозрачным для событий карты.
+            interactivityModel: 'default#transparent',
+            strokeWidth: 0,
+            opacity: 0.5
+        });
+
+        map.geoObjects.add(polygon);
+    }
+
+    ymaps.ready(init);
+
 </script>
-<style>
-    body, html {
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        height: 100%;
-    }
-    #map {
-        width: 100%;
-        height: 90%;
-    }
-</style>
-
-
 </body>
 
 </html>

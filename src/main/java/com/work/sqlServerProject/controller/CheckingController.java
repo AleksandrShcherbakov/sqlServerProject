@@ -91,8 +91,8 @@ public class CheckingController {
 
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
-    public String getMap(Model model, @RequestParam (required = false, name = "cell") String cell){
-        if (cell==null){
+    public String getMap(Model model){
+        /*if (cell==null){
 
             List<PointsToMap>allpoints = allPoints.stream()
                     .map(p->new PointsToMap(p.getLongitude(),p.getLatitude()))
@@ -116,7 +116,7 @@ public class CheckingController {
                 .get();
 
         model.addAttribute("cell", cel);
-        model.addAttribute("points", points);
+        model.addAttribute("points", points);*/
         return "map";
     }
 }

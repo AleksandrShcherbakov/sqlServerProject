@@ -19,8 +19,8 @@ public class Cell3G extends Cell {
     private Map<Integer, Double> allRSCPWeight;
 
 
-    public Cell3G(CellInfo cellInfo) {
-        super(cellInfo);
+    public Cell3G(CellInfo cellInfo, int distance) {
+        super(cellInfo, distance);
         this.Scr=  cellInfo.getScr();
         this.carrierFrequency=cellInfo.getCh();
     }

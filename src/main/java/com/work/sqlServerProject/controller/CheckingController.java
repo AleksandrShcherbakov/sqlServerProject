@@ -74,12 +74,14 @@ public class CheckingController {
             position = new Position(list);
         }
         position.setPointsInPosition(points);
+        position.setAllPointsToCells();
         position.findBestScan();
         this.pos=position;
         this.allPoints=points;
         StringBuilder ssylka= new StringBuilder();
-        for (Cell p : position.getCells()) {
-            ssylka.append("<a href='/map?cell=" + p.getCi() + "'>показать " + p.getCi() + "</a><br>");
+        List<String>abouts=position.getCells().stream().map(p->p.getAbout()).distinct().collect(Collectors.toList());
+        for(String p:abouts) {
+            ssylka.append("<a href='/map?about=" + p + "'>показать " + posname + "</a><br>");
         }
         ssylka.append("<a href='/map'>показать весь маршрут</a>");
         return posname+"<br>"+
@@ -91,32 +93,21 @@ public class CheckingController {
 
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
-    public String getMap(Model model){
-        /*if (cell==null){
-
-            List<PointsToMap>allpoints = allPoints.stream()
-                    .map(p->new PointsToMap(p.getLongitude(),p.getLatitude()))
-                    .collect(Collectors.toList());
-
-            model.addAttribute("points", allpoints);
-            return "map";
+    public String getMap(Model model,
+                         @RequestParam(required = false, name = "about") String about,
+                         @RequestParam(required = false, name = "posName") Integer number){
+        System.out.println(about);
+        List<Cell>cellList=pos.getCells().stream().filter(p->p.getAbout().equals(about)).peek(System.out::println).collect(Collectors.toList());
+        String[] colors = {"#FF0000", "#00FF00", "#0000FF"};
+        List<CellToMap>cellToMaps=cellList.stream().map(p->new CellToMap(p.getCi(),p.getAzimuth())).collect(Collectors.toList());
+        for (CellToMap c : cellToMaps){
+            c.setColor(colors[0]);
         }
-        Integer i = Integer.parseInt(cell);
-
-        List<PointsToMap>points = pos.getCells().stream()
-                .filter(p->p.getCi()==i)
-                .flatMap(p->p.getPointsInCell().stream())
-                .map(p->new PointsToMap(p.getLongitude(),p.getLatitude()))
-                .collect(Collectors.toList());
-
-        CellToMap cel=pos.getCells().stream()
-                .filter(p->p.getCi()==i)
-                .map(p->new CellToMap(p.getLongitude(),p.getLalitude(),p.getCi()))
-                .findFirst()
-                .get();
-
-        model.addAttribute("cell", cel);
-        model.addAttribute("points", points);*/
+        model.addAttribute("cells", cellToMaps);
+        List<PointsToMap> list = pos.getAllPointsInPosition().stream().map(p->new PointsToMap(p.getLongitude(),p.getLatitude())).collect(Collectors.toList());
+        model.addAttribute("pointss", list);
+        model.addAttribute("lon", pos.getCells().get(0).getLongitude());
+        model.addAttribute("lat", pos.getCells().get(0).getLalitude());
         return "map";
     }
 }

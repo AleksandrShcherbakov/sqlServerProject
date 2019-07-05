@@ -18,8 +18,8 @@ public class Cell4G extends Cell {
     private Map<Integer, Double> allRSRP;
     private Map<Integer, Double> allRSRPWeight;
 
-    public Cell4G(CellInfo cellInfo) {
-        super(cellInfo);
+    public Cell4G(CellInfo cellInfo, int distance) {
+        super(cellInfo, distance);
         this.PCI= cellInfo.getPci();
         this.ch=cellInfo.getCh();
     }

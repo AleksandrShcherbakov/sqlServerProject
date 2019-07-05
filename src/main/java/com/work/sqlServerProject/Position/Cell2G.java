@@ -20,8 +20,8 @@ public class Cell2G extends Cell {
 
 
 
-    public Cell2G(CellInfo cellInfo) {
-        super(cellInfo);
+    public Cell2G(CellInfo cellInfo, int distance) {
+        super(cellInfo, distance);
         this.BCCH=cellInfo.getCh();
         this.BSIC=cellInfo.getBsic();
         this.bcchBsic=BCCH+" "+BSIC;

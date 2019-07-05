@@ -4,31 +4,31 @@ package com.work.sqlServerProject.model;
  * Created by a.shcherbakov on 28.06.2019.
  */
 public class CellToMap {
-    private double longitude;
-    private double latitude;
     private String ci;
+    private String color;
+    private int azimuth;
 
-    public CellToMap(double longityde, double latitude, int ci) {
-        this.longitude = longityde;
-        this.latitude = latitude;
+    public CellToMap(int ci, int azimuth) {
+        this.azimuth=azimuth;
         this.ci = ci+"";
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getColor() {
+        return color;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public int getAzimuth() {
+        return azimuth;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setAzimuth(int azimuth) {
+        this.azimuth = azimuth;
     }
+
 
     public String getCi() {
         return ci;

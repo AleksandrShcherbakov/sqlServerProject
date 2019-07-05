@@ -30,25 +30,35 @@
     var center;
     var radius;
 
+    var cellss=[[${cells}]];
+    var pointsInPos=[[${pointss}]];
+    var latPos=[[${lat}]];
+    var lonPos=[[${lon}]];
+
     function init() {
         map = new ymaps.Map("map", {
-            center: [55.50, 37.75],
-            zoom: 10
+            center: [latPos, lonPos],
+            zoom: 15
         });
         zoom = map.getZoom();
         projection = map.options.get('projection');
-        center = projection.toGlobalPixels([55.50, 37.75], zoom);
-        radius = 15;
+        center = projection.toGlobalPixels([latPos, lonPos], zoom);
+        radius = 500;
 
-        createsectors(0, '#6699ff', '1');
-        createsectors(120, '#005655','2');
-        createsectors(240, '#00FF00', '3');
+        for (i=0;i<cellss.length;i++){
+            createsectors(cellss[i].azimuth,cellss[i].color,1);
+        }
+
+        for (i=0;i<pointsInPos.length;i++){
+            createPoint(pointsInPos[i].longitude, pointsInPos[i].latitude, '#669900');
+        }
+
     }
 
     function createsectors(az, color, number) {
         // вычисляем точки полигона в глобальных координатах
-        var start = (az-90-45)*Math.PI/180;
-        var end = (az-90+45)*Math.PI/180;
+        var start = (az-90-30)*Math.PI/180;
+        var end = (az-90+30)*Math.PI/180;
 
         var delta = end - start;
         var step = delta / precision;
@@ -78,6 +88,32 @@
         });
 
         map.geoObjects.add(polygon);
+    }
+
+    function createPoint(lon,lat, color) {
+        // Создаем круг.
+        var myCircle = new ymaps.Circle([
+            // Координаты центра круга.
+            [lat, lon],
+            // Радиус круга в метрах.
+            3
+        ], {
+            // Задаем опции круга.
+            // Цвет заливки.
+            // Последний байт (77) определяет прозрачность.
+            // Прозрачность заливки также можно задать используя опцию "fillOpacity".
+            fillColor: color
+            /*!// Цвет обводки.
+            strokeColor: "#990066",
+            // Прозрачность обводки.
+            strokeOpacity: 0.5,
+            // Ширина обводки в пикселях.
+            strokeWidth: 0*/
+        });
+
+        // Добавляем круг на карту.
+        map.geoObjects.add(myCircle);
+
     }
 
     ymaps.ready(init);

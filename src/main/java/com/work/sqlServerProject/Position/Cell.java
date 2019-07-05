@@ -104,7 +104,7 @@ public class Cell {
         double commonDist=0.0;
         int count=0;
         for (Point p : source){
-            double dist = toDist(this.lalitude,this.longitude,p.getLatitude(),p.getLongitude());
+            double dist = HelperCell.toDist(this.lalitude,this.longitude,p.getLatitude(),p.getLongitude());
             double az = toAzimuth(dist, p);
             if (dist<=maxDistance && dist>=minDistance){
                 if (rightBorderAzimuth>leftBorderAzimuth) {
@@ -168,35 +168,10 @@ public class Cell {
         }
     }
 
-    final static double pi=3.1415926535898;
-    final static double EarthRadius= 6372795.0;
-
-    public static double toDist(double latA, double lonA, double latB, double lonB){
-        double latArad=latA*pi/180;
-        double latBrad=latB*pi/180;
-        double lonArad=lonA*pi/180;
-        double lonBrad=lonB*pi/180;
-
-        double cl1= Math.cos(latArad);
-        double cl2= Math.cos(latBrad);
-        double sl1=Math.sin(latArad);
-        double sl2=Math.sin(latBrad);
-        double delta = lonBrad-lonArad;
-        double cdelta = Math.cos(delta);
-        double sdelta = Math.sin(delta);
-
-        double y = Math.sqrt(Math.pow(cl2 * sdelta, 2) + Math.pow(cl1 * sl2 - sl1 * cl2 * cdelta, 2));
-        double x = sl1 * sl2 + cl1 * cl2 * cdelta;
-
-        double ad = Math.atan2(y,x);
-        double dist=ad*EarthRadius;
-        return dist;
-    }
-
     public double toAzimuth(Double dist, Point point){
-        double x= toDist(this.lalitude, this.longitude, this.lalitude, point.getLongitude());
+        double x= HelperCell.toDist(this.lalitude, this.longitude, this.lalitude, point.getLongitude());
         double h= dist;
-        double azimuth=Math.asin(x/h)*180/pi;
+        double azimuth=Math.asin(x/h)*180/HelperCell.pi;
         double lonDif=point.getLongitude()-this.longitude;
         double latDif=point.getLatitude()-this.lalitude;
         if (lonDif>0 && latDif>0){
@@ -211,12 +186,12 @@ public class Cell {
             return 180+azimuth;
         }
         else
-        return 360-azimuth;
+            return 360-azimuth;
     }
 
 
 
-    public Cell(CellInfo cellInfo) {
+    public Cell(CellInfo cellInfo, int distance) {
         this.cellInfo = cellInfo;
         this.posname=cellInfo.getSyte();
         this.ci=cellInfo.getCi();
@@ -227,7 +202,7 @@ public class Cell {
         this.system=cellInfo.getSystem();
         this.cellsInBand=new TreeSet<>(comparator);
         this.channel=cellInfo.getCh();
-        this.maxDistance=1200; //1000 м
+        this.maxDistance=distance; //1000 м
         this.minDistance=10;
         this.sectorOfFinding=90;
         if (system.equals("GSM")){

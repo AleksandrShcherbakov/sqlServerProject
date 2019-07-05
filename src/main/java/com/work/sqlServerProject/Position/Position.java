@@ -16,6 +16,8 @@ public class Position {
     private int numberOfPosition;
     private List<Cell>cells;
     private StringBuilder stringBuilder=new StringBuilder();
+    private List<Point>allPointsInPosition;
+    private int distance;
 
     public void findBestScan(){
         Set<Short> techAndDiapazon = cells.stream() //имеющиеся диапаоны и технологии
@@ -84,17 +86,18 @@ public class Position {
     public Position(List<CellInfo>cellInfo) {
         cells=new ArrayList<>();
         this.numberOfPosition=cellInfo.get(0).getSyte();
+        this.distance=1200;      // 1200м
         for (CellInfo cell : cellInfo) {
             if (cell.toString().startsWith("UMTS")) {
-                cells.add(new Cell3G(cell));
+                cells.add(new Cell3G(cell, distance));
             }
 
             if (cell.toString().startsWith("GSM")){
-                cells.add(new Cell2G(cell));
+                cells.add(new Cell2G(cell, distance));
             }
 
             if (cell.toString().startsWith("LTE")){
-                cells.add(new Cell4G(cell));
+                cells.add(new Cell4G(cell, distance));
             }
         }
         cells.sort(new Comparator<Cell>() {
@@ -122,12 +125,35 @@ public class Position {
             cell.setAllCellsInBand(cells);
             cell.setPreviousAndNextCells();
         }
+
     }
 
     public void setPointsInPosition(List<Point> allPoints){
-        for (Cell c : cells){
-            c.setPointsInCell(allPoints, c.getPointsInCell(), c.getLeftBorderAzimuth(),c.getRightBorderAzimuth());
+        allPointsInPosition=new ArrayList<>();
+        double lonPos=cells.get(0).getLongitude();
+        double latPos=cells.get(0).getLalitude();
+        for (Point p : allPoints){
+            double dist = HelperCell.toDist(latPos,lonPos,p.getLatitude(),p.getLongitude());
+            if (dist<distance){
+                allPointsInPosition.add(p);
+            }
         }
+    }
+
+
+
+    public void setAllPointsToCells(){
+        for (Cell c : cells){
+            c.setPointsInCell(allPointsInPosition, c.getPointsInCell(), c.getLeftBorderAzimuth(),c.getRightBorderAzimuth());
+        }
+    }
+
+    public List<Point> getAllPointsInPosition() {
+        return allPointsInPosition;
+    }
+
+    public void setAllPointsInPosition(List<Point> allPointsInPosition) {
+        this.allPointsInPosition = allPointsInPosition;
     }
 
     public int getNumberOfPosition() {

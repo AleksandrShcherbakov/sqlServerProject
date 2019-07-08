@@ -57,8 +57,8 @@
 
     function createsectors(az, color, number) {
         // вычисляем точки полигона в глобальных координатах
-        var start = (az-90-45)*Math.PI/180;
-        var end = (az-90+45)*Math.PI/180;
+        var start = (az-90-30)*Math.PI/180;
+        var end = (az-90+30)*Math.PI/180;
 
         var delta = end - start;
         var step = delta / precision;

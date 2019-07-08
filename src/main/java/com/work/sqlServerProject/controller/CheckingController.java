@@ -3,6 +3,7 @@ package com.work.sqlServerProject.controller;
 import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
 import com.work.sqlServerProject.Position.Cell;
+import com.work.sqlServerProject.Position.Cell2G;
 import com.work.sqlServerProject.Position.Position;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.model.*;
@@ -12,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -98,13 +101,25 @@ public class CheckingController {
                          @RequestParam(required = false, name = "posName") Integer number){
         System.out.println(about);
         List<Cell>cellList=pos.getCells().stream().filter(p->p.getAbout().equals(about)).peek(System.out::println).collect(Collectors.toList());
-        String[] colors = {"#FF0000", "#00FF00", "#0000FF"};
-        List<CellToMap>cellToMaps=cellList.stream().map(p->new CellToMap(p.getCi(),p.getAzimuth())).collect(Collectors.toList());
-        for (CellToMap c : cellToMaps){
-            c.setColor(colors[0]);
+        if (about.startsWith("GSM")) {
+            Set<String> bsshBsics = cellList.stream().map(p-> (Cell2G)p).map(p -> p.getBcchBsic()).collect(Collectors.toSet());
         }
-        model.addAttribute("cells", cellToMaps);
-        List<PointsToMap> list = pos.getAllPointsInPosition().stream().map(p->new PointsToMap(p.getLongitude(),p.getLatitude())).collect(Collectors.toList());
+        Set<Point> pointsTomap=new HashSet<>();
+        for (Cell c : cellList){
+            if (about.equals("GSM 1800")) {
+                Cell2G g = (Cell2G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRxLevel1800().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("GSM 900")) {
+                Cell2G g = (Cell2G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRxLevel900().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+        }
+        model.addAttribute("cells", cellList);
+        List<PointToMap> list = pos.getAllPointsInPosition().stream().map(p->new PointToMap(p.getLongitude(),p.getLatitude())).collect(Collectors.toList());
         model.addAttribute("pointss", list);
         model.addAttribute("lon", pos.getCells().get(0).getLongitude());
         model.addAttribute("lat", pos.getCells().get(0).getLalitude());

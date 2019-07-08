@@ -3,11 +3,11 @@ package com.work.sqlServerProject.model;
 /**
  * Created by a.shcherbakov on 28.06.2019.
  */
-public class PointsToMap {
+public class PointToMap {
     private double longitude;
     private double latitude;
 
-    public PointsToMap(double longituge, double latitude) {
+    public PointToMap(double longituge, double latitude) {
         this.longitude = longituge;
         this.latitude = latitude;
     }
@@ -30,7 +30,7 @@ public class PointsToMap {
 
     @Override
     public String toString() {
-        return "PointsToMap{" +
+        return "PointToMap{" +
                 "longitude=" + longitude +
                 ", latitude=" + latitude +
                 '}';

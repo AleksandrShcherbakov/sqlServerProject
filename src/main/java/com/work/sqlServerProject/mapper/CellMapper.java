@@ -77,7 +77,7 @@ public class CellMapper implements RowMapper<CellInfo> {
             "b.TAC,\n" +
             "a.frequency as BAND,\n" +
             "a.BSC as BSC,\n" +
-            "b.earfcndl as CH,\n" +
+            "case b.earfcndl when 1326 then 1301 end as CH,\n" +
             "null as BSIC,\n" +
             "null as SCR,\n" +
             "b.pci as PCI,\n" +

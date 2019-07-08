@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class ColorHelper {
     // Member variables (properties about the object)
-    public String[] mColors = {
+    public static String[] mColors = {
             "#39add1", // light blue
             "#3079ab", // dark blue
             "#c25975", // mauve
@@ -24,7 +24,7 @@ public class ColorHelper {
     };
 
     // Method (abilities: things the object can do)
-    public String getColor() {
+    public static String getColor() {
         String color = "";
 
         // Randomly select a fact

@@ -1,10 +1,9 @@
 package com.work.sqlServerProject.controller;
 
+import com.work.sqlServerProject.Helper.ColorHelper;
 import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
-import com.work.sqlServerProject.Position.Cell;
-import com.work.sqlServerProject.Position.Cell2G;
-import com.work.sqlServerProject.Position.Position;
+import com.work.sqlServerProject.Position.*;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -104,6 +101,32 @@ public class CheckingController {
         if (about.startsWith("GSM")) {
             Set<String> bsshBsics = cellList.stream().map(p-> (Cell2G)p).map(p -> p.getBcchBsic()).collect(Collectors.toSet());
         }
+        else
+        if (about.startsWith("UMTS")) {
+            Set<Integer> scr = cellList.stream().map(p-> (Cell3G)p).map(p -> Integer.parseInt(p.getScr()+"")).collect(Collectors.toSet());
+        }
+        else
+        if (about.startsWith("LTE")) {
+            Set<Integer> pci = cellList.stream().map(p-> (Cell4G)p).map(p -> Integer.parseInt(p.getPCI()+"")).collect(Collectors.toSet());
+        }
+        Map<String, String> paramColor=new HashMap<>();
+        for (Cell c : cellList){
+            if (c.getAbout().startsWith("GSM")){
+                Cell2G p = (Cell2G) c;
+                paramColor.put(p.getBcchBsic(), ColorHelper.getColor());
+            }
+            else
+            if (c.getAbout().startsWith("UMTS")) {
+                Cell3G p = (Cell3G) c;
+                paramColor.put(p.getScr() + "", ColorHelper.getColor());
+            }
+            else
+            if (c.getAbout().startsWith("LTE")){
+                Cell4G p = (Cell4G) c;
+                paramColor.put(p.getPCI()+"", ColorHelper.getColor());
+            }
+        }
+
         Set<Point> pointsTomap=new HashSet<>();
         for (Cell c : cellList){
             if (about.equals("GSM 1800")) {
@@ -117,9 +140,65 @@ public class CheckingController {
                 Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRxLevel900().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
+            else
+            if (about.equals("UMTS 2100 10813")) {
+                Cell3G g = (Cell3G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10813().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("UMTS 2100 10788")) {
+                Cell3G g = (Cell3G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10788().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("UMTS 2100 10836")) {
+                Cell3G g = (Cell3G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10836().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("UMTS 900 3036")) {
+                Cell3G g = (Cell3G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP3036().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("UMTS 900 3012")) {
+                Cell3G g = (Cell3G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP3012().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("LTE 2600")) {
+                Cell4G g = (Cell4G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP3300().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("LTE 2600")) {
+                Cell4G g = (Cell4G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP3300().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("LTE 1800")) {
+                Cell4G g = (Cell4G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP1351().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+            else
+            if (about.equals("LTE 800")) {
+                Cell4G g = (Cell4G)c;
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP6413().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
         }
+        List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).collect(Collectors.toList());
+
+
         model.addAttribute("cells", cellList);
-        List<PointToMap> list = pos.getAllPointsInPosition().stream().map(p->new PointToMap(p.getLongitude(),p.getLatitude())).collect(Collectors.toList());
         model.addAttribute("pointss", list);
         model.addAttribute("lon", pos.getCells().get(0).getLongitude());
         model.addAttribute("lat", pos.getCells().get(0).getLalitude());

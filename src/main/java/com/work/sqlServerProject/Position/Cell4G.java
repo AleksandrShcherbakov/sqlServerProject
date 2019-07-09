@@ -54,7 +54,14 @@ public class Cell4G extends Cell {
             if (temp>maxRSRP){
                 maxRSRP=temp;
                 bestCI=i;
+                if(this.getCi()==7700734){
+                    System.out.println(i);
+                }
+
             }
+        }
+        if(this.getCi()==7700734){
+            System.out.println(this.getCi()+" "+bestCI);
         }
         return bestCI+" "+(bestCI==super.getCi()? "true":"false");
     }
@@ -66,6 +73,12 @@ public class Cell4G extends Cell {
         int best2=Integer.parseInt(checkWithWeight[0]);
         boolean ok1 = Boolean.parseBoolean(checkWithAverRxLev[1]);
         boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
+        if (super.getCi()==7700734 || super.getCi()==7700735){
+            System.out.println("best1= "+best1);
+            System.out.println("ok1= "+ok1);
+            System.out.println("best2= "+best2);
+            System.out.println("ok2= "+ok2);
+        }
         if (best1==best2 && ok1==ok2){
             super.setBestCellID(best1);
             super.setOk(ok1);
@@ -76,9 +89,15 @@ public class Cell4G extends Cell {
             if (ok1) {
                 super.setBestCellID(best1);
             }
-            else super.setBestCellID(best2);
+            else
+                super.setBestCellID(best2);
         }
-        else super.setOk(false);
+        else
+        if (best1!=0 && best2!=0){
+            super.setBestCellID(best2);
+        }
+        else
+            super.setOk(false);
     }
 
     public String findAverRSRPerPCI(Integer pci){

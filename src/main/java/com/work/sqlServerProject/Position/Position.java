@@ -47,6 +47,9 @@ public class Position {
                 Cell4G p  = (Cell4G) c;
                 p.putAllRSRPinband();
                 p.checkCell();
+                if (p.getCi()==7700734){
+                    System.out.println(p.getCi()+" "+p.getPCI()+" "+c.getBestCellID()+" "+c.isOk());
+                }
                 stringBuilder.append(p.toString());
                 stringBuilder.append("<br>");
             }

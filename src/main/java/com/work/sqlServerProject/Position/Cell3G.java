@@ -73,6 +73,10 @@ public class Cell3G extends Cell {
             }
             else super.setBestCellID(best2);
         }
+        else
+        if (best1!=0 && best2!=0){
+            super.setBestCellID(best2);
+        }
         else super.setOk(false);
     }
 

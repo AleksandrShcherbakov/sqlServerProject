@@ -46,11 +46,11 @@
         radius = 500;
 
         for (i=0;i<cellss.length;i++){
-            createsectors(cellss[i].azimuth,cellss[i].color,1);
+            createsectors(cellss[i].azimuth,cellss[i].color,cellss[i].color);
         }
 
         for (i=0;i<pointsInPos.length;i++){
-            createPoint(pointsInPos[i].longitude, pointsInPos[i].latitude, '#669900');
+            createPoint(pointsInPos[i].longitude, pointsInPos[i].latitude, pointsInPos[i].color);
         }
 
     }
@@ -90,25 +90,34 @@
         map.geoObjects.add(polygon);
     }
 
-    function createPoint(lon,lat, color) {
+    function createPoint(lon,lat,color) {
+        // Создаем круг.
         // Создаем круг.
         var myCircle = new ymaps.Circle([
             // Координаты центра круга.
             [lat, lon],
             // Радиус круга в метрах.
-            3
+            5
         ], {
+            // Описываем свойства круга.
+            // Содержимое балуна.
+            balloonContent: "Радиус круга - 10 км",
+            // Содержимое хинта.
+            hintContent: "Подвинь меня"
+        }, {
             // Задаем опции круга.
+            // Включаем возможность перетаскивания круга.
+            draggable: true,
             // Цвет заливки.
             // Последний байт (77) определяет прозрачность.
             // Прозрачность заливки также можно задать используя опцию "fillOpacity".
-            fillColor: color
-            /*!// Цвет обводки.
+            fillColor: color,
+            // Цвет обводки.
             strokeColor: "#990066",
             // Прозрачность обводки.
-            strokeOpacity: 0.5,
+            strokeOpacity: 0.8,
             // Ширина обводки в пикселях.
-            strokeWidth: 0*/
+            strokeWidth: 0
         });
 
         // Добавляем круг на карту.

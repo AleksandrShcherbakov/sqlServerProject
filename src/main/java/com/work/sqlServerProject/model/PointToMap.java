@@ -14,8 +14,31 @@ public class PointToMap {
     public PointToMap(Point point, String about, Map<String, String>paramColor) {
         this.longitude = point.getLongitude();
         this.latitude = point.getLatitude();
-        this.param = param;
-        this.color = color;
+        if (about.equals("GSM 900")){
+            double tempRxLev=-200;
+            for (String s : paramColor.keySet()){
+                if (point.getRxLevel900().get(s)!=null) {
+                    if (point.getRxLevel900().get(s) >= tempRxLev) {
+                        tempRxLev = point.getRxLevel900().get(s);
+                        this.param = s;
+                        this.color = paramColor.get(s);
+                    }
+                }
+            }
+        }
+        else
+        if (about.equals("GSM 1800")){
+            double tempRxLev=-200;
+            for (String s : paramColor.keySet()){
+                if (point.getRxLevel1800().get(s)!=null) {
+                    if (point.getRxLevel1800().get(s) >= tempRxLev) {
+                        tempRxLev = point.getRxLevel1800().get(s);
+                        this.param = s;
+                        this.color = paramColor.get(s);
+                    }
+                }
+            }
+        }
     }
 
     public String getParam() {

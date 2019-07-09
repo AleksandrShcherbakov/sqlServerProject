@@ -126,6 +126,7 @@ public class CheckingController {
                 paramColor.put(p.getPCI()+"", ColorHelper.getColor());
             }
         }
+        List<CellToMap>cellToMapList=cellList.stream().map(p->(Cell2G)p).map(p->new CellToMap(p.getCi(),p.getAzimuth(),paramColor.get(p.getBcchBsic()))).collect(Collectors.toList());
 
         Set<Point> pointsTomap=new HashSet<>();
         for (Cell c : cellList){
@@ -137,7 +138,7 @@ public class CheckingController {
             else
             if (about.equals("GSM 900")) {
                 Cell2G g = (Cell2G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRxLevel900().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p->p.getRxLevel900()!=null).filter(p -> p.getRxLevel900().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
@@ -195,10 +196,10 @@ public class CheckingController {
                 pointsTomap.addAll(set);
             }
         }
-        List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).collect(Collectors.toList());
+        List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).peek(p-> System.out.println(p.getColor())).collect(Collectors.toList());
 
 
-        model.addAttribute("cells", cellList);
+        model.addAttribute("cells", cellToMapList);
         model.addAttribute("pointss", list);
         model.addAttribute("lon", pos.getCells().get(0).getLongitude());
         model.addAttribute("lat", pos.getCells().get(0).getLalitude());

@@ -8,9 +8,10 @@ public class CellToMap {
     private String color;
     private int azimuth;
 
-    public CellToMap(int ci, int azimuth) {
+    public CellToMap(int ci, int azimuth, String color) {
         this.azimuth=azimuth;
         this.ci = ci+"";
+        this.color=color;
     }
 
     public String getColor() {

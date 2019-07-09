@@ -78,15 +78,14 @@ public class CheckingController {
         position.findBestScan();
         this.pos=position;
         this.allPoints=points;
-        StringBuilder ssylka= new StringBuilder();
+        /*StringBuilder ssylka= new StringBuilder();
         List<String>abouts=position.getCells().stream().map(p->p.getAbout()).distinct().collect(Collectors.toList());
         for(String p:abouts) {
-            ssylka.append("<a href='/map?about=" + p + "'>показать " + posname + "</a><br>");
-        }
-        ssylka.append("<a href='/map'>показать весь маршрут</a>");
+            ssylka.append("<a href='/map?about=" + p + "'>показать " + p + "</a><br>");
+        }*/
         return posname+"<br>"+
-                position.toString()+"<br>"+
-                ssylka.toString();
+                position.toString()+"<br>"
+                /*+ssylka.toString()*/;
     }
 
 
@@ -98,7 +97,7 @@ public class CheckingController {
                          @RequestParam(required = false, name = "posName") Integer number){
         System.out.println(about);
         List<Cell>cellList=pos.getCells().stream().filter(p->p.getAbout().equals(about)).peek(System.out::println).collect(Collectors.toList());
-        if (about.startsWith("GSM")) {
+        /*if (about.startsWith("GSM")) {
             Set<String> bsshBsics = cellList.stream().map(p-> (Cell2G)p).map(p -> p.getBcchBsic()).collect(Collectors.toSet());
         }
         else
@@ -108,7 +107,7 @@ public class CheckingController {
         else
         if (about.startsWith("LTE")) {
             Set<Integer> pci = cellList.stream().map(p-> (Cell4G)p).map(p -> Integer.parseInt(p.getPCI()+"")).collect(Collectors.toSet());
-        }
+        }*/
         Map<String, String> paramColor=new HashMap<>();
         for (Cell c : cellList){
             if (c.getAbout().startsWith("GSM")){
@@ -132,67 +131,67 @@ public class CheckingController {
         for (Cell c : cellList){
             if (about.equals("GSM 1800")) {
                 Cell2G g = (Cell2G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRxLevel1800().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRxLevel1800()!=null && p.getRxLevel1800().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("GSM 900")) {
                 Cell2G g = (Cell2G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p->p.getRxLevel900()!=null).filter(p -> p.getRxLevel900().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p->p.getRxLevel900()!=null && p.getRxLevel900().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("UMTS 2100 10813")) {
                 Cell3G g = (Cell3G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10813().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10813()!=null && p.getRSCP10813().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("UMTS 2100 10788")) {
                 Cell3G g = (Cell3G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10788().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10788()!=null && p.getRSCP10788().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("UMTS 2100 10836")) {
                 Cell3G g = (Cell3G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10836().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP10836()!=null && p.getRSCP10836().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("UMTS 900 3036")) {
                 Cell3G g = (Cell3G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP3036().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP3036()!=null && p.getRSCP3036().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("UMTS 900 3012")) {
                 Cell3G g = (Cell3G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP3012().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSCP3012()!=null && p.getRSCP3012().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("LTE 2600")) {
                 Cell4G g = (Cell4G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP3300().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP3300()!=null && p.getRSRP3300().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("LTE 2600")) {
                 Cell4G g = (Cell4G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP3300().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP3300()!=null && p.getRSRP3300().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("LTE 1800")) {
                 Cell4G g = (Cell4G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP1351().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP1351()!=null && p.getRSRP1351().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
             if (about.equals("LTE 800")) {
                 Cell4G g = (Cell4G)c;
-                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP6413().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = pos.getAllPointsInPosition().stream().filter(p -> p.getRSRP6413()!=null && p.getRSRP6413().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
         }

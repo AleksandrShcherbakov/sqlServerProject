@@ -47,9 +47,6 @@ public class Position {
                 Cell4G p  = (Cell4G) c;
                 p.putAllRSRPinband();
                 p.checkCell();
-                if (p.getCi()==7700734){
-                    System.out.println(p.getCi()+" "+p.getPCI()+" "+c.getBestCellID()+" "+c.isOk());
-                }
                 stringBuilder.append(p.toString());
                 stringBuilder.append("<br>");
             }
@@ -63,7 +60,7 @@ public class Position {
             long countOfNoBest=cellsOfOneBand.size()-countOfExistBest;
             System.out.println(i+" "+countOfExistBest);
             String res=null;
-            res=cellsOfOneBand.get(0).getAbout();
+            res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "'>" + cellsOfOneBand.get(0).getAbout() + "</a>";
             if (countOfExistBest==0){
                 stringBuilder.append(res+" - <span style='color:orange'>скорее всего сектора не в эфире, либо Ch, SCR, PCI на сети не соответствует General, либо чтото еще.</span>");
                 stringBuilder.append("<br>");

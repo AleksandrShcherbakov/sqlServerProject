@@ -76,7 +76,7 @@ public class PointToMap {
                 case "LTE 1800":
                     map=point.getRSRP1351();
                     break;
-                case "UMTS 800":
+                case "LTE 800":
                     map=point.getRSRP6413();
                     break;
             }

@@ -109,24 +109,34 @@ public class CheckingController {
             Set<Integer> pci = cellList.stream().map(p-> (Cell4G)p).map(p -> Integer.parseInt(p.getPCI()+"")).collect(Collectors.toSet());
         }*/
         Map<String, String> paramColor=new HashMap<>();
-        for (Cell c : cellList){
-            if (c.getAbout().startsWith("GSM")){
-                Cell2G p = (Cell2G) c;
-                paramColor.put(p.getBcchBsic(), ColorHelper.getColor());
+        for (int i=0; i<cellList.size();i++){
+            if (cellList.get(i).getAbout().startsWith("GSM")){
+                Cell2G p = (Cell2G) cellList.get(i);
+                paramColor.put(p.getBcchBsic(), ColorHelper.mColors[i]);
             }
             else
-            if (c.getAbout().startsWith("UMTS")) {
-                Cell3G p = (Cell3G) c;
-                paramColor.put(p.getScr() + "", ColorHelper.getColor());
+            if (cellList.get(i).getAbout().startsWith("UMTS")) {
+                Cell3G p = (Cell3G) cellList.get(i);
+                paramColor.put(p.getScr() + "", ColorHelper.mColors[i]);
             }
             else
-            if (c.getAbout().startsWith("LTE")){
-                Cell4G p = (Cell4G) c;
-                paramColor.put(p.getPCI()+"", ColorHelper.getColor());
+            if (cellList.get(i).getAbout().startsWith("LTE")){
+                Cell4G p = (Cell4G) cellList.get(i);
+                paramColor.put(p.getPCI()+"", ColorHelper.mColors[i]);
             }
         }
-        List<CellToMap>cellToMapList=cellList.stream().map(p->(Cell2G)p).map(p->new CellToMap(p.getCi(),p.getAzimuth(),paramColor.get(p.getBcchBsic()))).collect(Collectors.toList());
-
+        List<CellToMap> cellToMapList=null;
+        if (about.startsWith("GSM")) {
+            cellToMapList = cellList.stream().map(p -> (Cell2G) p).map(p -> new CellToMap(p.getCi(), p.getAzimuth(), paramColor.get(p.getBcchBsic()))).collect(Collectors.toList());
+        }
+        else
+        if (about.startsWith("UMTS")) {
+            cellToMapList = cellList.stream().map(p -> (Cell3G) p).map(p -> new CellToMap(p.getCi(), p.getAzimuth(), paramColor.get(p.getScr()+""))).collect(Collectors.toList());
+        }
+        else
+        if (about.startsWith("LTE")) {
+            cellToMapList = cellList.stream().map(p -> (Cell4G) p).map(p -> new CellToMap(p.getCi(), p.getAzimuth(), paramColor.get(p.getPCI()+""))).collect(Collectors.toList());
+        }
         Set<Point> pointsTomap=new HashSet<>();
         for (Cell c : cellList){
             if (about.equals("GSM 1800")) {

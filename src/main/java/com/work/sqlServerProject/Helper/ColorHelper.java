@@ -8,17 +8,17 @@ import java.util.Random;
 public class ColorHelper {
     // Member variables (properties about the object)
     public static String[] mColors = {
-            "#39add1", // light blue
-            "#3079ab", // dark blue
-            "#c25975", // mauve
             "#e15258", // red
+            "#51b46d", // green
+            "#637a91", // dark gray
+            "#3079ab", // dark blue
             "#f9845b", // orange
+            "#39add1", // light blue
+            "#c25975", // mauve
             "#838cc7", // lavender
             "#7d669e", // purple
             "#53bbb4", // aqua
-            "#51b46d", // green
             "#e0ab18", // mustard
-            "#637a91", // dark gray
             "#f092b0", // pink
             "#b7c0c7"  // light gray
     };

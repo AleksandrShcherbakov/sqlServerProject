@@ -34,6 +34,7 @@
     var pointsInPos=[[${pointss}]];
     var latPos=[[${lat}]];
     var lonPos=[[${lon}]];
+    var rad=[[${radius}]];
 
     function init() {
         map = new ymaps.Map("map", {
@@ -43,7 +44,7 @@
         zoom = map.getZoom();
         projection = map.options.get('projection');
         center = projection.toGlobalPixels([latPos, lonPos], zoom);
-        radius = 500;
+        radius = rad*500/1300;
 
         for (i=0;i<cellss.length;i++){
             createsectors(cellss[i].azimuth,cellss[i].color,cellss[i].ci);

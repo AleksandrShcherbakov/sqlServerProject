@@ -75,7 +75,7 @@ public class CheckingController {
                 }
             }
             catch (Exception e){
-                res.append("В указании списка позиций ошибка: "+s);
+                res.append("В указании списка позиций ошибка: "+s+"<br>");
             }
         }
 

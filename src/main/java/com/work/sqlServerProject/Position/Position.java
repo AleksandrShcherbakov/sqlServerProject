@@ -60,7 +60,7 @@ public class Position {
             long countOfNoBest=cellsOfOneBand.size()-countOfExistBest;
             System.out.println(i+" "+countOfExistBest);
             String res=null;
-            res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "'>" + cellsOfOneBand.get(0).getAbout() + "</a>";
+            res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "&posName="+this.numberOfPosition+"'>" + cellsOfOneBand.get(0).getAbout() + "</a>";
             if (countOfExistBest==0){
                 stringBuilder.append(res+" - <span style='color:orange'>скорее всего сектора не в эфире, либо Ch, SCR, PCI на сети не соответствует General, либо чтото еще.</span>");
                 stringBuilder.append("<br>");

@@ -46,11 +46,11 @@
         radius = 500;
 
         for (i=0;i<cellss.length;i++){
-            createsectors(cellss[i].azimuth,cellss[i].color,cellss[i].color);
+            createsectors(cellss[i].azimuth,cellss[i].color,cellss[i].ci);
         }
 
         for (i=0;i<pointsInPos.length;i++){
-            createPoint(pointsInPos[i].longitude, pointsInPos[i].latitude, pointsInPos[i].color);
+            createPoint(pointsInPos[i].longitude, pointsInPos[i].latitude, pointsInPos[i].color,pointsInPos[i].param);
         }
 
     }
@@ -90,7 +90,7 @@
         map.geoObjects.add(polygon);
     }
 
-    function createPoint(lon,lat,color) {
+    function createPoint(lon,lat,color,param) {
         // Создаем круг.
         // Создаем круг.
         var myCircle = new ymaps.Circle([
@@ -101,9 +101,9 @@
         ], {
             // Описываем свойства круга.
             // Содержимое балуна.
-            balloonContent: "Радиус круга - 10 км",
+            balloonContent: "",
             // Содержимое хинта.
-            hintContent: "Подвинь меня"
+            hintContent: param
         }, {
             // Задаем опции круга.
             // Включаем возможность перетаскивания круга.

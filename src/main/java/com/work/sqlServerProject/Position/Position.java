@@ -136,6 +136,7 @@ public class Position {
             double dist = HelperCell.toDist(latPos,lonPos,p.getLatitude(),p.getLongitude());
             if (dist<distance){
                 allPointsInPosition.add(p);
+                p.getDistToPos().put(this.numberOfPosition, dist);
             }
         }
     }

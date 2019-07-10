@@ -19,6 +19,7 @@ public class Point {
     Map<Integer, Double> RSRP3300;
     Map<Integer, Double> RSRP6413;
     Map<Integer, Double> RSRP1351;
+    Map<Integer, Double> distToPos;
 
     /*//public Point(String input) {
         this.input = input;
@@ -144,9 +145,16 @@ public class Point {
                 }
             }
         }
+        distToPos=new HashMap<>();
     }
 
+    public Map<Integer, Double> getDistToPos() {
+        return distToPos;
+    }
 
+    public void setDistToPos(Map<Integer, Double> distToPos) {
+        this.distToPos = distToPos;
+    }
 
     public String getInput() {
         return input;

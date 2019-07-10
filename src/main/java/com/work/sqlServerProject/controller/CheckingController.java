@@ -212,12 +212,13 @@ public class CheckingController {
             }
         }
         List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).peek(p-> System.out.println(p.getColor())).collect(Collectors.toList());
-
+        double maxDist=pointsTomap.stream().mapToDouble(p->p.getDistToPos().get(pos)).max().getAsDouble();
 
         model.addAttribute("cells", cellToMapList);
         model.addAttribute("pointss", list);
         model.addAttribute("lon", positions.get(pos).getCells().get(0).getLongitude());
         model.addAttribute("lat", positions.get(pos).getCells().get(0).getLalitude());
+        model.addAttribute("radius",maxDist);
         return "map";
     }
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="cb"></div>
+<script type="text/javascript">
+    var cbh = document.getElementById('cb');
+
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.name = 'system';
+    cb.value = "123123";
+    cb.content = "привет";
+    var label = document.createElement('label')
+    label.appendChild(document.createTextNode('text for label after checkbox'));
+    cbh.appendChild(cb);
+    cbh.appendChild(label);
+
+
+
+
+</script>
+
+</body>
+</html>

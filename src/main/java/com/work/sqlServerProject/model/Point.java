@@ -21,9 +21,9 @@ public class Point {
     Map<Integer, Double> RSRP1351;
     Map<Integer, Double> distToPos;
 
-    /*//public Point(String input) {
-        this.input = input;
-    }*/
+    public Point() {
+        this.distToPos=new HashMap<>();
+    }
     public void setGPS(String gpsinstring){
         String[] coord = gpsinstring.split(" ");
         double lon = Double.parseDouble(coord[1]);

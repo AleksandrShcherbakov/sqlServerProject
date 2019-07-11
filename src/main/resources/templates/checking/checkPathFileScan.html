@@ -11,9 +11,29 @@
             Ввести путь к файлу сканнера:
             <input type="text" th:field="*{url}" style="width: 100%">
             <br>
+            Или выберите из списка:
+            <div id="files"></div>
             <input type="submit" value="загрузить файл">
         </p>
     </form>
 </div>
+<script th:inline="javascript">
+    var list=[[${listFiles}]];
+    var files = document.getElementById('files');
+    for(i=0;i<list.length;i++) {
+        var inp = document.createElement('input');
+        var br = document.createElement('br');
+        inp.type = 'checkbox';
+        inp.name = 'file';
+        inp.value =list[i];
+        var label = document.createElement('label');
+        label.appendChild(document.createTextNode(list[i]/*.substring(list[i].lastIndexOf('/')+1,list[i].length)*/));
+        files.appendChild(inp);
+        files.appendChild(label);
+        files.appendChild(br);
+
+    }
+
+</script>
 </body>
 </html>

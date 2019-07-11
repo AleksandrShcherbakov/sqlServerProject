@@ -1,6 +1,7 @@
 package com.work.sqlServerProject.controller;
 
 import com.work.sqlServerProject.Helper.ColorHelper;
+import com.work.sqlServerProject.Helper.FileScanHelper;
 import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
 import com.work.sqlServerProject.Position.*;
@@ -29,21 +30,25 @@ public class CheckingController {
 
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
     public String showSelectScanFilePage(Model model){
+        List<String> nmfs = FileScanHelper.getFiles("");
+        
         PathScanFile pathScanFile = new PathScanFile();
+        model.addAttribute("listFiles",nmfs);
         model.addAttribute("pathScanFile", pathScanFile);
         return "checking/checkPathFileScan";
     }
 
     @RequestMapping(value = "/inputScan", method = RequestMethod.POST)
-    public String loadScanAndSelectPos(Model model, @ModelAttribute ("pathScanFile") PathScanFile pathScanFile){
-        List<String> parsered;
-        try {
-            parsered = ParserHalper.createinSrtings(pathScanFile.getUrl());
+    public String loadScanAndSelectPos(Model model, @ModelAttribute ("pathScanFile") PathScanFile pathScanFile,
+                                       @RequestParam (required = false,name = "file") String files){
+        StringBuilder stringBuilder=new StringBuilder();
+        if (!pathScanFile.getUrl().equals("")) {
+            stringBuilder.append(readFiles(pathScanFile.getUrl()));
         }
-        catch (IOException e){
-            return "Путь к файлу сканера указан не верно.";
+        String[]file=files.split(",");
+        for (String s : file){
+            stringBuilder.append(readFiles(s));
         }
-        points = Parser.getPointsFromScan(parsered);
         return "redirect:/checkPos";
     }
 
@@ -52,6 +57,18 @@ public class CheckingController {
         PosForCheck posForCheck = new PosForCheck();
         model.addAttribute("pos", posForCheck);
         return "checking/checkPos";
+    }
+
+    public String readFiles(String path){
+        List<String> parsered;
+        try {
+            parsered = ParserHalper.createinSrtings(path);
+        }
+        catch (IOException e){
+            return "Путь к файлу сканера указан не верно.";
+        }
+        points = Parser.getPointsFromScan(parsered);
+        return "файл "+path+" прочитан";
     }
 
 

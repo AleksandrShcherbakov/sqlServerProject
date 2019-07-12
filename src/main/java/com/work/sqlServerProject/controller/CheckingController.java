@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,13 +32,15 @@ public class CheckingController {
 
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
     public String showSelectScanFilePage(Model model){
-        List<String>list=new ArrayList<>();
+        List<Path>list=new ArrayList<>();
         for (String s : listPath) {
-            List<String> nmfs = FileScanHelper.getFiles(s);
+            List<Path> nmfs = FileScanHelper.getFiles(s);
             list.addAll(nmfs);
         }
+        list.sort(FileScanHelper.comparator);
+        List<String>listStr=list.stream().map(p->p.toString()).collect(Collectors.toList());
         PathScanFile pathScanFile = new PathScanFile();
-        model.addAttribute("listFiles",list);
+        model.addAttribute("listFiles",listStr);
         model.addAttribute("pathScanFile", pathScanFile);
         return "checking/checkPathFileScan";
     }

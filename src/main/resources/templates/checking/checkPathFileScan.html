@@ -20,18 +20,17 @@
 <script th:inline="javascript">
     var list=[[${listFiles}]];
     var files = document.getElementById('files');
-    for(i=0;i<list.length;i++) {
+    for(i=list.length-1;i>=0;i--) {
         var inp = document.createElement('input');
         var br = document.createElement('br');
         inp.type = 'checkbox';
         inp.name = 'file';
         inp.value =list[i];
         var label = document.createElement('label');
-        label.appendChild(document.createTextNode(list[i]/*.substring(list[i].lastIndexOf('/')+1,list[i].length)*/));
+        label.appendChild(document.createTextNode(list[i].substring(list[i].lastIndexOf('/')+1,list[i].length)));
         files.appendChild(inp);
         files.appendChild(label);
         files.appendChild(br);
-
     }
 
 </script>

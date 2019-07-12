@@ -26,14 +26,18 @@ public class CheckingController {
     private CellNameDAO cellNameDAO;
     private Map<Integer, Position> positions=null;
     List<Point> points=null;
+    String[]listPath={"Y:\\! MEASUREMENT FILES\\SUZUKI_01"};
 
 
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
     public String showSelectScanFilePage(Model model){
-        List<String> nmfs = FileScanHelper.getFiles("");
-
+        List<String>list=new ArrayList<>();
+        for (String s : listPath) {
+            List<String> nmfs = FileScanHelper.getFiles(s);
+            list.addAll(nmfs);
+        }
         PathScanFile pathScanFile = new PathScanFile();
-        model.addAttribute("listFiles",nmfs);
+        model.addAttribute("listFiles",list);
         model.addAttribute("pathScanFile", pathScanFile);
         return "checking/checkPathFileScan";
     }

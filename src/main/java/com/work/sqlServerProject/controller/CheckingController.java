@@ -31,7 +31,7 @@ public class CheckingController {
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
     public String showSelectScanFilePage(Model model){
         List<String> nmfs = FileScanHelper.getFiles("");
-        
+
         PathScanFile pathScanFile = new PathScanFile();
         model.addAttribute("listFiles",nmfs);
         model.addAttribute("pathScanFile", pathScanFile);
@@ -45,10 +45,13 @@ public class CheckingController {
         if (!pathScanFile.getUrl().equals("")) {
             stringBuilder.append(readFiles(pathScanFile.getUrl()));
         }
-        String[]file=files.split(",");
-        for (String s : file){
-            stringBuilder.append(readFiles(s));
+        if (files!=null) {
+            String[] file = files.split(",");
+            for (String s : file) {
+                stringBuilder.append(readFiles(s));
+            }
         }
+        System.out.println(stringBuilder.toString());
         return "redirect:/checkPos";
     }
 

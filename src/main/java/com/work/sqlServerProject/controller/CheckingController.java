@@ -65,7 +65,7 @@ public class CheckingController {
     @RequestMapping(value = "/inputScan", method = RequestMethod.POST)
     public String loadScanAndSelectPos(Model model, @ModelAttribute ("pathScanFile") PathScanFile pathScanFile,
                                        @RequestParam (required = false,name = "file") String files,
-                                       @RequestParam (required = false, name= "isBTS") String isBts,
+                                       @RequestParam (required = false, name= "isBTS") String isBts,//галочка
                                        @RequestParam (required = false, name = "bts") String btsPath){
         if (isBts!=null){
             this.useBTSFile=true;

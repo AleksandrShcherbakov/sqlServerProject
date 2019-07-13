@@ -3,36 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Check Posnames and Scan file</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
+<div>
+    <div th:if="${nobts}" th:utext="${nobts}" style="color: red"> </div>
+    <div th:if="${nofiles}" th:utext="${nofiles}" style="color: red"> </div>
+    <div th:if="${nopoints}" th:utext="${nopoints}" style="color: red"></div>
+</div>
 <div>
     <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post">
         <p>
             Ввести путь к файлу сканнера:
             <input type="text" th:field="*{url}" style="width: 100%">
             <br>
-            Или выберите из списка:
+            Или выберите из списка последних файлов:
             <div id="files"></div>
             <input type="submit" value="загрузить файл">
+        </p>
+        <p>
+            <input type="checkbox" id="useBts" name="isBTS" value="ок"> Использовать БТС файл (если компьютер не подключен к базе данных General)
+            <br>
+        <div id="checkBts">
+            Укажите путь к bts файлу:
+            <input type="text" id="pathToBts" th:field="*{toBts}" style="width: 100%">
+
+            или выберите из имеющихся:
+            <div id="listOfBts"></div>
+        </div>
+        <script>
+            $('#checkBts').hide();
+            $('#useBts').click(function () {
+                if ($(this).is(':checked')){
+                    $('#checkBts').show();
+                }
+                else {
+                    $('#checkBts').hide();
+                }
+            });
+        </script>
+        <script th:inline="javascript">
+            var list=[[${btss}]];
+            var files = document.getElementById('listOfBts');
+            for(i=0;i<list.length;i++) {
+                var inp = document.createElement('input');
+                var br = document.createElement('br');
+                inp.type = 'radio';
+                inp.name = 'bts';
+                inp.value =list[i];
+                var label = document.createElement('label');
+                label.appendChild(document.createTextNode(list[i].substring(list[i].lastIndexOf('\\')+1,list[i].length)));
+                files.appendChild(inp);
+                files.appendChild(label);
+                files.appendChild(br);
+            }
+        </script>
         </p>
     </form>
 </div>
 <script th:inline="javascript">
     var list=[[${listFiles}]];
     var files = document.getElementById('files');
-    for(i=list.length-1;i>=0;i--) {
+    for(i=0;i<list.length;i++) {
         var inp = document.createElement('input');
         var br = document.createElement('br');
         inp.type = 'checkbox';
         inp.name = 'file';
         inp.value =list[i];
         var label = document.createElement('label');
-        label.appendChild(document.createTextNode(list[i].substring(list[i].lastIndexOf('/')+1,list[i].length)));
+        label.appendChild(document.createTextNode(list[i].substring(list[i].lastIndexOf('\\')+1,list[i].length)));
         files.appendChild(inp);
         files.appendChild(label);
         files.appendChild(br);
     }
-
 </script>
 </body>
 </html>

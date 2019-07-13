@@ -12,10 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by a.shcherbakov on 24.06.2019.
@@ -27,7 +32,14 @@ public class CheckingController {
     private CellNameDAO cellNameDAO;
     private Map<Integer, Position> positions=null;
     List<Point> points=null;
-    String[]listPath={"Y:\\! MEASUREMENT FILES\\SUZUKI_01"};
+    String[]listPath={"Y:\\! MEASUREMENT FILES\\SUZUKI_01",
+            "Y:\\! MEASUREMENT FILES\\SUZUKI_01"};
+    List<String> listWithNmf=null;
+    List<String> listFilesBts=null;
+    String pathToNbf="Y:\\! MEASUREMENT FILES";
+    boolean useBTSFile=false;
+    String pathToBts=null;
+    List<String>btsLines=null;
 
 
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
@@ -38,16 +50,49 @@ public class CheckingController {
             list.addAll(nmfs);
         }
         list.sort(FileScanHelper.comparator);
-        List<String>listStr=list.stream().map(p->p.toString()).collect(Collectors.toList());
+        List<String>listStr=list.stream().map(p->p.toString()).peek(p-> System.out.println(p)).collect(Collectors.toList());
+        this.listWithNmf=listStr;
         PathScanFile pathScanFile = new PathScanFile();
+        List<String>filesBts = getBtsPaths(pathToNbf).stream().map(p->p.toString()).peek(System.out::println).collect(Collectors.toList());
+        this.listFilesBts=filesBts;
+        model.addAttribute("btss",filesBts);
         model.addAttribute("listFiles",listStr);
         model.addAttribute("pathScanFile", pathScanFile);
         return "checking/checkPathFileScan";
     }
 
+
     @RequestMapping(value = "/inputScan", method = RequestMethod.POST)
     public String loadScanAndSelectPos(Model model, @ModelAttribute ("pathScanFile") PathScanFile pathScanFile,
-                                       @RequestParam (required = false,name = "file") String files){
+                                       @RequestParam (required = false,name = "file") String files,
+                                       @RequestParam (required = false, name= "isBTS") String isBts,
+                                       @RequestParam (required = false, name = "bts") String btsPath){
+        if (isBts!=null){
+            this.useBTSFile=true;
+            if (!pathScanFile.getToBts().equals("")){
+                this.pathToBts=pathScanFile.getToBts();
+                try {
+                    this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
+                } catch (IOException e) {
+                    System.out.println(pathToBts+ " файл с BTS не прочитан");
+                }
+            }
+            else
+            if (btsPath!=null){
+                this.pathToBts=btsPath;
+                try {
+                    this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
+                } catch (IOException e) {
+                    System.out.println(pathToBts+ " файл с BTS не прочитан");
+                }
+            }
+            else {
+                model.addAttribute("nobts", "Указано желание использовать BTS файл, но сам файл не указан.");
+                model.addAttribute("btss",this.listFilesBts);
+                model.addAttribute("listFiles",this.listWithNmf);
+                return "checking/checkPathFileScan";
+            }
+        }
         StringBuilder stringBuilder=new StringBuilder();
         if (!pathScanFile.getUrl().equals("")) {
             stringBuilder.append(readFiles(pathScanFile.getUrl()));
@@ -58,15 +103,37 @@ public class CheckingController {
                 stringBuilder.append(readFiles(s));
             }
         }
+        if (pathScanFile.getUrl().equals("") && files==null){
+            model.addAttribute("nofiles", "Не указан ни один файл сканера.");
+            model.addAttribute("btss",this.listFilesBts);
+            model.addAttribute("listFiles",this.listWithNmf);
+            return "checking/checkPathFileScan";
+        }
+        if (points.size()==0){
+            model.addAttribute("nopoints", "Ни один файл сканера прочитать не удалось. Что-то не так.");
+            model.addAttribute("btss",this.listFilesBts);
+            model.addAttribute("listFiles",this.listWithNmf);
+            return "checking/checkPathFileScan";
+        }
         System.out.println(stringBuilder.toString());
         return "redirect:/checkPos";
     }
+
+
 
     @RequestMapping(value = "/checkPos", method = RequestMethod.GET)
     public String showSelectPos(Model model){
         PosForCheck posForCheck = new PosForCheck();
         model.addAttribute("pos", posForCheck);
         return "checking/checkPos";
+    }
+
+    public List<Path> getBtsPaths(String pathDir){
+        File dir = new File(pathDir); //path указывает на директорию
+        File[] arrFiles = dir.listFiles();
+        List<Path> files = Arrays.stream(arrFiles).map(p->p.toPath()).filter(p->p.toString().endsWith(".nbf")).peek(System.out::println)
+                .sorted(FileScanHelper.comparator).collect(Collectors.toList());
+        return files;
     }
 
     public String readFiles(String path){
@@ -77,8 +144,19 @@ public class CheckingController {
         catch (IOException e){
             return "Путь к файлу сканера указан не верно.";
         }
-        points = Parser.getPointsFromScan(parsered);
-        return "файл "+path+" прочитан";
+        int size1=0;
+        if (points!=null){
+            size1=points.size();
+        }
+        if (points==null) {
+            points = Parser.getPointsFromScan(parsered);
+        }
+        else points.addAll(Parser.getPointsFromScan(parsered));
+        int size2=points.size();
+        if (points.size()!=0 && size1!=size2) {
+            return "файл " + path + " прочитан";
+        }
+        else return "файл "+ path + " не прочитан";
     }
 
 
@@ -90,8 +168,9 @@ public class CheckingController {
             return "не введена позиция";
         }
         positions=new HashMap<>();
+
         StringBuilder res=new StringBuilder();
-        String[]poss=posForCheck.getPosnames().split("[, ]");
+        String[]poss=posForCheck.getPosnames().split(",");
         for (String s : poss){
             s=s.trim();
             try {
@@ -111,18 +190,23 @@ public class CheckingController {
                     p.getValue().toString()+"<br>");
             res.append("=================================================================<br><br>");
         }
-        return res.toString();
+        return  res.toString();
 
     }
 
     public int setPosition(Integer posname){
         Position position=null;
         if (posname!=null) {
-            List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
-            if (list.size()==0){
-                return -1;
+            if (useBTSFile){
+                //написать код
             }
-            position = new Position(list);
+            else {
+                List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
+                if (list.size() == 0) {
+                    return -1;
+                }
+                position = new Position(list);
+            }
         }
         position.setPointsInPosition(points);
         position.setAllPointsToCells();

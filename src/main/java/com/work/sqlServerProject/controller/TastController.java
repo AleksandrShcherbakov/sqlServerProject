@@ -5,12 +5,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -21,15 +25,14 @@ public class TastController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseBody
-    public String date(){
-        String dateInString = "82May13";
-        String dateInString2 = "80May13";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMMdd",Locale.ENGLISH);
-        LocalDate dateTime = LocalDate.parse(dateInString, formatter);
-        LocalDate dateTime2 = LocalDate.parse(dateInString2, formatter);
-        System.out.println(dateTime);
-        return  dateTime2.compareTo(dateTime)+"";
-
+    public String getBtsPaths(/*String pathDir*/){
+        File dir = new File("C:\\giants"); //path указывает на директорию
+        File[] arrFiles = dir.listFiles();
+        List<File> lst = Arrays.asList(arrFiles);
+        for (File f : lst){
+            System.out.println(f.getAbsolutePath());
+        }
+        return "ok";
     }
 
 

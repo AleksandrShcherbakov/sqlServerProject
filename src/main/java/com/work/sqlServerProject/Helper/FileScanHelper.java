@@ -30,10 +30,11 @@ public class FileScanHelper {
             }
             BasicFileAttributes atr2 = null;
             try {
-                atr2 = Files.readAttributes(o1, BasicFileAttributes.class);
+                atr2 = Files.readAttributes(o2, BasicFileAttributes.class);
             } catch (IOException e) {
                 System.out.println(o2+" нет атрибутов");
             }
+            System.out.println(atr2.creationTime().compareTo(atr1.creationTime()));
             return atr2.creationTime().compareTo(atr1.creationTime());
         }
     };

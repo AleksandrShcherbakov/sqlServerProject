@@ -46,6 +46,12 @@
         <script th:inline="javascript">
             var list=[[${btss}]];
             var files = document.getElementById('listOfBts');
+            if (list.length===0){
+                var p = document.createElement("p");
+                var t = document.createTextNode("Список возможных вариантов пуст, скорее всего Вы не на работе.");
+                p.appendChild(t);
+                files.appendChild(p);
+            }
             for(i=0;i<list.length;i++) {
                 var inp = document.createElement('input');
                 var br = document.createElement('br');
@@ -65,6 +71,12 @@
 <script th:inline="javascript">
     var list=[[${listFiles}]];
     var files = document.getElementById('files');
+    if (list.length===0){
+        var p = document.createElement("p");
+        var t = document.createTextNode("Список возможных вариантов пуст, скорее всего Вы не на работе.");
+        p.appendChild(t);
+        files.appendChild(p);
+    }
     for(i=0;i<list.length;i++) {
         var inp = document.createElement('input');
         var br = document.createElement('br');

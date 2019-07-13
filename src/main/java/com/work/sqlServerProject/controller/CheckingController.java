@@ -116,7 +116,7 @@ public class CheckingController {
             return "checking/checkPathFileScan";
         }
         if (points.size()==0){
-            model.addAttribute("nopoints", "Ни один файл сканера прочитать не удалось. Неправильно указан путь к файлу");
+            model.addAttribute("nopoints", "Ни один файл сканера прочитать не удалось. Неправильно указан путь к файлу сканера.");
             model.addAttribute("btss",this.listFilesBts);
             model.addAttribute("listFiles",this.listWithNmf);
             return "checking/checkPathFileScan";

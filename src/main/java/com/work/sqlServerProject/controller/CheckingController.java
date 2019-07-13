@@ -69,12 +69,17 @@ public class CheckingController {
                                        @RequestParam (required = false, name = "bts") String btsPath){
         if (isBts!=null){
             this.useBTSFile=true;
+            if (this.btsLines!=null){
+                System.out.println("файл BTS уже загружен -"+pathToBts);
+            }
+            else
             if (!pathScanFile.getToBts().equals("")){
                 this.pathToBts=pathScanFile.getToBts();
                 try {
                     this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
                 } catch (IOException e) {
                     System.out.println(pathToBts+ " файл с BTS не прочитан");
+                    model.addAttribute("nobtsread", "БТС файл указан не верно");
                 }
             }
             else
@@ -84,6 +89,7 @@ public class CheckingController {
                     this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
                 } catch (IOException e) {
                     System.out.println(pathToBts+ " файл с BTS не прочитан");
+                    model.addAttribute("nobtsread", "БТС файл указан не верно");
                 }
             }
             else {
@@ -110,7 +116,7 @@ public class CheckingController {
             return "checking/checkPathFileScan";
         }
         if (points.size()==0){
-            model.addAttribute("nopoints", "Ни один файл сканера прочитать не удалось. Что-то не так.");
+            model.addAttribute("nopoints", "Ни один файл сканера прочитать не удалось. Неправильно указан путь к файлу");
             model.addAttribute("btss",this.listFilesBts);
             model.addAttribute("listFiles",this.listWithNmf);
             return "checking/checkPathFileScan";
@@ -199,17 +205,22 @@ public class CheckingController {
 
     public int setPosition(Integer posname){
         Position position=null;
+        List<CellInfo> list=null;
         if (posname!=null) {
             if (useBTSFile){
-                //написать код
-            }
-            else {
-                List<CellInfo> list = cellNameDAO.getInfoForBS(posname);
+                String param = btsLines.get(0);
+                list = btsLines.stream().filter(p->p.contains(";"+posname+";")).map(p->new CellInfo(param, p)).collect(Collectors.toList());
                 if (list.size() == 0) {
                     return -1;
                 }
-                position = new Position(list);
             }
+            else {
+                list = cellNameDAO.getInfoForBS(posname);
+                if (list.size() == 0) {
+                    return -1;
+                }
+            }
+            position = new Position(list);
         }
         position.setPointsInPosition(points);
         position.setAllPointsToCells();

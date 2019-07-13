@@ -10,6 +10,7 @@
     <div th:if="${nobts}" th:utext="${nobts}" style="color: red"> </div>
     <div th:if="${nofiles}" th:utext="${nofiles}" style="color: red"> </div>
     <div th:if="${nopoints}" th:utext="${nopoints}" style="color: red"></div>
+    <div th:if="${nobtsread}" th:utext="${nobtsread}" style="color: orange"></div>
 </div>
 <div>
     <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post">

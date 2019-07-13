@@ -1,5 +1,8 @@
 package com.work.sqlServerProject.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by a.shcherbakov on 19.02.2019.
  */
@@ -24,7 +27,32 @@ public class CellInfo {
     private Object rncid;
     private String region;
 
-    public CellInfo() {
+    public CellInfo(String param, String info) {
+        Map<String,String> reference=new HashMap<>();
+        String[]paraminfo=param.split(";");
+        String[]values=info.split(";");
+        for (int i=0;i<paraminfo.length;i++){
+            reference.put(paraminfo[i],values[i]);
+        }
+        this.system = reference.get("SYSTEM");
+        this.syte = Integer.parseInt(reference.get("SITE"));
+        this.ci = Integer.parseInt(reference.get("CID"));
+        this.lat = Float.parseFloat(reference.get("LAT"));
+        this.lon = Float.parseFloat(reference.get("LON"));
+        this.cell = reference.get("CELL");
+        this.lac = Integer.parseInt(reference.get("LAC"));
+        this.tac = reference.get("TAC");
+        this.band = Integer.parseInt(reference.get("BAND"));
+        this.bsc = reference.get("BSC");
+        this.ch = Integer.parseInt("CH");
+        this.bsic= reference.get("BSIC");
+        this.scr = reference.get("SCR");
+        this.pci = reference.get("PCI");
+        this.dir = Integer.parseInt("DIR");
+        this.height = Integer.parseInt("HEIGHT");
+        this.tilt = Integer.parseInt("TILT");
+        this.rncid = reference.get("RNCID");
+        this.region = reference.get("REGION");
     }
 
     public CellInfo(String system, int syte, int ci, float lat, float lon, String cell, int lac, Object tac, int band, Object bsc, int ch, Object bsic, Object scr, Object pci, int dir, int height, int tilt, Object rncid, String region) {
@@ -52,6 +80,8 @@ public class CellInfo {
         this.rncid = rncid;
         this.region = region;
     }
+
+
 
     public String getSystem() {
         return system;

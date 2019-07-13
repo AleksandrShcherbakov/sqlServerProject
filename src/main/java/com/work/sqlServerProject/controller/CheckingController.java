@@ -128,12 +128,15 @@ public class CheckingController {
         return "checking/checkPos";
     }
 
-    public List<Path> getBtsPaths(String pathDir){
+    public List<Path> getBtsPaths(String pathDir) {
         File dir = new File(pathDir); //path указывает на директорию
         File[] arrFiles = dir.listFiles();
-        List<Path> files = Arrays.stream(arrFiles).map(p->p.toPath()).filter(p->p.toString().endsWith(".nbf")).peek(System.out::println)
-                .sorted(FileScanHelper.comparator).collect(Collectors.toList());
-        return files;
+        if (arrFiles != null) {
+            List<Path> files = Arrays.stream(arrFiles).map(p -> p.toPath()).filter(p -> p.toString().endsWith(".nbf")).peek(System.out::println)
+                    .sorted(FileScanHelper.comparator).collect(Collectors.toList());
+            return files;
+        }
+        else return new ArrayList<>();
     }
 
     public String readFiles(String path){

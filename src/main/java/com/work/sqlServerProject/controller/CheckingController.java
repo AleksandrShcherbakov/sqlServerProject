@@ -34,9 +34,11 @@ public class CheckingController {
     List<Point> points=null;
     String[]listPath={"Y:\\! MEASUREMENT FILES\\SUZUKI_01",
             "Y:\\! MEASUREMENT FILES\\SUZUKI_01"};
+
     List<String> listWithNmf=null;
     List<String> listFilesBts=null;
-    String pathToNbf="Y:\\! MEASUREMENT FILES";
+
+    String pathToNbf="C://giants";
     boolean useBTSFile=false;
     String pathToBts=null;
     List<String>btsLines=null;
@@ -67,19 +69,19 @@ public class CheckingController {
                                        @RequestParam (required = false,name = "file") String files,
                                        @RequestParam (required = false, name= "isBTS") String isBts,//галочка
                                        @RequestParam (required = false, name = "bts") String btsPath){
+        if (isBts==null){
+            this.useBTSFile=false;
+        }
+        else
         if (isBts!=null){
             this.useBTSFile=true;
-            if (this.btsLines!=null){
-                System.out.println("файл BTS уже загружен -"+pathToBts);
-            }
-            else
             if (!pathScanFile.getToBts().equals("")){
                 this.pathToBts=pathScanFile.getToBts();
                 try {
                     this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
                 } catch (IOException e) {
                     System.out.println(pathToBts+ " файл с BTS не прочитан");
-                    model.addAttribute("nobtsread", "БТС файл указан не верно");
+                    model.addAttribute("nobtsread", "БТС файл указан не верно "+pathToBts);
                 }
             }
             else
@@ -89,7 +91,7 @@ public class CheckingController {
                     this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
                 } catch (IOException e) {
                     System.out.println(pathToBts+ " файл с BTS не прочитан");
-                    model.addAttribute("nobtsread", "БТС файл указан не верно");
+                    model.addAttribute("nobtsread", "БТС файл указан не верно "+pathToBts);
                 }
             }
             else {
@@ -138,7 +140,7 @@ public class CheckingController {
         File dir = new File(pathDir); //path указывает на директорию
         File[] arrFiles = dir.listFiles();
         if (arrFiles != null) {
-            List<Path> files = Arrays.stream(arrFiles).map(p -> p.toPath()).filter(p -> p.toString().endsWith(".nbf")).peek(System.out::println)
+            List<Path> files = Arrays.stream(arrFiles).map(p -> p.toPath()).filter(p -> p.toString().endsWith(".csv") || p.toString().endsWith(".nmf")).peek(System.out::println)
                     .sorted(FileScanHelper.comparator).collect(Collectors.toList());
             return files;
         }
@@ -186,6 +188,10 @@ public class CheckingController {
                 int pos=Integer.parseInt(s);
                 int i=setPosition(pos);
                 if (i==-1){
+                    if (useBTSFile){
+                        res.append("Позиции "+pos+" в БТС файле не найдено<br>");
+                    }
+                    else
                     res.append("Позиции "+pos+" в базе не найдено<br>");
                 }
             }

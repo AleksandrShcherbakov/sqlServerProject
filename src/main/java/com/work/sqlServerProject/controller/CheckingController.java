@@ -30,18 +30,30 @@ public class CheckingController {
 
     @Autowired
     private CellNameDAO cellNameDAO;
-    private Map<Integer, Position> positions=null;
-    List<Point> points=null;
-    String[]listPath={"Y:\\! MEASUREMENT FILES\\SUZUKI_01",
+    private Map<Integer, Position> positions = null;
+    List<Point> points = null;
+    String[] listPath = {"Y:\\! MEASUREMENT FILES\\SUZUKI_01",
             "Y:\\! MEASUREMENT FILES\\SUZUKI_01"};
 
-    List<String> listWithNmf=null;
-    List<String> listFilesBts=null;
+    List<String> listWithNmf = null;
+    List<String> listFilesBts = null;
+    String pathToNbf = "C://giants";
+    boolean useBTSFile = false;
+    String pathToBts = null;
+    List<String> btsLines = null;
+    List<String> alredyLoadedFiles=new ArrayList<>();
 
-    String pathToNbf="C://giants";
-    boolean useBTSFile=false;
-    String pathToBts=null;
-    List<String>btsLines=null;
+    @RequestMapping(value = "/reset", method = RequestMethod.GET)
+    public String reset(Model model) {
+        useBTSFile = false;
+        pathToBts = null;
+        btsLines = null;
+        points=null;
+        alredyLoadedFiles.clear();
+        return "redirect:/inputScan";
+    }
+
+
 
 
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
@@ -60,6 +72,7 @@ public class CheckingController {
         model.addAttribute("btss",filesBts);
         model.addAttribute("listFiles",listStr);
         model.addAttribute("pathScanFile", pathScanFile);
+        model.addAttribute("loaded", alredyLoadedFiles);
         return "checking/checkPathFileScan";
     }
 
@@ -71,6 +84,8 @@ public class CheckingController {
                                        @RequestParam (required = false, name = "bts") String btsPath){
         if (isBts==null){
             this.useBTSFile=false;
+            this.pathToBts=null;
+            this.btsLines=null;
         }
         else
         if (isBts!=null){
@@ -104,11 +119,13 @@ public class CheckingController {
         StringBuilder stringBuilder=new StringBuilder();
         if (!pathScanFile.getUrl().equals("")) {
             stringBuilder.append(readFiles(pathScanFile.getUrl()));
+            alredyLoadedFiles.add(pathScanFile.getUrl());
         }
         if (files!=null) {
             String[] file = files.split(",");
             for (String s : file) {
                 stringBuilder.append(readFiles(s));
+                alredyLoadedFiles.add(s);
             }
         }
         if (pathScanFile.getUrl().equals("") && files==null){

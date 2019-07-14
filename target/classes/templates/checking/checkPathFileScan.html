@@ -32,6 +32,11 @@
             или выберите из имеющихся:
             <div id="listOfBts"></div>
         </div>
+        <div>
+            <form th:action="@{/reset}" th:method="get">
+            <input type="submit" value="сбросить загруженные файлы">
+            </form>
+        </div>
         <script>
             $('#checkBts').hide();
             $('#useBts').click(function () {
@@ -90,5 +95,6 @@
         files.appendChild(br);
     }
 </script>
+
 </body>
 </html>

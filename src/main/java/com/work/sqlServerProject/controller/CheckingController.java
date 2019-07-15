@@ -13,14 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by a.shcherbakov on 24.06.2019.
@@ -32,12 +30,12 @@ public class CheckingController {
     private CellNameDAO cellNameDAO;
     private Map<Integer, Position> positions = null;
     List<Point> points = null;
-    String[] listPath = {"Y:\\! MEASUREMENT FILES\\SUZUKI_01",
-            "Y:\\! MEASUREMENT FILES\\SUZUKI_01"};
+    String[] listPath = {"Y:\\! MEASUREMENT FILES\\SUZUKI_01\\",
+            "Y:\\! MEASUREMENT FILES\\SUZUKI_02\\"};
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = "C://giants";
+    String pathToNbf = "Y:\\! MEASUREMENT FILES\\";
     boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;
@@ -157,7 +155,7 @@ public class CheckingController {
         File dir = new File(pathDir); //path указывает на директорию
         File[] arrFiles = dir.listFiles();
         if (arrFiles != null) {
-            List<Path> files = Arrays.stream(arrFiles).map(p -> p.toPath()).filter(p -> p.toString().endsWith(".csv") || p.toString().endsWith(".nmf")).peek(System.out::println)
+            List<Path> files = Arrays.stream(arrFiles).map(p -> p.toPath()).filter(p -> p.toString().endsWith(".csv") || p.toString().endsWith(".nbf")).peek(System.out::println)
                     .sorted(FileScanHelper.comparator).collect(Collectors.toList());
             return files;
         }

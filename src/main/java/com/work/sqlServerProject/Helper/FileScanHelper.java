@@ -5,13 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -43,14 +39,19 @@ public class FileScanHelper {
         Path path = Paths.get(pathToDirectory);
         List<Path>resFiles=new ArrayList<>();
 
-        try {
-            List<Path>files= Files.walk(path).filter(p->Files.isRegularFile(p) && p.toString().endsWith("1.nmf")).collect(Collectors.toList());
-            files.sort(comparator);
-            resFiles=files.subList(0, 3);
 
+        List<Path>files= null;
+        try {
+            files = Files.walk(path).filter(p->Files.isRegularFile(p) && p.toString().endsWith("1.nmf")).collect(Collectors.toList());
         } catch (IOException e) {
-            System.out.println("неправильно указана директория с файлами .nmf");
+            e.printStackTrace();
         }
+        files.sort(comparator);
+            if (files.size()>=3) {
+                resFiles = files.subList(0, 3);
+            }
+            else resFiles=files;
+
         return resFiles;
     }
 }

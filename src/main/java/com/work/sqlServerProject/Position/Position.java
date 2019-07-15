@@ -31,24 +31,24 @@ public class Position {
                 Cell2G p  = (Cell2G) c;
                 p.putAllrxLevinband();
                 p.checkCell();
-                stringBuilder.append(p.toString());
-                stringBuilder.append("<br>");
+                //stringBuilder.append(p.toString());
+                //stringBuilder.append("<br>");
             }
             else
             if (classOfCell.equals("Cell3G")){
                 Cell3G p  = (Cell3G) c;
                 p.putAllRSCPinband();
                 p.checkCell();
-                stringBuilder.append(p.toString());
-                stringBuilder.append("<br>");
+                //stringBuilder.append(p.toString());
+                //stringBuilder.append("<br>");
             }
             else
             if (classOfCell.equals("Cell4G")){
                 Cell4G p  = (Cell4G) c;
                 p.putAllRSRPinband();
                 p.checkCell();
-                stringBuilder.append(p.toString());
-                stringBuilder.append("<br>");
+                //stringBuilder.append(p.toString());
+                //stringBuilder.append("<br>");
             }
         }
         for (Short i : techAndDiapazon){
@@ -60,7 +60,7 @@ public class Position {
             long countOfNoBest=cellsOfOneBand.size()-countOfExistBest;
             System.out.println(i+" "+countOfExistBest);
             String res=null;
-            res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "&posName="+cellsOfOneBand.get(0).getPosname()+"'>" + cellsOfOneBand.get(0).getAbout() + "</a>";
+            res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "&posName="+cellsOfOneBand.get(0).getPosname()+"' target=\"_blank\">" + cellsOfOneBand.get(0).getAbout() + "</a>";
             if (countOfExistBest==0){
                 stringBuilder.append(res+" - <span style='color:orange'>скорее всего сектора не в эфире, либо Ch, SCR, PCI на сети не соответствует General, либо чтото еще.</span>");
                 stringBuilder.append("<br>");

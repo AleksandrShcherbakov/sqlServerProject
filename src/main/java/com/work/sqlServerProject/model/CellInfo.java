@@ -44,13 +44,13 @@ public class CellInfo {
         this.tac = reference.get("TAC");
         this.band = Integer.parseInt(reference.get("BAND"));
         this.bsc = reference.get("BSC");
-        this.ch = Integer.parseInt("CH");
+        this.ch = Integer.parseInt(reference.get("CH"));
         this.bsic= reference.get("BSIC");
         this.scr = reference.get("SCR");
         this.pci = reference.get("PCI");
-        this.dir = Integer.parseInt("DIR");
-        this.height = Integer.parseInt("HEIGHT");
-        this.tilt = Integer.parseInt("TILT");
+        this.dir = Integer.parseInt(reference.get("DIR"));
+        this.height = Integer.parseInt(reference.get("HEIGHT"));
+        this.tilt = Integer.parseInt(reference.get("TILT"));
         this.rncid = reference.get("RNCID");
         this.region = reference.get("REGION");
     }

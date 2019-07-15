@@ -12,11 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.*;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,26 +27,17 @@ public class CheckingController {
     private CellNameDAO cellNameDAO;
     private Map<Integer, Position> positions = null;
     List<Point> points = null;
-    String[] listPath = {"Y:\\! MEASUREMENT FILES\\SUZUKI_01\\",
-            "Y:\\! MEASUREMENT FILES\\SUZUKI_02\\"};
+    String[] listPath = {"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_01",
+                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_02",
+                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_81"};
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = "Y:\\! MEASUREMENT FILES\\";
+    String pathToNbf = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES";
     boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;
     List<String> alredyLoadedFiles=new ArrayList<>();
-
-    @RequestMapping(value = "/reset", method = RequestMethod.GET)
-    public String reset(Model model) {
-        useBTSFile = false;
-        pathToBts = null;
-        btsLines = null;
-        points=null;
-        alredyLoadedFiles.clear();
-        return "redirect:/inputScan";
-    }
 
 
 
@@ -91,7 +79,15 @@ public class CheckingController {
             if (!pathScanFile.getToBts().equals("")){
                 this.pathToBts=pathScanFile.getToBts();
                 try {
-                    this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
+                    btsLines=new ArrayList<>();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToBts)));
+                    String s = reader.readLine();
+                    while (s!=null){
+                        System.out.println(s);
+                        btsLines.add(s);
+                        s=reader.readLine();
+                    }
+                    reader.close();
                 } catch (IOException e) {
                     System.out.println(pathToBts+ " файл с BTS не прочитан");
                     model.addAttribute("nobtsread", "БТС файл указан не верно "+pathToBts);
@@ -101,7 +97,16 @@ public class CheckingController {
             if (btsPath!=null){
                 this.pathToBts=btsPath;
                 try {
-                    this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
+                    btsLines=new ArrayList<>();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToBts)));
+                    String s = reader.readLine();
+                    while (s!=null){
+                        System.out.println(s);
+                        btsLines.add(s);
+                        s=reader.readLine();
+                    }
+                    reader.close();
+                    //this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
                 } catch (IOException e) {
                     System.out.println(pathToBts+ " файл с BTS не прочитан");
                     model.addAttribute("nobtsread", "БТС файл указан не верно "+pathToBts);
@@ -211,6 +216,7 @@ public class CheckingController {
                 }
             }
             catch (Exception e){
+                e.printStackTrace();
                 res.append("В указании списка позиций ошибка: "+s+"<br>");
             }
         }
@@ -230,7 +236,18 @@ public class CheckingController {
         if (posname!=null) {
             if (useBTSFile){
                 String param = btsLines.get(0);
-                list = btsLines.stream().filter(p->p.contains(";"+posname+";")).map(p->new CellInfo(param, p)).collect(Collectors.toList());
+                String[]parameters=param.split(";");
+                int i=0;
+                for (int s=0;s<parameters.length;s++){
+                    if (parameters[s].equals("SITE")) {
+                        i = s;
+                        break;
+                    }
+                }
+                System.out.println(i);
+
+                int finalI = i;
+                list = btsLines.stream().filter(p->p.split(";")[finalI].equals(posname+"")).map(p->new CellInfo(param, p)).collect(Collectors.toList());
                 if (list.size() == 0) {
                     return -1;
                 }

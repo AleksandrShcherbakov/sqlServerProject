@@ -46,12 +46,13 @@ public class FileScanHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        files.sort(comparator);
-            if (files.size()>=3) {
+        if (files!=null) {
+            files.sort(comparator);
+            if (files.size() >= 3) {
                 resFiles = files.subList(0, 3);
             }
             else resFiles=files;
-
+        }
         return resFiles;
     }
 }

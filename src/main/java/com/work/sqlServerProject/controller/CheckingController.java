@@ -29,14 +29,14 @@ public class CheckingController {
     private CellNameDAO cellNameDAO;
     private Map<Integer, Position> positions = null;
     List<Point> points = null;
-    String[] listPath = {/*"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_01",
+    String[] listPath = {"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_01",
                         "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_02",
-                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_81",*/
+                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_81",
                         "C:\\projects\\для тестирования"};
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = "C:\\projects\\для тестирования"/*"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"*/;
+    String pathToNbf = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES";
     boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;

@@ -1,6 +1,7 @@
 <html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title></title>
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru-RU" type="text/javascript"></script>
     <style>
         body, html {
@@ -17,10 +18,10 @@
 </head>
 
 <body>
+<div th:if="${nopoints}" th:utext="${nopoints}" style="color: red"></div>
 <div id="map"></div>
 <div id="note"></div>
 <script th:inline="javascript">
-
     var precision = 30;
     var map;
     var points = [];
@@ -35,6 +36,9 @@
     var latPos=[[${lat}]];
     var lonPos=[[${lon}]];
     var rad=[[${radius}]];
+    var pos=[[${pos}]];
+    var about=[[${about}]];
+    document.title=pos+" "+about;
 
     function init() {
         map = new ymaps.Map("map", {

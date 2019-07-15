@@ -11,6 +11,12 @@
     <div th:if="${nofiles}" th:utext="${nofiles}" style="color: red"> </div>
     <div th:if="${nopoints}" th:utext="${nopoints}" style="color: red"></div>
     <div th:if="${nobtsread}" th:utext="${nobtsread}" style="color: orange"></div>
+    <div id="alredyExist">
+
+    </div>
+    <form id="formForExist" th:action="@{/reset}" th:method="get">
+        <input type="submit" value="удалить загруженные файлы">
+    </form>
 </div>
 <div>
     <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post">
@@ -32,6 +38,7 @@
             или выберите из имеющихся:
             <div id="listOfBts"></div>
         </div>
+
         <script>
             $('#checkBts').hide();
             $('#useBts').click(function () {
@@ -44,11 +51,29 @@
             });
         </script>
         <script th:inline="javascript">
+            $('#formForExist').hide();
+            var alredy=[[${loaded}]];
+            var count = [[${countOfPoints}]];
+            if (alredy.length>0){
+                var exist = document.getElementById("alredyExist");
+                var p = document.createElement("p");
+                p.appendChild(document.createTextNode("Загруженные файлы:"));
+                exist.appendChild(p);
+                for (i=0;i<alredy.length;i++){
+                    var p = document.createElement("p");
+                    var t = document.createTextNode(alredy[i]);
+                    p.appendChild(t);
+                    exist.appendChild(p);
+                }
+                $('#formForExist').show();
+            }
+        </script>
+        <script th:inline="javascript">
             var list=[[${btss}]];
             var files = document.getElementById('listOfBts');
             if (list.length===0){
                 var p = document.createElement("p");
-                var t = document.createTextNode("Список возможных вариантов пуст, скорее всего Вы не на работе.");
+                var t = document.createTextNode("Список возможных вариантов пуст.");
                 p.appendChild(t);
                 files.appendChild(p);
             }
@@ -73,7 +98,7 @@
     var files = document.getElementById('files');
     if (list.length===0){
         var p = document.createElement("p");
-        var t = document.createTextNode("Список возможных вариантов пуст, скорее всего Вы не на работе.");
+        var t = document.createTextNode("Список возможных вариантов пуст.");
         p.appendChild(t);
         files.appendChild(p);
     }

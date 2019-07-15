@@ -1,5 +1,6 @@
 package com.work.sqlServerProject.controller;
 
+import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import com.work.sqlServerProject.Helper.ColorHelper;
 import com.work.sqlServerProject.Helper.FileScanHelper;
 import com.work.sqlServerProject.NBFparser.Parser;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,18 +29,27 @@ public class CheckingController {
     private CellNameDAO cellNameDAO;
     private Map<Integer, Position> positions = null;
     List<Point> points = null;
-    String[] listPath = {"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_01",
+    String[] listPath = {/*"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_01",
                         "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_02",
-                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_81"};
+                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_81",*/
+                        "C:\\projects\\для тестирования"};
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES";
+    String pathToNbf = "C:\\projects\\для тестирования"/*"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"*/;
     boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;
     List<String> alredyLoadedFiles=new ArrayList<>();
 
+    @RequestMapping(value = "/reset", method = RequestMethod.GET)
+    public String reset(Model model){
+        System.out.println("до "+alredyLoadedFiles.size());
+        alredyLoadedFiles.clear();
+        points.clear();
+        System.out.println("после "+alredyLoadedFiles.size());
+        return "redirect:/inputScan";
+    }
 
 
 
@@ -59,6 +70,9 @@ public class CheckingController {
         model.addAttribute("listFiles",listStr);
         model.addAttribute("pathScanFile", pathScanFile);
         model.addAttribute("loaded", alredyLoadedFiles);
+        if (points!=null){
+            model.addAttribute("countOfPoints", points.size());
+        }
         return "checking/checkPathFileScan";
     }
 
@@ -83,7 +97,6 @@ public class CheckingController {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToBts)));
                     String s = reader.readLine();
                     while (s!=null){
-                        System.out.println(s);
                         btsLines.add(s);
                         s=reader.readLine();
                     }
@@ -101,12 +114,10 @@ public class CheckingController {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToBts)));
                     String s = reader.readLine();
                     while (s!=null){
-                        System.out.println(s);
                         btsLines.add(s);
                         s=reader.readLine();
                     }
                     reader.close();
-                    //this.btsLines= Files.lines(Paths.get(pathToBts)).collect(Collectors.toList());
                 } catch (IOException e) {
                     System.out.println(pathToBts+ " файл с BTS не прочитан");
                     model.addAttribute("nobtsread", "БТС файл указан не верно "+pathToBts);
@@ -121,24 +132,32 @@ public class CheckingController {
         }
         StringBuilder stringBuilder=new StringBuilder();
         if (!pathScanFile.getUrl().equals("")) {
-            stringBuilder.append(readFiles(pathScanFile.getUrl()));
-            alredyLoadedFiles.add(pathScanFile.getUrl());
+            if (alredyLoadedFiles.contains(pathScanFile.getUrl())) {
+                System.out.println(pathScanFile.getUrl() + " уже загружен");
+            } else {
+                stringBuilder.append(readFiles(pathScanFile.getUrl()));
+                alredyLoadedFiles.add(pathScanFile.getUrl());
+            }
         }
         if (files!=null) {
             String[] file = files.split(",");
             for (String s : file) {
-                stringBuilder.append(readFiles(s));
-                alredyLoadedFiles.add(s);
+                if (alredyLoadedFiles.contains(s)) {
+                    System.out.println(s + " уже загружен");
+                } else {
+                    stringBuilder.append(readFiles(s));
+                    alredyLoadedFiles.add(s);
+                }
             }
         }
-        if (pathScanFile.getUrl().equals("") && files==null){
-            model.addAttribute("nofiles", "Не указан ни один файл сканера.");
+        if (pathScanFile.getUrl().equals("") && files==null && alredyLoadedFiles.size()==0){
+            model.addAttribute("nofiles", "Не указан и не загружен ни один файл сканера.");
             model.addAttribute("btss",this.listFilesBts);
             model.addAttribute("listFiles",this.listWithNmf);
             return "checking/checkPathFileScan";
         }
         if (points.size()==0){
-            model.addAttribute("nopoints", "Ни один файл сканера прочитать не удалось. Неправильно указан путь к файлу сканера.");
+            model.addAttribute("nopoints", "Ни один файл сканера прочитать не удалось. Возможно неправильно указан путь к файлу сканера.");
             model.addAttribute("btss",this.listFilesBts);
             model.addAttribute("listFiles",this.listWithNmf);
             return "checking/checkPathFileScan";
@@ -215,6 +234,10 @@ public class CheckingController {
                     res.append("Позиции "+pos+" в базе не найдено<br>");
                 }
             }
+            catch (SQLException e){
+                res.append("Нет доступа к базк general, а БТС файл не выбран.<br>" +
+                        "<a href='/inputScan'>Вернуться на страницу выбора</a>");
+            }
             catch (Exception e){
                 e.printStackTrace();
                 res.append("В указании списка позиций ошибка: "+s+"<br>");
@@ -230,7 +253,7 @@ public class CheckingController {
 
     }
 
-    public int setPosition(Integer posname){
+    public int setPosition(Integer posname) throws SQLException {
         Position position=null;
         List<CellInfo> list=null;
         if (posname!=null) {
@@ -253,7 +276,12 @@ public class CheckingController {
                 }
             }
             else {
-                list = cellNameDAO.getInfoForBS(posname);
+                try {
+                    list = cellNameDAO.getInfoForBS(posname);
+                }
+                catch (Exception e){
+                    throw new SQLException();
+                }
                 if (list.size() == 0) {
                     return -1;
                 }
@@ -375,7 +403,20 @@ public class CheckingController {
             }
         }
         List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).peek(p-> System.out.println(p.getColor())).collect(Collectors.toList());
-        double maxDist=pointsTomap.stream().mapToDouble(p->p.getDistToPos().get(pos)).max().getAsDouble();
+        double maxDist=500;
+        boolean nopoints=false;
+        try {
+            maxDist=pointsTomap.stream().mapToDouble(p->p.getDistToPos().get(pos)).max().getAsDouble();
+        }
+        catch (NoSuchElementException e){
+            e.printStackTrace();
+            nopoints=true;
+        }
+        if (nopoints){
+            model.addAttribute("nopoints", "Для позиции "+pos+" измерений нет.");
+        }
+        model.addAttribute("pos",pos);
+        model.addAttribute("about", about);
 
         model.addAttribute("cells", cellToMapList);
         model.addAttribute("pointss", list);

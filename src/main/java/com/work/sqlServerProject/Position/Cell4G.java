@@ -60,9 +60,7 @@ public class Cell4G extends Cell {
 
             }
         }
-        if(this.getCi()==7700734){
-            System.out.println(this.getCi()+" "+bestCI);
-        }
+        System.out.println(super.getCi()+" "+bestCI+" "+super.getAzimuth());
         return bestCI+" "+(bestCI==super.getCi()? "true":"false");
     }
 

@@ -96,6 +96,9 @@ public class Cell {
         //leftBorderAzimuth=((this.azimuth+previous.azimuth+sectorOfFinding)%360)/2;
         //rightBorderAzimuth=((this.azimuth+next.azimuth-sectorOfFinding)%360)/2;
         leftBorderAzimuth=((this.azimuth-sectorOfFinding/2)%360);
+        if (leftBorderAzimuth<0){
+            leftBorderAzimuth=360+leftBorderAzimuth;
+        }
         rightBorderAzimuth=((this.azimuth+sectorOfFinding/2)%360);
     }
 
@@ -109,13 +112,11 @@ public class Cell {
             if (dist<=maxDistance && dist>=minDistance){
                 if (rightBorderAzimuth>leftBorderAzimuth) {
                     if (az > leftBorderAzimuth && az < rightBorderAzimuth) {
-                        //System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
                         checkNotNullAndAdd(p, target);
                     }
                 }
                 else
                     if ((az>=0 && az<rightBorderAzimuth) || (az<360 && az>leftBorderAzimuth)){
-                        //System.out.println(dist + " " + az + " " + p.getLatitude() + " " + p.getLongitude());
                         checkNotNullAndAdd(p, target);
                     }
             }

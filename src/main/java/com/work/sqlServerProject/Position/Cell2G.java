@@ -50,12 +50,16 @@ public class Cell2G extends Cell {
         double temp=0;
         for (Integer i : map.keySet()){
             temp=map.get(i);
+            if (super.getCi()==48575){
+                System.out.println(temp);
+            }
 
             if (temp==0)
                 continue;
             if (temp>maxRxLev){
                 maxRxLev=temp;
                 bestCI=i;
+                System.out.println(super.getCi()+" "+i+" "+temp);
             }
         }
         return bestCI+" "+(bestCI==super.getCi()? "true":"false");

@@ -1,6 +1,5 @@
 package com.work.sqlServerProject.controller;
 
-import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import com.work.sqlServerProject.Helper.ColorHelper;
 import com.work.sqlServerProject.Helper.FileScanHelper;
 import com.work.sqlServerProject.NBFparser.Parser;
@@ -245,7 +244,7 @@ public class CheckingController {
         }
 
         for (Map.Entry p : positions.entrySet()){
-            res.append(p.getKey()+"<br>"+
+            res.append("<b>"+p.getKey()+"</b><br><br>"+
                     p.getValue().toString()+"<br>");
             res.append("=================================================================<br><br>");
         }
@@ -402,7 +401,7 @@ public class CheckingController {
                 pointsTomap.addAll(set);
             }
         }
-        List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).peek(p-> System.out.println(p.getColor())).collect(Collectors.toList());
+        List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).collect(Collectors.toList());
         double maxDist=500;
         boolean nopoints=false;
         try {

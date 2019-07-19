@@ -16,6 +16,8 @@ public class Position {
     private int numberOfPosition;
     private List<Cell>cells;
     private StringBuilder stringBuilder=new StringBuilder();
+    private StringBuilder detailResult=new StringBuilder();
+    String resDetail="";
     private List<Point>allPointsInPosition;
     private int distance;
 
@@ -31,26 +33,32 @@ public class Position {
                 Cell2G p  = (Cell2G) c;
                 p.putAllrxLevinband();
                 p.checkCell();
-                //stringBuilder.append(p.toString());
-                //stringBuilder.append("<br>");
+                detailResult.append(p.toString());
+                detailResult.append("<br>");
             }
             else
             if (classOfCell.equals("Cell3G")){
                 Cell3G p  = (Cell3G) c;
                 p.putAllRSCPinband();
                 p.checkCell();
-                //stringBuilder.append(p.toString());
-                //stringBuilder.append("<br>");
+                detailResult.append(p.toString());
+                detailResult.append("<br>");
             }
             else
             if (classOfCell.equals("Cell4G")){
                 Cell4G p  = (Cell4G) c;
                 p.putAllRSRPinband();
                 p.checkCell();
-                //stringBuilder.append(p.toString());
-                //stringBuilder.append("<br>");
+                detailResult.append(p.toString());
+                detailResult.append("<br>");
             }
         }
+        for (Cell c : cells){
+            System.out.println(c.getCi()+" "+c.getAbout()+" "+c.getPointsInCell().size());
+        }
+        String div="<div id="+numberOfPosition+"'div' style='display: none;'><p>"+detailResult.toString()+"</p></div>";
+
+        resDetail = div;
         for (Short i : techAndDiapazon){
             List<Cell>cellsOfOneBand=cells.stream().filter(p->p.getNumID()==i).collect(Collectors.toList());
             List<Cell>cellsOfFalseWithExistBest=cellsOfOneBand.stream().filter(p->p.isOk()==false && p.getBestCellID()!=0).collect(Collectors.toList());
@@ -62,17 +70,17 @@ public class Position {
             String res=null;
             res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "&posName="+cellsOfOneBand.get(0).getPosname()+"' target=\"_blank\">" + cellsOfOneBand.get(0).getAbout() + "</a>";
             if (countOfExistBest==0){
-                stringBuilder.append(res+" - <span style='color:orange'>скорее всего сектора не в эфире, либо Ch, SCR, PCI на сети не соответствует General, либо чтото еще.</span>");
+                stringBuilder.append(res+" - <span style='color:orange'>или сектора не в эфире, или Ch, SCR, PCI на сети не соответствуют БД General. Либо станию не объехали.</span>");
                 stringBuilder.append("<br>");
             }
             else
             if (countOfTrue>=cellsOfOneBand.size()-1){
-                stringBuilder.append(res+" - <span style='color:green'>сектора сориентированы правильно.</span>");
+                stringBuilder.append(res+" - <span style='color:green'>Ok</span>");
                 stringBuilder.append("<br>");
             }
             else
             if (countOfNoBest>=2 || (cellsOfFalseWithExistBest.size()>=2 &&countOfDifBests<cellsOfFalseWithExistBest.size())){
-                stringBuilder.append(res+" - <span style='color:blue'>данных для определения правильности ориентации секторов недостаточно.</span>");
+                stringBuilder.append(res+" - <span style='color:blue'>данных недостаточно.</span>");
                 stringBuilder.append("<br>");
             }
             else
@@ -176,6 +184,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return stringBuilder.toString();
+        return stringBuilder.toString()+"<br>"+resDetail;
     }
 }

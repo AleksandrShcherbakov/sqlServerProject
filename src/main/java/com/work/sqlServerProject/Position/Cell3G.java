@@ -51,6 +51,7 @@ public class Cell3G extends Cell {
                 bestCI=i;
             }
         }
+        System.out.println(super.getCi()+" "+bestCI+" "+super.getAzimuth());
         return bestCI+" "+(bestCI==super.getCi()? "true":"false");
     }
 

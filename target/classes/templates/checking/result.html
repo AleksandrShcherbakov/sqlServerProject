@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="res"></div>
+
+<script th:inline="javascript">
+    var results=[[${resToTemplate}]];
+    var resDiv=document.getElementById("res");
+    var br=document.createElement("br");
+    for (i=0;i<results.length;i++){
+        var div=document.createElement("div");
+        div.id=elements[0];
+        var elements=results[i].split(" ");
+        var p = document.createElement("p");
+        var posNumber=elements[0];
+        alert(posNumber);
+        var commonRes=elements[1];
+        var detailRes=elements[2];
+        p.appendChild(posNumber);
+        p.appendChild(br);
+        p.appendChild(commonRes);
+        p.appendChild(br);
+        p.appendChild(detailRes);
+        div.appendChild(p);
+        resDiv.appendChild(div);
+    }
+</script>
+
+</body>
+</html>

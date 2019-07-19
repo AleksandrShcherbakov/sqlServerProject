@@ -266,8 +266,6 @@ public class CheckingController {
                         break;
                     }
                 }
-                System.out.println(i);
-
                 int finalI = i;
                 list = btsLines.stream().filter(p->p.split(";")[finalI].equals(posname+"")).map(p->new CellInfo(param, p)).collect(Collectors.toList());
                 if (list.size() == 0) {
@@ -302,8 +300,7 @@ public class CheckingController {
                          @RequestParam(required = false, name = "about") String about,
                          @RequestParam(required = false, name = "posName") String number){
         Integer pos = Integer.parseInt(number);
-        System.out.println(about);
-        List<Cell>cellList= positions.get(pos).getCells().stream().filter(p->p.getAbout().equals(about)).peek(System.out::println).collect(Collectors.toList());
+        List<Cell>cellList= positions.get(pos).getCells().stream().filter(p->p.getAbout().equals(about)).collect(Collectors.toList());
         Map<String, String> paramColor=new HashMap<>();
         for (int i=0; i<cellList.size();i++){
             if (cellList.get(i).getAbout().startsWith("GSM")){

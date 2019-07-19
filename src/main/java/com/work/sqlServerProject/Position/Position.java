@@ -53,9 +53,7 @@ public class Position {
                 detailResult.append("<br>");
             }
         }
-        for (Cell c : cells){
-            System.out.println(c.getCi()+" "+c.getAbout()+" "+c.getPointsInCell().size());
-        }
+
         String div="<div id="+numberOfPosition+"'div' style='display: none;'><p>"+detailResult.toString()+"</p></div>";
 
         resDetail = div;

@@ -103,7 +103,6 @@ public class Cell {
     }
 
     public void setPointsInCell(List<Point>source, List<Point>target, int leftBorderAzimuth,int rightBorderAzimuth){
-        //target=new ArrayList<>();
         double commonDist=0.0;
         int count=0;
         for (Point p : source){

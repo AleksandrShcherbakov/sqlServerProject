@@ -51,7 +51,9 @@ public class Cell3G extends Cell {
                 bestCI=i;
             }
         }
-        System.out.println(super.getCi()+" "+bestCI+" "+super.getAzimuth());
+        if (super.getCi()==16791 || super.getCi()==19789) {
+            System.out.println(super.getCi() + " " + bestCI + " " + super.getAzimuth());
+        }
         return bestCI+" "+(bestCI==super.getCi()? "true":"false");
     }
 
@@ -62,6 +64,10 @@ public class Cell3G extends Cell {
         int best2=Integer.parseInt(checkWithWeight[0]);
         boolean ok1 = Boolean.parseBoolean(checkWithAverRSCP[1]);
         boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
+        if (super.getCi()==16791 || super.getCi()==19789){
+            System.out.println(super.getCi()+" aver ="+best1+" "+ok1);
+            System.out.println(super.getCi()+" averWeight ="+best2+" "+ok2);
+        }
         if (best1==best2 && ok1==ok2){
             super.setBestCellID(best1);
             super.setOk(ok1);

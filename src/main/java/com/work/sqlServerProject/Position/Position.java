@@ -3,10 +3,7 @@ package com.work.sqlServerProject.Position;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.Point;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,21 +51,38 @@ public class Position {
             }
         }
 
-        String div="<div id="+numberOfPosition+"'div' style='display: none;'><p>"+detailResult.toString()+"</p></div>";
-
-        resDetail = div;
         for (Short i : techAndDiapazon){
-            List<Cell>cellsOfOneBand=cells.stream().filter(p->p.getNumID()==i).collect(Collectors.toList());
+            Map<Integer,Cell>selfAndBestCI= new HashMap<>();
+            List<Cell>cellsOfOneBand=cells.stream().filter(p->p.getNumID()==i).peek(p->selfAndBestCI.put(p.getCi(),p)).collect(Collectors.toList());
             List<Cell>cellsOfFalseWithExistBest=cellsOfOneBand.stream().filter(p->p.isOk()==false && p.getBestCellID()!=0).collect(Collectors.toList());
+
+            for (Cell c : cellsOfOneBand){
+                if (c.getBestCellID()!=0 && !c.isOk()){
+                    if (selfAndBestCI.get(c.getBestCellID()).getBestCellID()==c.getBestCellID()){
+                        c.setBestCellID(0);
+                    }
+                }
+            }
+
             long countOfDifBests=cellsOfFalseWithExistBest.stream().map(p->p.getBestCellID()).distinct().count();
             long countOfTrue=cellsOfOneBand.stream().filter(p->p.isOk()==true).count();
             long countOfExistBest=cellsOfOneBand.stream().filter(p->p.getBestCellID()!=0).count();
             long countOfNoBest=cellsOfOneBand.size()-countOfExistBest;
+
+            Set<Integer>unicBest=new HashSet<>();
+            long countOfFindedBests=cellsOfOneBand.stream().filter(p->p.getBestCellID()!=0).peek(p->unicBest.add(p.getBestCellID())).count();
+            long countOfUniques=unicBest.size();
+
             System.out.println(i+" "+countOfExistBest);
             String res=null;
             res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "&posName="+cellsOfOneBand.get(0).getPosname()+"' target=\"_blank\">" + cellsOfOneBand.get(0).getAbout() + "</a>";
             if (countOfExistBest==0){
                 stringBuilder.append(res+" - <span style='color:orange'>или сектора не в эфире, или Ch, SCR, PCI на сети не соответствуют БД General. Либо станию не объехали.</span>");
+                stringBuilder.append("<br>");
+            }
+            else
+            if (countOfUniques<countOfFindedBests){
+                stringBuilder.append(res+" - <span style='color: #31372b'>имеется неоднозначность.</span>");
                 stringBuilder.append("<br>");
             }
             else
@@ -82,6 +96,7 @@ public class Position {
                 stringBuilder.append("<br>");
             }
             else
+
             {
                 stringBuilder.append(res+" - <span style='color:red'>сектора перепутаны.</span>");
                 stringBuilder.append("<br>");
@@ -92,7 +107,7 @@ public class Position {
     public Position(List<CellInfo>cellInfo) {
         cells=new ArrayList<>();
         this.numberOfPosition=cellInfo.get(0).getSyte();
-        this.distance=1200;      // 1200м
+        this.distance=700;      // 700м
         for (CellInfo cell : cellInfo) {
             if (cell.toString().startsWith("UMTS")) {
                 cells.add(new Cell3G(cell, distance));
@@ -182,6 +197,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return stringBuilder.toString()+"<br>"+resDetail;
+        return stringBuilder.toString()+"<br>"+detailResult.toString();
     }
 }

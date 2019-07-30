@@ -243,12 +243,14 @@ public class CheckingController {
                 res.append("В указании списка позиций ошибка: "+s+"<br>");
             }
         }
-
+        List<String>toTemplate=new ArrayList<>();
         for (Map.Entry p : positions.entrySet()){
+            toTemplate.add(positions.get(p.getKey()).getInfoForTemplate());
             res.append("<b>"+p.getKey()+"</b><br><br>"+
                     p.getValue().toString()+"<br>");
             res.append("=================================================================<br><br>");
         }
+        model.addAttribute("allInfo", toTemplate);
         return  res.toString();
 
     }

@@ -107,7 +107,23 @@ public class Position {
     public Position(List<CellInfo>cellInfo) {
         cells=new ArrayList<>();
         this.numberOfPosition=cellInfo.get(0).getSyte();
-        this.distance=700;      // 700м
+        switch (cellInfo.get(0).getRegion()){
+            case "Mck: Center":
+                this.distance=500;
+                break;
+            case "Mck: M":
+                this.distance=700;
+                break;
+            case "Mck: M+":
+                this.distance=1000;
+                break;
+            case "Mck: M++":
+                this.distance=1500;
+                break;
+            default:
+                this.distance=1200;
+        }
+
         for (CellInfo cell : cellInfo) {
             if (cell.toString().startsWith("UMTS")) {
                 cells.add(new Cell3G(cell, distance));
@@ -192,6 +208,10 @@ public class Position {
 
     public void setCells(List<Cell> cells) {
         this.cells = cells;
+    }
+
+    public String getInfoForTemplate(){
+        return stringBuilder.toString()+"__"+detailResult.toString();
     }
 
 

@@ -68,7 +68,9 @@ public class Cell2G extends Cell {
         int best2=Integer.parseInt(checkWithWeight[0]);
         super.setBest2(best2);
         boolean ok1 = Boolean.parseBoolean(checkWithAverRxLev[1]);
+        super.setOk1(ok1);
         boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
+        super.setOk2(ok2);
 
         //для теста
         if (super.getCi()==42594) {
@@ -126,7 +128,7 @@ public class Cell2G extends Cell {
             System.out.println("averWeight = "+(common/count)/count);
         }
 
-        if (count<10){
+        if (count<20){
             return 0+" "+(common/count)/count;
         }
         return common/count+" "+(common/count)/count;

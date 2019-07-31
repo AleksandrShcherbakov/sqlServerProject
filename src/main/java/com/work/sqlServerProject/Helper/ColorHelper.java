@@ -10,8 +10,8 @@ public class ColorHelper {
     public static String[] mColors = {
             "#e15258", // red
             "#51b46d", // green
-            "#3079ab", // dark blue
             "#b7c0c7",  // light gray
+            "#3079ab", // dark blue
             "#f9845b", // orange
             "#c25975", // mauve
             "#637a91", // dark gray

@@ -90,13 +90,17 @@ public class Position {
 
             for (Cell c : cellsOfOneBand){
                 if (c.getBestCellID()!=0 && !c.isOk()){
-                    if (selfAndBestCI.get(c.getBestCellID()).getBestCellID()==c.getBestCellID()){
+                    if (selfAndBestCI.get(c.getBestCellID()).getBest1()==selfAndBestCI.get(c.getBestCellID()).getBest2() && selfAndBestCI.get(c.getBestCellID()).getBestCellID()==c.getBestCellID()){
                         if (c.getBest1()!=c.getBest2()){
-                            c.setBestCellID(c.getBest1());
+                            if (c.getBestCellID()==c.getBest1()) {
+                                c.setBestCellID(c.getBest2());
+                                c.setOk(c.isOk1());
+                            }
+                            else {
+                                c.setBestCellID(c.getBest1());
+                                c.setOk(c.isOk2());
+                            }
                         }
-                        /*else {
-                            c.setBestCellID(0);
-                        }*/
                     }
                 }
             }

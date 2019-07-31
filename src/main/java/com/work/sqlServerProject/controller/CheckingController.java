@@ -36,7 +36,7 @@ public class CheckingController {
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES";
+    String pathToNbf = /*"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"*/"C:\\projects\\для тестирования";
     boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;

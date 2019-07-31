@@ -124,7 +124,9 @@ public class Cell3G extends Cell {
         if (count==0){
             return 0+" "+0;
         }
-        countOfPoints=count;
+        if (count<20){
+            return 0+" "+(common/count)/count;
+        }
         return common/count+" "+(common/count)/count;
     }
 

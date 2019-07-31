@@ -35,6 +35,9 @@ public class Cell {
     private int best1;
     private int best2;
 
+    private boolean ok1;
+    private boolean ok2;
+
     Comparator<Cell> comparator = new Comparator<Cell>() {
         @Override
         public int compare(Cell o1, Cell o2) {
@@ -447,5 +450,21 @@ public class Cell {
 
     public void setBest2(int best2) {
         this.best2 = best2;
+    }
+
+    public boolean isOk1() {
+        return ok1;
+    }
+
+    public void setOk1(boolean ok1) {
+        this.ok1 = ok1;
+    }
+
+    public boolean isOk2() {
+        return ok2;
+    }
+
+    public void setOk2(boolean ok2) {
+        this.ok2 = ok2;
     }
 }

@@ -18,37 +18,69 @@ public class Position {
     private List<Point>allPointsInPosition;
     private int distance;
 
+    public String printDetailInfo(){
+        StringBuilder builder=new StringBuilder();
+        String ab = cells.get(0).getAbout();
+        for (Cell c : cells){
+            String classOfCell = c.getClass().getSimpleName();
+            if (!ab.equals(c.getAbout())) {
+                builder.append("<br>");
+            }
+            if (classOfCell.equals("Cell2G")) {
+                Cell2G p = (Cell2G) c;
+                builder.append(p.toString());
+                builder.append("<br>");
+
+            } else if (classOfCell.equals("Cell3G")) {
+                Cell3G p = (Cell3G) c;
+                builder.append(p.toString());
+                builder.append("<br>");
+
+            } else if (classOfCell.equals("Cell4G")) {
+                Cell4G p = (Cell4G) c;
+                builder.append(p.toString());
+                builder.append("<br>");
+
+            }
+            ab=c.getAbout();
+        }
+        return builder.toString();
+    }
+
     public void findBestScan(){
         Set<Short> techAndDiapazon = cells.stream() //имеющиеся диапаоны и технологии
                 .map(p->p.getNumID())
                 .distinct()
                 .collect(Collectors.toSet());
-
+        String ab = cells.get(0).getAbout();
         for (Cell c : cells){
             String classOfCell = c.getClass().getSimpleName();
-            if (classOfCell.equals("Cell2G")){
-                Cell2G p  = (Cell2G) c;
-                p.putAllrxLevinband();
-                p.checkCell();
-                detailResult.append(p.toString());
+            if (!ab.equals(c.getAbout())) {
                 detailResult.append("<br>");
             }
-            else
-            if (classOfCell.equals("Cell3G")){
-                Cell3G p  = (Cell3G) c;
-                p.putAllRSCPinband();
-                p.checkCell();
-                detailResult.append(p.toString());
-                detailResult.append("<br>");
-            }
-            else
-            if (classOfCell.equals("Cell4G")){
-                Cell4G p  = (Cell4G) c;
-                p.putAllRSRPinband();
-                p.checkCell();
-                detailResult.append(p.toString());
-                detailResult.append("<br>");
-            }
+            if (classOfCell.equals("Cell2G")) {
+                    Cell2G p = (Cell2G) c;
+                    p.putAllrxLevinband();
+                    p.checkCell();
+                    detailResult.append(p.toString());
+                    detailResult.append("<br>");
+
+                } else if (classOfCell.equals("Cell3G")) {
+                    Cell3G p = (Cell3G) c;
+                    p.putAllRSCPinband();
+                    p.checkCell();
+                    detailResult.append(p.toString());
+                    detailResult.append("<br>");
+
+                } else if (classOfCell.equals("Cell4G")) {
+                    Cell4G p = (Cell4G) c;
+                    p.putAllRSRPinband();
+                    p.checkCell();
+                    detailResult.append(p.toString());
+                    detailResult.append("<br>");
+
+                }
+            ab=c.getAbout();
         }
 
         for (Short i : techAndDiapazon){
@@ -59,7 +91,12 @@ public class Position {
             for (Cell c : cellsOfOneBand){
                 if (c.getBestCellID()!=0 && !c.isOk()){
                     if (selfAndBestCI.get(c.getBestCellID()).getBestCellID()==c.getBestCellID()){
-                        c.setBestCellID(0);
+                        if (c.getBest1()!=c.getBest2()){
+                            c.setBestCellID(c.getBest1());
+                        }
+                        /*else {
+                            c.setBestCellID(0);
+                        }*/
                     }
                 }
             }
@@ -81,7 +118,7 @@ public class Position {
                 stringBuilder.append("<br>");
             }
             else
-            if (countOfUniques<countOfFindedBests){
+            if (countOfUniques<countOfFindedBests && countOfTrue<cellsOfOneBand.size()-1){
                 stringBuilder.append(res+" - <span style='color: #31372b'>имеется неоднозначность.</span>");
                 stringBuilder.append("<br>");
             }
@@ -96,7 +133,6 @@ public class Position {
                 stringBuilder.append("<br>");
             }
             else
-
             {
                 stringBuilder.append(res+" - <span style='color:red'>сектора перепутаны.</span>");
                 stringBuilder.append("<br>");
@@ -217,6 +253,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return stringBuilder.toString()+"<br>"+detailResult.toString();
+        return stringBuilder.toString()+"<br>"/*+detailResult.toString()*/;
     }
 }

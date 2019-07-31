@@ -51,9 +51,6 @@ public class Cell3G extends Cell {
                 bestCI=i;
             }
         }
-        if (super.getCi()==16791 || super.getCi()==19789) {
-            System.out.println(super.getCi() + " " + bestCI + " " + super.getAzimuth());
-        }
         return bestCI+" "+(bestCI==super.getCi()? "true":"false");
     }
 
@@ -61,7 +58,9 @@ public class Cell3G extends Cell {
         String[] checkWithAverRSCP = findBestCI(allRSCP).split(" ");
         String[] checkWithWeight = findBestCI(allRSCPWeight).split(" ");
         int best1=Integer.parseInt(checkWithAverRSCP[0]);
+        super.setBest1(best1);
         int best2=Integer.parseInt(checkWithWeight[0]);
+        super.setBest2(best2);
         boolean ok1 = Boolean.parseBoolean(checkWithAverRSCP[1]);
         boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
         if (super.getCi()==16791 || super.getCi()==19789){
@@ -138,7 +137,7 @@ public class Cell3G extends Cell {
         else
             r=" ok: "+super.isOk();
 
-        return "system: "+super.getSystem()+" "+super.getBand()+
+        return "system: "+super.getSystem()+" "+super.getBand()+" "+super.getChannel()+
                 " selfCI: "+super.getCi()+
                 " bestScanCI: "+super.getBestCellID()+
                 " азимут: "+super.getAzimuth()+r;

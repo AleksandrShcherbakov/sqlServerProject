@@ -32,6 +32,8 @@ public class Cell {
     private boolean ok;
     private int bestCellID;
 
+    private int best1;
+    private int best2;
 
     Comparator<Cell> comparator = new Comparator<Cell>() {
         @Override
@@ -431,5 +433,19 @@ public class Cell {
         this.lalitude = lalitude;
     }
 
+    public int getBest1() {
+        return best1;
+    }
 
+    public void setBest1(int best1) {
+        this.best1 = best1;
+    }
+
+    public int getBest2() {
+        return best2;
+    }
+
+    public void setBest2(int best2) {
+        this.best2 = best2;
+    }
 }

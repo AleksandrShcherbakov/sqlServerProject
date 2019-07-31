@@ -50,16 +50,11 @@ public class Cell2G extends Cell {
         double temp=0;
         for (Integer i : map.keySet()){
             temp=map.get(i);
-            if (super.getCi()==48575){
-                System.out.println(temp);
-            }
-
             if (temp==0)
                 continue;
             if (temp>maxRxLev){
                 maxRxLev=temp;
                 bestCI=i;
-                System.out.println(super.getCi()+" "+i+" "+temp);
             }
         }
         return bestCI+" "+(bestCI==super.getCi()? "true":"false");
@@ -69,9 +64,18 @@ public class Cell2G extends Cell {
         String[] checkWithAverRxLev = findBestCI(allRxLev).split(" ");
         String[] checkWithWeight = findBestCI(allRxLevWeight).split(" ");
         int best1=Integer.parseInt(checkWithAverRxLev[0]);
+        super.setBest1(best1);
         int best2=Integer.parseInt(checkWithWeight[0]);
+        super.setBest2(best2);
         boolean ok1 = Boolean.parseBoolean(checkWithAverRxLev[1]);
         boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
+
+        //для теста
+        if (super.getCi()==42594) {
+            System.out.println(super.getCi() + " 1- " + best1 + " " + ok1);
+            System.out.println(super.getCi() + " 2- " + best2 + " " + ok2);
+        }
+
         if (best1==best2 && ok1==ok2){
             super.setBestCellID(best1);
             super.setOk(ok1);;
@@ -114,6 +118,16 @@ public class Cell2G extends Cell {
         }
         if (count==0){
             return 0+" "+0;
+        }
+
+        //для теста
+        if (super.getCi()==42594){
+            System.out.println("self = "+super.getAbout()+" test = "+bcchBsic+" aver = "+common/count+"; count="+count);
+            System.out.println("averWeight = "+(common/count)/count);
+        }
+
+        if (count<10){
+            return 0+" "+(common/count)/count;
         }
         return common/count+" "+(common/count)/count;
     }

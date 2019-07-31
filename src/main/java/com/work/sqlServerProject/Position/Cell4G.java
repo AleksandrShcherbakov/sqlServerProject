@@ -68,7 +68,9 @@ public class Cell4G extends Cell {
         String[] checkWithAverRxLev = findBestCI(allRSRP).split(" ");
         String[] checkWithWeight = findBestCI(allRSRPWeight).split(" ");
         int best1=Integer.parseInt(checkWithAverRxLev[0]);
+        super.setBest1(best1);
         int best2=Integer.parseInt(checkWithWeight[0]);
+        super.setBest2(best2);
         boolean ok1 = Boolean.parseBoolean(checkWithAverRxLev[1]);
         boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
         if (super.getCi()==7700734 || super.getCi()==7700735){

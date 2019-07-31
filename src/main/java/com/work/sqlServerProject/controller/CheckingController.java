@@ -247,7 +247,8 @@ public class CheckingController {
         for (Map.Entry p : positions.entrySet()){
             toTemplate.add(positions.get(p.getKey()).getInfoForTemplate());
             res.append("<b>"+p.getKey()+"</b><br><br>"+
-                    p.getValue().toString()+"<br>");
+                    p.getValue().toString()+
+                    positions.get(p.getKey()).printDetailInfo()+"<br>");
             res.append("=================================================================<br><br>");
         }
         model.addAttribute("allInfo", toTemplate);

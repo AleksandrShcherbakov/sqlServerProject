@@ -94,6 +94,11 @@ public class Cell2G extends Cell {
         if (best1!=0 && best2!=0){
             super.setBestCellID(best2);
         }
+        else
+        if (best1==0 && best2!=0){
+            super.setBestCellID(best2);
+            super.setOk(ok2);
+        }
         else super.setOk(false);
     }
 

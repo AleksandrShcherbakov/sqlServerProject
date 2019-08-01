@@ -97,7 +97,11 @@ public class Cell4G extends Cell {
             super.setBestCellID(best2);
         }
         else
-            super.setOk(false);
+        if (best1==0 && best2!=0){
+            super.setBestCellID(best2);
+            super.setOk(ok2);
+        }
+        else super.setOk(false);
     }
 
     public String findAverRSRPerPCI(Integer pci){
@@ -126,7 +130,7 @@ public class Cell4G extends Cell {
         if (count==0){
             return 0+" "+0;
         }
-        if (count<20){
+        if (count<10){
             return 0+" "+(common/count)/count;
         }
         return common/count+" "+(common/count)/count;

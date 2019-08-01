@@ -36,7 +36,7 @@ public class CheckingController {
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = /*"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"*/"C:\\projects\\для тестирования";
+    String pathToNbf = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"/*"C:\\projects\\для тестирования"*/;
     boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;
@@ -253,6 +253,7 @@ public class CheckingController {
         }
         model.addAttribute("allInfo", toTemplate);
         return  res.toString();
+        //return "checking/result";
 
     }
 

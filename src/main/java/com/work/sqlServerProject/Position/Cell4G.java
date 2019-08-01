@@ -54,10 +54,6 @@ public class Cell4G extends Cell {
             if (temp>maxRSRP){
                 maxRSRP=temp;
                 bestCI=i;
-                if(this.getCi()==7700734){
-                    System.out.println(i);
-                }
-
             }
         }
         System.out.println(super.getCi()+" "+bestCI+" "+super.getAzimuth());
@@ -73,12 +69,7 @@ public class Cell4G extends Cell {
         super.setBest2(best2);
         boolean ok1 = Boolean.parseBoolean(checkWithAverRxLev[1]);
         boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
-        if (super.getCi()==7700734 || super.getCi()==7700735){
-            System.out.println("best1= "+best1);
-            System.out.println("ok1= "+ok1);
-            System.out.println("best2= "+best2);
-            System.out.println("ok2= "+ok2);
-        }
+
         if (best1==best2 && ok1==ok2){
             super.setBestCellID(best1);
             super.setOk(ok1);
@@ -127,9 +118,12 @@ public class Cell4G extends Cell {
                 count++;
             }
         }
+
         if (count==0){
             return 0+" "+0;
         }
+
+
         if (count<10){
             return 0+" "+(common/count)/count;
         }

@@ -36,7 +36,7 @@ public class CheckingController {
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"/*"C:\\projects\\для тестирования"*/;
+    String pathToNbf = /*"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"*/"C:\\projects\\для тестирования";
     boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;
@@ -212,7 +212,7 @@ public class CheckingController {
 
 
     @RequestMapping(value = "/checkPos", method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     public String selectPN(Model model, @ModelAttribute ("pos") PosForCheck posForCheck) throws IOException {
         if (posForCheck.getPosnames().equals("")){
             return "не введена позиция";
@@ -252,8 +252,8 @@ public class CheckingController {
             res.append("=================================================================<br><br>");
         }
         model.addAttribute("allInfo", toTemplate);
-        return  res.toString();
-        //return "checking/result";
+        //return  res.toString();
+        return "checking/result";
 
     }
 

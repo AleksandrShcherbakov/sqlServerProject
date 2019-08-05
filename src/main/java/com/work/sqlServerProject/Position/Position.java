@@ -251,7 +251,7 @@ public class Position {
     }
 
     public String getInfoForTemplate(){
-        return stringBuilder.toString()+"___"+detailResult.toString();
+        return this.numberOfPosition+"___"+ stringBuilder.toString()+"___"+detailResult.toString();
     }
 
 

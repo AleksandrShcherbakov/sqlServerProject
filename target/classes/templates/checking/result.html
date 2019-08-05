@@ -3,30 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-<div id="main">
-<label>test</label>
-<div id="pnlTest" style="display:none">
-<p>
-    Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.
-</p>
-</div>
-</div>
 
-<script >
-    var ch = document.getElementById("chkTest");
-    function toggle() {
-        var div = document.getElementById('pnlTest');
-        if(this.checked)
-            div.style.display = 'block';
-        else
-            div.style.display = 'none';
+<div id="main"></div>
+
+
+<script th:inline="javascript" >
+    var allInfo=[[${allInfo}]];
+    var main =document.getElementById("main");
+
+    for (m=0;m<allInfo.length;m++){
+        var s = create(allInfo[m], main);
+        check("ch"+s, "div"+s);
     }
-    ch.onchange = toggle;
+
+    function create(text, main){
+        var partsOfText=text.split("___");
+        var i=partsOfText[0]; //number of position
+        var commonInfo=partsOfText[1]; //common info
+        var detailInfo=partsOfText[2]; //detail info
+        var ch=document.createElement('input');
+        ch.type="checkbox";
+        ch.id='ch'+i;
+        var label = document.createElement('label');
+        label.appendChild(document.createTextNode('показать детально'));
+        var detailDiv = createDivWithText(detailInfo);
+        detailDiv.id= 'div'+i;
+        $('#main').append('<h3>'+partsOfText[0]+'</h3>');
+        $('#main').append(partsOfText[1]+'<br>');
+        main.appendChild(ch);
+        main.appendChild(label);
+        main.appendChild(document.createElement('br'));
+        main.appendChild(detailDiv);
+        $('#main').append('================================================================');
+        return i;
+    }
+
+
+
+    function createDivWithText(text){
+        var d = document.createElement('div');
+        var p = document.createElement('p');
+        var strings = text.split('<br>');
+        for (k=0;k<strings.length;k++){
+            p.appendChild(document.createTextNode(strings[k]));
+            p.appendChild(document.createElement('br'));
+        }
+        d.appendChild(p);
+        return d;
+    }
+
+    function check(chid,divid){
+        $('#'+divid).hide();
+        $('#'+chid).click(function () {
+            if ($(this).is(':checked')){
+                $('#'+divid).show('slide', {direction: 'left'}, 1400);
+            }
+            else {
+                $('#'+divid).hide('slide', {direction: 'left'}, 1400);
+            }
+        });
+    }
+
 
 
 

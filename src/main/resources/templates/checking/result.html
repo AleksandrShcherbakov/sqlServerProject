@@ -18,15 +18,42 @@
 </div>
 
 <script >
-    var ch = document.getElementById("chkTest");
-    function toggle() {
-        var div = document.getElementById('pnlTest');
-        if(this.checked)
-            div.style.display = 'block';
-        else
-            div.style.display = 'none';
+    var main =document.getElementById("main");
+    var p=document.createElement('p');
+    p.appendChild(document.createTextNode("hello"));
+    main.appendChild(p);
+    for (i=0;i<5;i++){
+        create(i+"текст", main, i);
+        check("ch"+i, "div"+i);
     }
-    ch.onchange = toggle;
+
+    function create(text, main, i){
+        var ch=document.createElement('input');
+        ch.type="checkbox";
+        ch.id='ch'+i;
+        main.appendChild(ch);
+        var div = document.createElement('div');
+        div.id='div'+i;
+        div.style.display='block';
+        var p=document.createElement('p');
+        p.appendChild(document.createTextNode(text));
+        div.appendChild(p);
+        main.appendChild(div);
+
+    }
+
+    function check(chid,divid){
+        $('#'+divid).hide();
+        $('#'+chid).click(function () {
+            if ($(this).is(':checked')){
+                $('#'+divid).show();
+            }
+            else {
+                $('#'+divid).hide();
+            }
+        });
+    }
+
 
 
 

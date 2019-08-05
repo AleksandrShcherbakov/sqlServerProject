@@ -60,10 +60,10 @@
         $('#'+divid).hide();
         $('#'+chid).click(function () {
             if ($(this).is(':checked')){
-                $('#'+divid).show();
+                $('#'+divid).slideDown(250);
             }
             else {
-                $('#'+divid).hide();
+                $('#'+divid).slideUp(250);
             }
         });
     }

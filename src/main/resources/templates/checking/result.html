@@ -12,12 +12,18 @@
 
 
 <script th:inline="javascript" >
+    var wrangs = [[${wrangs}]];
     var allInfo=[[${allInfo}]];
+    if (wrangs!==null) {
+        $('#main').append('<span style="color: red">'+ wrangs+'</span>');
+    }
     var main =document.getElementById("main");
 
-    for (m=0;m<allInfo.length;m++){
-        var s = create(allInfo[m], main);
-        check("ch"+s, "div"+s);
+    if (allInfo!==null) {
+        for (m = 0; m < allInfo.length; m++) {
+            var s = create(allInfo[m], main);
+            check("ch" + s, "div" + s);
+        }
     }
 
     function create(text, main){

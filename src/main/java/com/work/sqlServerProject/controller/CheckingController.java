@@ -36,7 +36,7 @@ public class CheckingController {
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = /*"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"*/"C:\\projects\\для тестирования";
+    String pathToNbf = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"/*"C:\\projects\\для тестирования"*/;
     boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;
@@ -220,27 +220,38 @@ public class CheckingController {
         positions=new HashMap<>();
 
         StringBuilder res=new StringBuilder();
+        StringBuilder wrangs = new StringBuilder();
         String[]poss=posForCheck.getPosnames().split(",");
         for (String s : poss){
             s=s.trim();
             try {
                 int pos=Integer.parseInt(s);
                 int i=setPosition(pos);
-                if (i==-1){
-                    if (useBTSFile){
-                        res.append("Позиции "+pos+" в БТС файле не найдено<br>");
+                if (i==-1) {
+                    if (useBTSFile) {
+                        String wrang = "Позиции " + pos + " в БТС файле не найдено<br>";
+                        wrangs.append(wrang);
+                        res.append(wrang);
+                    } else {
+                        String wrang ="Позиции " + pos + " в базе не найдено<br>";
+                        wrangs.append(wrang);
+                        res.append(wrang);
                     }
-                    else
-                    res.append("Позиции "+pos+" в базе не найдено<br>");
                 }
             }
             catch (SQLException e){
-                res.append("Нет доступа к базк general, а БТС файл не выбран.<br>" +
-                        "<a href='/inputScan'>Вернуться на страницу выбора</a>");
+                String wrang = "Нет доступа к базк general, а БТС файл не выбран.<br>" +
+                        "<a href='/inputScan'>Вернуться на страницу выбора</a>";
+                wrangs.append(wrang);
+                res.append(wrang);
+                model.addAttribute("wrangs", wrangs.toString());
+                return "checking/result";
             }
             catch (Exception e){
                 e.printStackTrace();
-                res.append("В указании списка позиций ошибка: "+s+"<br>");
+                String wrang = "В указании списка позиций ошибка: "+s+"<br>";
+                wrangs.append(wrang);
+                res.append(wrang);
             }
         }
         List<String>toTemplate=new ArrayList<>();
@@ -251,6 +262,7 @@ public class CheckingController {
                     positions.get(p.getKey()).printDetailInfo()+"<br>");
             res.append("=================================================================<br><br>");
         }
+        model.addAttribute("wrangs", wrangs.toString());
         model.addAttribute("allInfo", toTemplate);
         //return  res.toString();
         return "checking/result";

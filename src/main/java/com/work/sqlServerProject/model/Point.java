@@ -18,7 +18,7 @@ public class Point {
     Map<Integer, Double> RSCP3012;
     Map<Integer, Double> RSRP3300;
     Map<Integer, Double> RSRP6413;
-    Map<Integer, Double> RSRP1351;
+    Map<Integer, Double> RSRP1301;
     Map<Integer, Double> distToPos;
 
     public Point() {
@@ -43,9 +43,9 @@ public class Point {
                 RSRP6413=new HashMap<>();
                 map=RSRP6413;
             }
-            if (PciRsrp.get(0).startsWith("1351")){
-                RSRP1351=new HashMap<>();
-                map=RSRP1351;
+            if (PciRsrp.get(0).startsWith("1301")){
+                RSRP1301=new HashMap<>();
+                map=RSRP1301;
             }
             for (String s : PciRsrp){
                 try {
@@ -252,12 +252,12 @@ public class Point {
         this.RSRP6413 = RSRP6413;
     }
 
-    public Map<Integer, Double> getRSRP1351() {
-        return RSRP1351;
+    public Map<Integer, Double> getRSRP1301() {
+        return RSRP1301;
     }
 
-    public void setRSRP1351(Map<Integer, Double> RSRP1351) {
-        this.RSRP1351 = RSRP1351;
+    public void setRSRP1301(Map<Integer, Double> RSRP1301) {
+        this.RSRP1301 = RSRP1301;
     }
 
     @Override
@@ -267,6 +267,6 @@ public class Point {
                 RSCP3036+"<br>"+RSCP3012+"<br>"+
                 RSRP3300+"<br>"+
                 RSRP6413+"<br>"+
-                RSRP1351;
+                RSRP1301;
     }
 }

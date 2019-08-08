@@ -405,7 +405,7 @@ public class CheckingController {
             else
             if (about.equals("LTE 1800")) {
                 Cell4G g = (Cell4G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSRP1351()!=null && p.getRSRP1351().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSRP1301()!=null && p.getRSRP1301().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else

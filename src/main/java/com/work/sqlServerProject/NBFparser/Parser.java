@@ -40,7 +40,7 @@ public class Parser {
                        point.setUMTS(getScrRscp900(m));
                    }
                }
-               if (m.startsWith("OFDMSCAN") && (m.contains("1351,1,") || m.contains("3300,1,") || m.contains("6413,1,"))) {
+               if (m.startsWith("OFDMSCAN") && (m.contains("1301,1,") || m.contains("3300,1,") || m.contains("6413,1,"))) {
                    point.setLTE(createElementsStr(m));
                }
            }
@@ -62,9 +62,9 @@ public class Parser {
             band="6413";
         }
         else
-        if (s.contains(",1351,1,")){
+        if (s.contains(",1301,1,")){
             m = s.split("70003,")[1];
-            band = "1351";
+            band = "1301";
         }
         else return null;
         String[]u=null;

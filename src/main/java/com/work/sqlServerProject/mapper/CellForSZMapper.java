@@ -22,9 +22,12 @@ public class CellForSZMapper implements RowMapper<CellForSZ> {
             " ci," +
             " geo_zone," +
             " uarfcnDL" +
-            " from pmc.bs_general_table_cr as a left outer join" +
-            " (SELECT distinct cellname, uarfcnDL from pmc.cellstatus where ran= '3G') as b on a.cellname=b.cellname "+
-            " where a.ant_location = 'outdoor'";
+            " from pmc.bs_general_table_cr as a left join" +
+            " (select a.cellname, b.uarfcndl from\n" +
+            "(SELECT distinct max(date) as date, cellname from pmc.cellstatus where ran= '3G' group by cellname) as a left join\n" +
+            "(SELECT distinct date, cellname, uarfcnDL from pmc.cellstatus where ran= '3G') as b on a.cellname=b.cellname and a.date=b.date\n) as b on a.cellname=b.cellname "+
+            " where a.ant_location = 'outdoor'\n"+
+            "and (a.duplexmode is null or a.duplexmode!='nb-iot') ";
 
     @Override
     public CellForSZ mapRow(ResultSet resultSet, int i) throws SQLException {

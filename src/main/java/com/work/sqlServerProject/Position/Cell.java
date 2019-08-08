@@ -168,7 +168,7 @@ public class Cell {
             target.add(p);
         }
         else
-        if (this.system.equals("LTE") && this.band==1800 && p.getRSRP1351()!=null) {
+        if (this.system.equals("LTE") && this.band==1800 && p.getRSRP1301()!=null) {
             target.add(p);
         }
     }

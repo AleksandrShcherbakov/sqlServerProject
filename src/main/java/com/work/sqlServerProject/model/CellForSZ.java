@@ -56,7 +56,7 @@ public class CellForSZ {
                 this.carryingFrequency=6413;
             }
             if (diapazon==1800){
-                this.carryingFrequency=1351;
+                this.carryingFrequency=1301;
             }
             if (diapazon==2600){
                 this.carryingFrequency=3300;

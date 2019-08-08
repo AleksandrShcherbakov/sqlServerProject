@@ -110,7 +110,7 @@ public class Cell4G extends Cell {
             }
             else
             if (super.getBand()==1800) {
-                map = p.getRSRP1351();
+                map = p.getRSRP1301();
             }
             tempRSCP = map.get(pci);
             if (tempRSCP!=null){

@@ -85,27 +85,27 @@ public class SZController {
         }
         this.setExecutor(ex);
 
-        if (szFormPos.getPosName()==0){
-            model.addAttribute("nopos", "Номер позиции не может быть \"0\"");
-            return "checkPos";
-        }
-        numOfBS=szFormPos.getPosName();
-        if (system==null) {
-            model.addAttribute("nothing", "Вы не указали ни одного диапазона.");
-            return "checkPos";
-        }
-        if (szFormPos.getPathDir().equals("")){
-            this.pathDir=Helper.createDefPath();
-        }
-        else {
-            this.pathDir=Helper.createDefPath(szFormPos.getPathDir());
-        }
+            if (szFormPos.getPosName() == 0) {
+                model.addAttribute("nopos", "Номер позиции не может быть \"0\"");
+                return "checkPos";
+            }
+            numOfBS = szFormPos.getPosName();
+            if (system == null) {
+                model.addAttribute("nothing", "Вы не указали ни одного диапазона.");
+                return "checkPos";
+            }
+            if (szFormPos.getPathDir().equals("")) {
+                this.pathDir = Helper.createDefPath();
+            } else {
+                this.pathDir = Helper.createDefPath(szFormPos.getPathDir());
+            }
 
-        list=cellNameDAO.getBSforSZ(szFormPos.getPosName());
-        if (list.size()==0){
-            model.addAttribute("noposonnetwork", "БС с указанным номером не существует.");
-            return "checkPos";
-        }
+            list = cellNameDAO.getBSforSZ(szFormPos.getPosName());
+            if (list.size() == 0) {
+                model.addAttribute("noposonnetwork", "БС с указанным номером не существует.");
+                return "checkPos";
+            }
+
         String[] bands = system.split(",");
         List<CellForSZ>checkedList = new ArrayList<>();
         for (CellForSZ c : list){
@@ -125,6 +125,7 @@ public class SZController {
         model.addAttribute("numOfBS", numOfBS);
         return "szTable";
     }
+
 
     @RequestMapping(value = "/setCI", method = RequestMethod.POST)
     public String showResultTable(Model model, @ModelAttribute("formForSZ") FormCellForSZ formCellForSZ) throws IOException {

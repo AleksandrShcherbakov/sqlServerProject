@@ -11,22 +11,21 @@ import java.sql.SQLException;
  * Created by a.shcherbakov on 07.03.2019.
  */
 public class CellForSZMapper implements RowMapper<CellForSZ> {
-    public static final String SQL_SZ = "select posname," +
-            " ran, " +
-            "vendor," +
-            " azimuth," +
-            " frequency," +
-            " carriernum," +
-            " name," +
-            " address," +
-            " ci," +
-            " geo_zone," +
-            " uarfcnDL" +
-            " from pmc.bs_general_table_cr as a left join" +
-            " (select a.cellname, b.uarfcndl from\n" +
-            "(SELECT distinct max(date) as date, cellname from pmc.cellstatus where ran= '3G' group by cellname) as a left join\n" +
-            "(SELECT distinct date, cellname, uarfcnDL from pmc.cellstatus where ran= '3G') as b on a.cellname=b.cellname and a.date=b.date\n) as b on a.cellname=b.cellname "+
-            " where a.ant_location = 'outdoor'\n"+
+    public static final String SQL_SZ = "select posname,\n" +
+            "a.ran,\n" +
+            "a.vendor,\n" +
+            "azimuth,\n" +
+            "frequency,\n" +
+            "carriernum,\n" +
+            "name,\n" +
+            "address,\n" +
+            "a.ci,\n" +
+            "geo_zone,\n" +
+            "b.uarfcnDL \n" +
+            "from pmc.bs_general_table_cr as a left join (select a.cellname, uarfcndl from pmc.cellstatus as a  join (\n" +
+            "select max(date) as date, cellname from pmc.cellstatus group by cellname\n" +
+            ") as b on a.cellname=b.cellname and a.date=b.date)as b on a.cellname=b.cellname\n" +
+            "where a.ant_location = 'outdoor'\n" +
             "and (a.duplexmode is null or a.duplexmode!='nb-iot') ";
 
     @Override

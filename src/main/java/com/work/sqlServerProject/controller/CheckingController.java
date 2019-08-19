@@ -8,6 +8,7 @@ import com.work.sqlServerProject.Position.*;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,26 +29,25 @@ public class CheckingController {
     private CellNameDAO cellNameDAO;
     private Map<Integer, Position> positions = null;
     List<Point> points = null;
-    String[] listPath = {"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_01",
+    @Value("${list.filesNMF}")
+    String[] listPath; /*{"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_01",
                         "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_02",
                         "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_81",
                         "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_94",
-                        "C:\\projects\\для тестирования"};
+                        "C:\\projects\\для тестирования"};*/
 
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
-    String pathToNbf = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"/*"C:\\projects\\для тестирования"*/;
-    boolean useBTSFile = false;
+    @Value("${filesBTS}")
+    String pathToNbf;/* = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"*//*"C:\\projects\\для тестирования"*//*;*/    boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;
     List<String> alredyLoadedFiles=new ArrayList<>();
 
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
     public String reset(Model model){
-        System.out.println("до "+alredyLoadedFiles.size());
         alredyLoadedFiles.clear();
         points.clear();
-        System.out.println("после "+alredyLoadedFiles.size());
         return "redirect:/inputScan";
     }
 

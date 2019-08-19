@@ -127,6 +127,11 @@ public class Position {
                 stringBuilder.append("<br>");
             }
             else
+            if (cellsOfOneBand.size()==2 && ((countOfTrue==1)||unicBest.size()==1)){
+                stringBuilder.append(res+" - <span style='color: #31372b'>имеется неоднозначность.</span>");
+                stringBuilder.append("<br>");
+            }
+            else
             if (countOfTrue>=cellsOfOneBand.size()-1){
                 stringBuilder.append(res+" - <span style='color:green'>Ok</span>");
                 stringBuilder.append("<br>");

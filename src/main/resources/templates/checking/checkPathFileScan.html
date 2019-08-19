@@ -62,7 +62,7 @@
                 exist.appendChild(p);
                 for (i=0;i<alredy.length;i++){
                     var p = document.createElement("p");
-                    var t = document.createTextNode(alredy[i]);
+                    var t = document.createTextNode(alredy[i].substring(alredy[i].lastIndexOf('\\')+1,alredy[i].length));
                     p.appendChild(t);
                     exist.appendChild(p);
                 }

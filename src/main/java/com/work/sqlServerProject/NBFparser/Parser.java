@@ -52,18 +52,33 @@ public class Parser {
         List<String> res = new ArrayList<>();
         String m =null;
         String band = null;
-        if (s.contains(",3300,1,")){
-            m=s.split("70007,")[1];
+        if (s.contains(",5,3300,1,")){
+            try{
+                m = s.split("70007,")[1];
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                System.out.println("Ошибка при парсинге 3300:\n"+s);
+            }
             band="3300";
         }
         else
-        if (s.contains(",6413,1,")){
-            m=s.split("70020,")[1];
+        if (s.contains(",5,6413,1,")){
+            try {
+                m = s.split("70020,")[1];
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                System.out.println("Ошибка при парсинге 6413:\n"+s);
+            }
             band="6413";
         }
         else
-        if (s.contains(",1301,1,")){
-            m = s.split("70003,")[1];
+        if (s.contains(",5,1301,1,")){
+            try {
+                m = s.split("70003,")[1];
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                System.out.println("Ошибка при парсинге 1301:\n"+s);
+            }
             band = "1301";
         }
         else return null;
@@ -72,7 +87,7 @@ public class Parser {
             u = m.split(",");
         }
         catch (NullPointerException e){
-            System.out.println(m);
+            //System.out.println(m);
             return null;
         }
         StringBuilder stringBuilder = new StringBuilder(band+",");

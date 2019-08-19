@@ -43,9 +43,9 @@
         $('#main').append('<h3>'+partsOfText[0]+'</h3>');
         $('#main').append(partsOfText[1]+'<br>');
         if (partsOfText[1].toString().includes("сектора перепутаны")){
-            $('#main').append('<a href="/szPos" <!--target="_blank-->">Создать СЗ на перепутку</a><br><br>')
-            $('#main').append('<div id='+partsOfText[0]+'></div>');
-            openSZ(partsOfText[0]);
+            $('#main').append('<a href="/szPos" target="_blank">Создать СЗ на перепутку</a><br><br>')
+            //$('#main').append('<div id='+partsOfText[0]+'></div>');
+            //openSZ(partsOfText[0]);
         }
         main.appendChild(ch);
         main.appendChild(label);
@@ -82,7 +82,7 @@
         });
     }
 
-    function openSZ(id){
+    /*function openSZ(id){
         $('a').on("click", function(){
             event.preventDefault();
 //This will run just fine for files stored within  your own domain
@@ -91,7 +91,7 @@
 // Load External pages.
             $("#"+id).append('<object data="'+this.getAttribute('href')+'" height="500" width=100%/>');
         });
-    }
+    }*/
 
 
 

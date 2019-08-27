@@ -8,8 +8,11 @@
 </head>
 <body>
 
+<p><a href='/'>На главную.</a></p>
+<div id="main">
 
-<div id="main"></div>
+</div>
+
 
 
 <script th:inline="javascript" >
@@ -26,7 +29,9 @@
             var s = create(allInfo[m], main);
             check("ch" + s, "div" + s);
         }
+
     }
+
 
     function create(text, main){
         var partsOfText=text.split("___");

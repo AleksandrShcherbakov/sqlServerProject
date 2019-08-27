@@ -72,7 +72,7 @@ public class Cell2G extends Cell {
         boolean ok2= Boolean.parseBoolean(checkWithWeight[1]);
         super.setOk2(ok2);
 
-        //РґР»СЏ С‚РµСЃС‚Р°
+        //для теста
         if (super.getCi()==42594) {
             System.out.println(super.getCi() + " 1- " + best1 + " " + ok1);
             System.out.println(super.getCi() + " 2- " + best2 + " " + ok2);
@@ -110,13 +110,7 @@ public class Cell2G extends Cell {
         Double common=0.0;
         int count=0;
         for (Point p : super.getPointsInCell()) {
-            if (super.getBand() == 900) {
-                map = p.getRxLevel900();
-            }
-            else
-            if (super.getBand() == 1800) {
-                map = p.getRxLevel1800();
-            }
+            map=p.getMainMap().get("GSM "+super.getBand());
             tempRxLev = map.get(bcchBsic);
             if (tempRxLev != null) {
                 common = common + tempRxLev;
@@ -127,7 +121,7 @@ public class Cell2G extends Cell {
             return 0+" "+0;
         }
 
-        //РґР»СЏ С‚РµСЃС‚Р°
+        //для теста
         if (super.getCi()==42594){
             System.out.println("self = "+super.getAbout()+" test = "+bcchBsic+" aver = "+common/count+"; count="+count);
             System.out.println("averWeight = "+(common/count)/count);
@@ -144,7 +138,7 @@ public class Cell2G extends Cell {
     public String toString() {
         String r =null;
         if (super.getBestCellID()==0){
-            r=" РёР·РјРµСЂРµРЅРёР№ РІ Р·РѕРЅРµ СЌС‚РѕРіРѕ СЃРµРєС‚РѕСЂР° РЅРµС‚";
+            r=" измерений в зоне этого сектора нет";
         }
         else
             r=" ok: "+super.isOk();
@@ -152,7 +146,7 @@ public class Cell2G extends Cell {
         return "system: "+super.getSystem()+" "+super.getBand()+
                 " selfCI: "+super.getCi()+
                 " bestScanCI: "+super.getBestCellID()+
-                " Р°Р·РёРјСѓС‚: "+super.getAzimuth()+r;
+                " азимут: "+super.getAzimuth()+r;
 
     }
 

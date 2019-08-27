@@ -11,13 +11,13 @@ public class CellForSZ {
     private String vendor; //vendor
     private int azimuth; //azimuth
     private int diapazon; //frequency
-    private int carryingFrequency; //СѓРєР°Р·С‹РІР°РµРј РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ
+    private int carryingFrequency; //указываем в конструкторе
     private int carrierNumber; //CerrierNum
     private String name; //name
     private String nameAddress;
     private String address; //address
     private int CIinGeneral; //CI
-    private int CIinNetwork; //РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ СѓРєР°Р·С‹РІР°РµРј default
+    private int CIinNetwork; //в конструкторе указываем default
     private String geozone; //geo_Zone
     private String checkingStr;
     private boolean check;
@@ -48,20 +48,11 @@ public class CellForSZ {
         this.address = address;
         this.CIinGeneral = CIinGeneral;
         this.geozone = geozone;
-        if (ran.equals("3G")) {
-            this.carryingFrequency=dlCh;
+
+        if (!ran.equals("2G")) {
+            this.carryingFrequency = dlCh;
         }
-        if (ran.equals("4G")){
-            if (diapazon==800){
-                this.carryingFrequency=6413;
-            }
-            if (diapazon==1800){
-                this.carryingFrequency=1301;
-            }
-            if (diapazon==2600){
-                this.carryingFrequency=3300;
-            }
-        }
+        else
         if (ran.equals("2G")){
             this.carryingFrequency = 0;
         }

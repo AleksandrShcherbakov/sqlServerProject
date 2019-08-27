@@ -23,9 +23,9 @@ public class ParserHalper {
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Р¤Р°Р№Р» СЃРєР°РЅРµСЂР° РЅРµ РЅР°Р№РґРµРЅ");
+            System.out.println("Файл сканера не найден");
         } catch (IOException e) {
-            System.out.println("РѕС€РёР±РєР° РїСЂРё С‡С‚РµРЅРёРё С„Р°Р№Р»Р° СЃРєР°РЅРµСЂР°");
+            System.out.println("ошибка при чтении файла сканера");
         }
         String[] points = stringBuilder.toString().split("GPS");
         for (String s : points){

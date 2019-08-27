@@ -5,7 +5,7 @@
     <title>Select BS</title>
 </head>
 <body>
-
+<p><a href='/'>На главную.</a></p>
 <br>
 <div th:if="${nothing}" th:utext="${nothing}"> </div>
 <div th:if="${nopos}" th:utext="${nopos}"> </div>
@@ -18,36 +18,86 @@
         <b>укажите номер БС:</b><br>
         <input type="text" th:field="*{posName}"/>
     </p>
+    <div id ='bands'>
     <p style="color: green">
         <input type="checkbox" name="system" value="2G 900 0" >2G 900<br>
         <input type="checkbox" name="system" value="2G 1800 0">2G 1800
     </p>
-    <p style="color: red">
-        <input type="checkbox" name="system" value="3G 2100 10813">3G 2100 ch: 10813<br>
+    <p id="UMTS 2100" style="color: red">
+        <!--<input type="checkbox" name="system" value="3G 2100 10813">3G 2100 ch: 10813<br>
         <input type="checkbox" name="system" value="3G 2100 10788">3G 2100 ch: 10788<br>
-        <input type="checkbox" name="system" value="3G 2100 10836">3G 2100 ch: 10836
+        <input type="checkbox" name="system" value="3G 2100 10836">3G 2100 ch: 10836-->
     </p>
-    <p style="color: brown">
-        <input type="checkbox" name="system" value="3G 900 3036">3G 900 ch: 3036<br>
-        <input type="checkbox" name="system" value="3G 900 3012">3G 900 ch: 3012
+    <p id="UMTS 900" style="color: brown">
+        <!--<input type="checkbox" name="system" value="3G 900 3036">3G 900 ch: 3036<br>
+        <input type="checkbox" name="system" value="3G 900 3012">3G 900 ch: 3012-->
     </p>
-    <p style="color: blueviolet">
-        <input type="checkbox" name="system" value="4G 2600 3300">4G 2600 ch: 3300<br>
+    <p id="LTE" style="color: blueviolet">
+        <!--<input type="checkbox" name="system" value="4G 2600 3300">4G 2600 ch: 3300<br>
         <input type="checkbox" name="system" value="4G 1800 1301">4G 1800 ch: 1301<br>
-        <input type="checkbox" name="system" value="4G 800 6413">4G 800 ch: 6413
+        <input type="checkbox" name="system" value="4G 800 6413">4G 800 ch: 6413-->
     </p>
-    <p>
-        <input type="radio" name="executor" value="Хропов А.Н.">Хропов А.Н.<br>
-        <input type="radio" name="executor" value="Щербаков А.В.">Щербаков А.В.
-    </p>
+    </div>
+    <div id="executors">
+    </div>
     <p>
         <b>Укажите путь к директории, куда будет помещён файл СЗ. Иначе – в default-папку "С://Cлужебные записки" (рекомендуется):</b><br>
         <input type="text" th:field="*{pathDir}"><br>
         <input type="submit" value="OK"/>
     </p>
 </form>
-
 </div>
+<script th:inline="javascript">
+    var executorsList=[[${executors}]];
+    var lte = [[${LTE}]];
+    var umts = [[${UMTS}]];
+    var umts2100=document.getElementById("UMTS 2100");
+    var umts900=document.getElementById("UMTS 900");
+    var ltes=document.getElementById("LTE");
+    for (i=0;i<umts.length;i++){
+        if (umts[i].length===5){
+            var checkbox = document.createElement("input");
+            checkbox.type="checkbox";
+            checkbox.name="system";
+            checkbox.value="3G 2100 "+umts[i];
+            umts2100.appendChild(checkbox);
+            umts2100.appendChild(document.createElement("label").appendChild(document.createTextNode("3G 2100 ch: "+umts[i])));
+            umts2100.appendChild(document.createElement("br"));
+        }
+        else
+        if (umts[i].length===4){
+            var checkbox = document.createElement("input");
+            checkbox.type="checkbox";
+            checkbox.name="system";
+            checkbox.value="3G 900 "+umts[i];
+            umts900.appendChild(checkbox);
+            umts900.appendChild(document.createElement("label").appendChild(document.createTextNode("3G 900 ch: "+umts[i])));
+            umts900.appendChild(document.createElement("br"));
+        }
+    }
+    for (i=0;i<lte.length;i++){
+        var diapazon=lte[i].split("_")[2];
+        var frequency=lte[i].split("_")[0];
+        var checkbox = document.createElement("input");
+        checkbox.type="checkbox";
+        checkbox.name="system";
+        checkbox.value="4G "+diapazon+" "+frequency;
+        ltes.appendChild(checkbox);
+        ltes.appendChild(document.createElement("label").appendChild(document.createTextNode("4G "+diapazon+" ch: "+frequency)));
+        ltes.appendChild(document.createElement("br"));
+    }
+
+    var div= document.getElementById("executors");
+    for (i=0;i<executorsList.length;i++){
+        var radio = document.createElement("input");
+        radio.type="radio";
+        radio.name="executor";
+        radio.value=executorsList[i];
+        div.appendChild(radio);
+        div.appendChild(document.createElement('label').appendChild(document.createTextNode(executorsList[i])));
+        div.appendChild(document.createElement('br'));
+    }
+</script>
 
 </body>
 </html>

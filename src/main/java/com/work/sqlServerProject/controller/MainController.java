@@ -7,6 +7,7 @@ import com.work.sqlServerProject.form.CellNameForm;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.CellNameInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,12 +27,27 @@ import java.util.List;
  */
 @Controller
 public class MainController {
+    @Value("${ltecarriers}")
+    String [] LTEcarrierBand;
+    @Value("${umtscarriers}")
+    String [] UMTScarriers;
+
+    public static String[]LTE;
+    public static String[]UMTS;
 
     @Autowired
     private CellNameDAO cellNameDAO;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String openStartPage(){
+        LTE=this.LTEcarrierBand;
+        UMTS=this.UMTScarriers;
+        for (String s : LTEcarrierBand){
+            System.out.println(s);
+        }
+        for (String s : UMTScarriers){
+            System.out.println(s);
+        }
         return "start";
     }
 
@@ -61,7 +77,7 @@ public class MainController {
         String fileName= simpleDateFormat.format(new Date())+"_ALL_BS.csv";
         File file = new File(path+"\\"+fileName);
         if (file.exists()){
-            return "BTS С„Р°Р№Р» Р·Р° СЃРµРіРѕРґРЅСЏ СѓР¶Рµ СЃРѕР·РґР°РЅ.<br><p><a href='/'>РќР° СЃС‚Р°СЂС‚РѕРІСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ</a></p>";
+            return "BTS файл за сегодня уже создан.<br><p><a href='/'>На стартовую страницу</a></p>";
         }
         List<CellInfo>list=cellNameDAO.getAllCells();
         List<CellInfo>listLteEricsson = cellNameDAO.getAllLteEricssonCells();
@@ -73,14 +89,14 @@ public class MainController {
         if (!path.isEmpty()) {
             file = new File(path);
 
-        if (file.isFile()){
-            return "Р’С‹ СѓРєР°Р·Р°Р»Рё С„Р°Р№Р» Р° РЅРµ РґРёСЂРµРєС‚РѕСЂРёСЋ, РёРїР°СЂР°РІСЊС‚РµСЃСЊ!<br><p><a href='/'>Р’РІРµСЃС‚Рё РґРёСЂРµРєС‚РѕСЂРёСЋ РµС‰Рµ СЂР°Р·</a></p>";
-        }
-        else
-            if (!file.exists()){
-            Files.createDirectory(Paths.get(path));
-            }}
+            if (file.isFile()){
+                return "Вы указали файл а не директорию, ипаравьтесь!<br><p><a href='/'>Ввести директорию еще раз</a></p>";
+            }
             else
+            if (!file.exists()){
+                Files.createDirectory(Paths.get(path));
+            }}
+        else
         if (path.equals("")){
             path="C://";
         }
@@ -92,7 +108,7 @@ public class MainController {
             //stringBuilder.append(a);
             //System.out.println(a);
         }*/
-        return "BTS С„Р°Р№Р» СЃРѕР·РґР°РЅ<br><p><a href='/'>РќР° СЃС‚Р°СЂС‚РѕРІСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ</a></p>";
+        return "BTS файл создан<br><p><a href='/'>На стартовую страницу</a></p>";
     }
     @RequestMapping(value = "/exit", method = RequestMethod.GET)
     public String exit(){
@@ -104,14 +120,14 @@ public class MainController {
     @ResponseBody
     public String  createFile() throws IOException {
         File file1 = new File("C://123.txt");
-        String string = "\n РїСЂРёРІРµС‚ ghbdtn";
+        String string = "\n привет ghbdtn";
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1, true)));
             bufferedWriter.write(string);
             bufferedWriter.close();
         }
         catch (Exception e){
-            return "РЅРёС‡РµРіРѕ РЅРµ РїРѕР»СѓС‡РёР»РѕСЃСЊ";
+            return "ничего не получилось";
         }
         return file1.toString();
     }

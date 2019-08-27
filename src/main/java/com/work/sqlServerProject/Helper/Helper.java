@@ -52,13 +52,13 @@ public class Helper {
                 printWriter.flush();
                 printWriter.close();
             } catch (FileNotFoundException e) {
-                return "РґР°РЅРЅС‹Рµ РёР· "+list.getClass().getSimpleName()+" РЅРµ Р·Р°РїРёСЃР°РЅС‹, РІРѕР·РЅРёРєР»Рѕ РёСЃРєР»СЋС‡РµРЅРёРµ FileNotFoundException";
+                return "данные из "+list.getClass().getSimpleName()+" не записаны, возникло исключение FileNotFoundException";
             } catch (IOException e) {
-                return "РґР°РЅРЅС‹Рµ РёР· "+list.getClass().getSimpleName()+" РЅРµ Р·Р°РїРёСЃР°РЅС‹, РІРѕР·РЅРёРєР»Рѕ РёСЃРєР»СЋС‡РµРЅРёРµ IOException";
+                return "данные из "+list.getClass().getSimpleName()+" не записаны, возникло исключение IOException";
             }
 
         }
-        return "РґР°РЅРЅС‹Рµ РёР· "+list.getClass().getSimpleName()+" Р·Р°РїРёСЃР°РЅС‹ РІ С„Р°Р№Р»";
+        return "данные из "+list.getClass().getSimpleName()+" записаны в файл";
     }
 
     public static List<CellForSZ> setCIfromform(List<CellForSZ>list, List<CellForSZ> form){
@@ -77,7 +77,7 @@ public class Helper {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfMonth = new SimpleDateFormat("MMMMMMMMMMMM");
         Date date = new Date();
-        String defPath= "C://РЎР»СѓР¶РµР±РЅС‹Рµ Р·Р°РїРёСЃРєРё/"+sdfYear.format(date)+"/"+sdfMonth.format(date)+"/"+sdfDate.format(date);
+        String defPath= "C://Служебные записки/"+sdfYear.format(date)+"/"+sdfMonth.format(date)+"/"+sdfDate.format(date);
         File fileDir = new File(defPath);
         if (!fileDir.exists()){
             Files.createDirectories(Paths.get(defPath));

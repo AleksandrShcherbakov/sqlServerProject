@@ -27,7 +27,7 @@ public class Cell {
     private double maxDistance;
     private double minDistance;
     private int sectorOfFinding;
-    private short numID;
+    private Integer numID;
     private String about;
     private boolean ok;
     private int bestCellID;
@@ -127,50 +127,29 @@ public class Cell {
         }
     }
 
-    public void setPointsInSector(List<Point>target,int leftAz, int rightAz){
-
-    }
 
     public void checkNotNullAndAdd(Point p, List<Point>target){
-        if (this.system.equals("GSM") && this.band==900 && p.getRxLevel900()!=null) {
-            target.add(p);
+        if (this.system.equals("GSM")){
+            String key = "GSM "+this.band;
+            if (p.getMainMap().get(key)!=null){
+                target.add(p);
+            }
         }
         else
-        if (this.system.equals("GSM") && this.band==1800 && p.getRxLevel1800()!=null) {
-            target.add(p);
+        if (this.system.equals("UMTS")){
+            String key = this.system+" "+this.channel;
+            if (p.getMainMap().get(key)!=null){
+                target.add(p);
+            }
         }
         else
-        if (this.system.equals("UMTS") && this.band==2100 && this.channel==10813 && p.getRSCP10813()!=null) {
-            target.add(p);
+        if (this.system.equals("LTE")){
+            String key = this.system+" "+this.channel;
+            if (p.getMainMap().get(key)!=null){
+                target.add(p);
+            }
         }
-        else
-        if (this.system.equals("UMTS") && this.band==2100 && this.channel==10836 && p.getRSCP10836()!=null) {
-            target.add(p);
-        }
-        else
-        if (this.system.equals("UMTS") && this.band==2100 && this.channel==10788 && p.getRSCP10788()!=null) {
-            target.add(p);
-        }
-        else
-        if (this.system.equals("UMTS") && this.band==900 && this.channel==3036 && p.getRSCP3036()!=null) {
-            target.add(p);
-        }
-        else
-        if (this.system.equals("UMTS") && this.band==900 && this.channel==3012 && p.getRSCP3012()!=null) {
-            target.add(p);
-        }
-        else
-        if (this.system.equals("LTE") && this.band==2600 && p.getRSRP3300()!=null) {
-            target.add(p);
-        }
-        else
-        if (this.system.equals("LTE") && this.band==800 && p.getRSRP6413()!=null) {
-            target.add(p);
-        }
-        else
-        if (this.system.equals("LTE") && this.band==1800 && p.getRSRP1301()!=null) {
-            target.add(p);
-        }
+
     }
 
     public double toAzimuth(Double dist, Point point){
@@ -207,48 +186,22 @@ public class Cell {
         this.system=cellInfo.getSystem();
         this.cellsInBand=new TreeSet<>(comparator);
         this.channel=cellInfo.getCh();
-        this.maxDistance=distance; //1000 м
+        this.maxDistance=distance;
         this.minDistance=10;
         this.sectorOfFinding=90;
         if (system.equals("GSM")){
-            if (band==900){
-                numID=1;
-            }
-            else numID=2;
+            numID=HelperCell.numIds.get(system+" "+band);
             about=system+" "+band;
         }
         else
         if (system.equals("UMTS")){
-            if (band==2100){
-                if (channel==10813){
-                    numID=3;
-                }
-                else
-                if (channel==10788){
-                    numID=4;
-                }
-                else numID=5;
-            }
-            else
-            if (band==900){
-                if (channel==3036){
-                    numID=6;
-                }
-                else numID=7;
-            }
-            about=system+" "+band+" "+channel;
+            numID=HelperCell.numIds.get(system+" "+channel);
+            about=system+" "+channel;
         }
         else
         if (system.equals("LTE")){
-            if (band==2600){
-                numID=8;
-            }
-            else
-            if (band==1800){
-                numID=9;
-            }
-            else numID=10;
-            about=system+" "+band;
+            numID=HelperCell.numIds.get(system+" "+channel);
+            about=system+" "+channel;
         }
     }
 
@@ -300,11 +253,11 @@ public class Cell {
         this.about = about;
     }
 
-    public short getNumID() {
+    public Integer getNumID() {
         return numID;
     }
 
-    public void setNumID(short numID) {
+    public void setNumID(Integer numID) {
         this.numID = numID;
     }
 

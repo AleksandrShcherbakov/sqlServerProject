@@ -2,6 +2,7 @@ package com.work.sqlServerProject.controller;
 
 import com.work.sqlServerProject.Helper.ColorHelper;
 import com.work.sqlServerProject.Helper.FileScanHelper;
+import com.work.sqlServerProject.Helper.NoCarrierException;
 import com.work.sqlServerProject.NBFparser.Parser;
 import com.work.sqlServerProject.NBFparser.ParserHalper;
 import com.work.sqlServerProject.Position.*;
@@ -25,24 +26,28 @@ import java.util.stream.Collectors;
 @Controller
 public class CheckingController {
 
+
+
+
+    public static String[]LTE;
+    public static String[]UMTS;
+
     @Autowired
     private CellNameDAO cellNameDAO;
     private Map<Integer, Position> positions = null;
     List<Point> points = null;
     @Value("${list.filesNMF}")
-    String[] listPath; /*{"\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_01",
-                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\SUZUKI_02",
-                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_81",
-                        "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES\\VW_94",
-                        "C:\\projects\\РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ"};*/
-
+    String[] listPath;
     List<String> listWithNmf = null;
     List<String> listFilesBts = null;
     @Value("${filesBTS}")
-    String pathToNbf;/* = "\\\\ceph-msk\\Optimization Department-DT LOGS\\! MEASUREMENT FILES"*//*"C:\\projects\\РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ"*//*;*/    boolean useBTSFile = false;
+    String pathToNbf;
+
+    boolean useBTSFile = false;
     String pathToBts = null;
     List<String> btsLines = null;
     List<String> alredyLoadedFiles=new ArrayList<>();
+
 
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
     public String reset(Model model){
@@ -56,6 +61,9 @@ public class CheckingController {
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
     public String showSelectScanFilePage(Model model){
         List<Path>list=new ArrayList<>();
+        LTE=MainController.LTE;
+        UMTS=MainController.UMTS;
+
         for (String s : listPath) {
             List<Path> nmfs = FileScanHelper.getFiles(s);
             list.addAll(nmfs);
@@ -80,8 +88,11 @@ public class CheckingController {
     @RequestMapping(value = "/inputScan", method = RequestMethod.POST)
     public String loadScanAndSelectPos(Model model, @ModelAttribute ("pathScanFile") PathScanFile pathScanFile,
                                        @RequestParam (required = false,name = "file") String files,
-                                       @RequestParam (required = false, name= "isBTS") String isBts,//РіР°Р»РѕС‡РєР°
+                                       @RequestParam (required = false, name= "isBTS") String isBts,//галочка
                                        @RequestParam (required = false, name = "bts") String btsPath){
+
+
+
         if (isBts==null){
             this.useBTSFile=false;
             this.pathToBts=null;
@@ -102,8 +113,8 @@ public class CheckingController {
                     }
                     reader.close();
                 } catch (IOException e) {
-                    System.out.println(pathToBts+ " С„Р°Р№Р» СЃ BTS РЅРµ РїСЂРѕС‡РёС‚Р°РЅ");
-                    model.addAttribute("nobtsread", "Р‘РўРЎ С„Р°Р№Р» СѓРєР°Р·Р°РЅ РЅРµ РІРµСЂРЅРѕ "+pathToBts);
+                    System.out.println(pathToBts+ " файл с BTS не прочитан");
+                    model.addAttribute("nobtsread", "БТС файл указан не верно "+pathToBts);
                 }
             }
             else
@@ -119,12 +130,12 @@ public class CheckingController {
                     }
                     reader.close();
                 } catch (IOException e) {
-                    System.out.println(pathToBts+ " С„Р°Р№Р» СЃ BTS РЅРµ РїСЂРѕС‡РёС‚Р°РЅ");
-                    model.addAttribute("nobtsread", "Р‘РўРЎ С„Р°Р№Р» СѓРєР°Р·Р°РЅ РЅРµ РІРµСЂРЅРѕ "+pathToBts);
+                    System.out.println(pathToBts+ " файл с BTS не прочитан");
+                    model.addAttribute("nobtsread", "БТС файл указан не верно "+pathToBts);
                 }
             }
             else {
-                model.addAttribute("nobts", "РЈРєР°Р·Р°РЅРѕ Р¶РµР»Р°РЅРёРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ BTS С„Р°Р№Р», РЅРѕ СЃР°Рј С„Р°Р№Р» РЅРµ СѓРєР°Р·Р°РЅ.");
+                model.addAttribute("nobts", "Указано желание использовать BTS файл, но сам файл не указан.");
                 model.addAttribute("btss",this.listFilesBts);
                 model.addAttribute("listFiles",this.listWithNmf);
                 return "checking/checkPathFileScan";
@@ -133,7 +144,7 @@ public class CheckingController {
         StringBuilder stringBuilder=new StringBuilder();
         if (!pathScanFile.getUrl().equals("")) {
             if (alredyLoadedFiles.contains(pathScanFile.getUrl())) {
-                System.out.println(pathScanFile.getUrl() + " СѓР¶Рµ Р·Р°РіСЂСѓР¶РµРЅ");
+                System.out.println(pathScanFile.getUrl() + " уже загружен");
             } else {
                 stringBuilder.append(readFiles(pathScanFile.getUrl()));
                 alredyLoadedFiles.add(pathScanFile.getUrl());
@@ -143,7 +154,7 @@ public class CheckingController {
             String[] file = files.split(",");
             for (String s : file) {
                 if (alredyLoadedFiles.contains(s)) {
-                    System.out.println(s + " СѓР¶Рµ Р·Р°РіСЂСѓР¶РµРЅ");
+                    System.out.println(s + " уже загружен");
                 } else {
                     stringBuilder.append(readFiles(s));
                     alredyLoadedFiles.add(s);
@@ -151,13 +162,13 @@ public class CheckingController {
             }
         }
         if (pathScanFile.getUrl().equals("") && files==null && alredyLoadedFiles.size()==0){
-            model.addAttribute("nofiles", "РќРµ СѓРєР°Р·Р°РЅ Рё РЅРµ Р·Р°РіСЂСѓР¶РµРЅ РЅРё РѕРґРёРЅ С„Р°Р№Р» СЃРєР°РЅРµСЂР°.");
+            model.addAttribute("nofiles", "Не указан и не загружен ни один файл сканера.");
             model.addAttribute("btss",this.listFilesBts);
             model.addAttribute("listFiles",this.listWithNmf);
             return "checking/checkPathFileScan";
         }
         if (points.size()==0){
-            model.addAttribute("nopoints", "РќРё РѕРґРёРЅ С„Р°Р№Р» СЃРєР°РЅРµСЂР° РїСЂРѕС‡РёС‚Р°С‚СЊ РЅРµ СѓРґР°Р»РѕСЃСЊ. Р’РѕР·РјРѕР¶РЅРѕ РЅРµРїСЂР°РІРёР»СЊРЅРѕ СѓРєР°Р·Р°РЅ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃРєР°РЅРµСЂР°.");
+            model.addAttribute("nopoints", "Ни один файл сканера прочитать не удалось. Возможно неправильно указан путь к файлу сканера.");
             model.addAttribute("btss",this.listFilesBts);
             model.addAttribute("listFiles",this.listWithNmf);
             return "checking/checkPathFileScan";
@@ -176,7 +187,7 @@ public class CheckingController {
     }
 
     public List<Path> getBtsPaths(String pathDir) {
-        File dir = new File(pathDir); //path СѓРєР°Р·С‹РІР°РµС‚ РЅР° РґРёСЂРµРєС‚РѕСЂРёСЋ
+        File dir = new File(pathDir); //path указывает на директорию
         File[] arrFiles = dir.listFiles();
         if (arrFiles != null) {
             List<Path> files = Arrays.stream(arrFiles).map(p -> p.toPath()).filter(p -> p.toString().endsWith(".csv") || p.toString().endsWith(".nbf")).peek(System.out::println)
@@ -192,7 +203,7 @@ public class CheckingController {
             parsered = ParserHalper.createinSrtings(path);
         }
         catch (IOException e){
-            return "РџСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃРєР°РЅРµСЂР° СѓРєР°Р·Р°РЅ РЅРµ РІРµСЂРЅРѕ.";
+            return "Путь к файлу сканера указан не верно.";
         }
         int size1=0;
         if (points!=null){
@@ -204,9 +215,9 @@ public class CheckingController {
         else points.addAll(Parser.getPointsFromScan(parsered));
         int size2=points.size();
         if (points.size()!=0 && size1!=size2) {
-            return "С„Р°Р№Р» " + path + " РїСЂРѕС‡РёС‚Р°РЅ";
+            return "файл " + path + " прочитан";
         }
-        else return "С„Р°Р№Р» "+ path + " РЅРµ РїСЂРѕС‡РёС‚Р°РЅ";
+        else return "файл "+ path + " не прочитан";
     }
 
 
@@ -215,7 +226,7 @@ public class CheckingController {
     //@ResponseBody
     public String selectPN(Model model, @ModelAttribute ("pos") PosForCheck posForCheck) throws IOException {
         if (posForCheck.getPosnames().equals("")){
-            return "РЅРµ РІРІРµРґРµРЅР° РїРѕР·РёС†РёСЏ";
+            return "не введена позиция";
         }
         positions=new HashMap<>();
 
@@ -226,22 +237,33 @@ public class CheckingController {
             s=s.trim();
             try {
                 int pos=Integer.parseInt(s);
-                int i=setPosition(pos);
+                int i=0;
+                try{
+                    i=setPosition(pos);
+                }
+                catch (NoCarrierException e ){
+                    e.printStackTrace();
+                    int ch = e.getCh();
+                    String wrang = "частота "+ch+" не указана в application.properties. Проверьте.<br>";
+                    wrangs.append(wrang);
+                    res.append(wrang);
+                }
+
                 if (i==-1) {
                     if (useBTSFile) {
-                        String wrang = "РџРѕР·РёС†РёРё " + pos + " РІ Р‘РўРЎ С„Р°Р№Р»Рµ РЅРµ РЅР°Р№РґРµРЅРѕ<br>";
+                        String wrang = "Позиции " + pos + " в БТС файле не найдено<br>";
                         wrangs.append(wrang);
                         res.append(wrang);
                     } else {
-                        String wrang ="РџРѕР·РёС†РёРё " + pos + " РІ Р±Р°Р·Рµ РЅРµ РЅР°Р№РґРµРЅРѕ<br>";
+                        String wrang ="Позиции " + pos + " в базе не найдено<br>";
                         wrangs.append(wrang);
                         res.append(wrang);
                     }
                 }
             }
             catch (SQLException e){
-                String wrang = "РќРµС‚ РґРѕСЃС‚СѓРїР° Рє Р±Р°Р·Рє general, Р° Р‘РўРЎ С„Р°Р№Р» РЅРµ РІС‹Р±СЂР°РЅ.<br>" +
-                        "<a href='/inputScan'>Р’РµСЂРЅСѓС‚СЊСЃСЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РІС‹Р±РѕСЂР°</a>";
+                String wrang = "Нет доступа к базе general, а БТС файл не выбран.<br>" +
+                        "<a href='/inputScan'>Вернуться на страницу выбора</a>";
                 wrangs.append(wrang);
                 res.append(wrang);
                 model.addAttribute("wrangs", wrangs.toString());
@@ -249,7 +271,8 @@ public class CheckingController {
             }
             catch (Exception e){
                 e.printStackTrace();
-                String wrang = "Р’ СѓРєР°Р·Р°РЅРёРё СЃРїРёСЃРєР° РїРѕР·РёС†РёР№ РѕС€РёР±РєР°: "+s+"<br>";
+                String wrang = "В указани" +
+                        "и списка позиций ошибка: "+s+"<br>";
                 wrangs.append(wrang);
                 res.append(wrang);
             }
@@ -269,7 +292,7 @@ public class CheckingController {
 
     }
 
-    public int setPosition(Integer posname) throws SQLException {
+    public int setPosition(Integer posname) throws SQLException, NullPointerException {
         Position position=null;
         List<CellInfo> list=null;
         if (posname!=null) {
@@ -349,69 +372,21 @@ public class CheckingController {
         }
         Set<Point> pointsTomap=new HashSet<>();
         for (Cell c : cellList){
-            if (about.equals("GSM 1800")) {
+            if (about.startsWith("GSM")) {
                 Cell2G g = (Cell2G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRxLevel1800()!=null && p.getRxLevel1800().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
+                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getMainMap().get(about)!=null && p.getMainMap().get(about).get(g.getBcchBsic())!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
-            if (about.equals("GSM 900")) {
-                Cell2G g = (Cell2G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p->p.getRxLevel900()!=null && p.getRxLevel900().get(g.getBcchBsic())!=null).collect(Collectors.toSet());
-                pointsTomap.addAll(set);
-            }
-            else
-            if (about.equals("UMTS 2100 10813")) {
+            if (about.startsWith("UMTS")) {
                 Cell3G g = (Cell3G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSCP10813()!=null && p.getRSCP10813().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getMainMap().get(about)!=null && p.getMainMap().get(about).get(g.getScr()+"")!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
             else
-            if (about.equals("UMTS 2100 10788")) {
-                Cell3G g = (Cell3G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSCP10788()!=null && p.getRSCP10788().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
-                pointsTomap.addAll(set);
-            }
-            else
-            if (about.equals("UMTS 2100 10836")) {
-                Cell3G g = (Cell3G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSCP10836()!=null && p.getRSCP10836().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
-                pointsTomap.addAll(set);
-            }
-            else
-            if (about.equals("UMTS 900 3036")) {
-                Cell3G g = (Cell3G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSCP3036()!=null && p.getRSCP3036().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
-                pointsTomap.addAll(set);
-            }
-            else
-            if (about.equals("UMTS 900 3012")) {
-                Cell3G g = (Cell3G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSCP3012()!=null && p.getRSCP3012().get(Integer.parseInt(g.getScr()+""))!=null).collect(Collectors.toSet());
-                pointsTomap.addAll(set);
-            }
-            else
-            if (about.equals("LTE 2600")) {
+            if (about.startsWith("LTE")) {
                 Cell4G g = (Cell4G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSRP3300()!=null && p.getRSRP3300().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
-                pointsTomap.addAll(set);
-            }
-            else
-            if (about.equals("LTE 2600")) {
-                Cell4G g = (Cell4G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSRP3300()!=null && p.getRSRP3300().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
-                pointsTomap.addAll(set);
-            }
-            else
-            if (about.equals("LTE 1800")) {
-                Cell4G g = (Cell4G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSRP1301()!=null && p.getRSRP1301().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
-                pointsTomap.addAll(set);
-            }
-            else
-            if (about.equals("LTE 800")) {
-                Cell4G g = (Cell4G)c;
-                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getRSRP6413()!=null && p.getRSRP6413().get(Integer.parseInt(g.getPCI()+""))!=null).collect(Collectors.toSet());
+                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getMainMap().get(about)!=null && p.getMainMap().get(about).get(g.getPCI()+"")!=null).collect(Collectors.toSet());
                 pointsTomap.addAll(set);
             }
         }
@@ -426,7 +401,7 @@ public class CheckingController {
             nopoints=true;
         }
         if (nopoints){
-            model.addAttribute("nopoints", "Р”Р»СЏ РїРѕР·РёС†РёРё "+pos+" РёР·РјРµСЂРµРЅРёР№ РЅРµС‚.");
+            model.addAttribute("nopoints", "Для позиции "+pos+" измерений нет.");
         }
         model.addAttribute("pos",pos);
         model.addAttribute("about", about);

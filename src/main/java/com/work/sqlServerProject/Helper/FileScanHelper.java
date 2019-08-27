@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by РђР»РµРєСЃР°РЅРґСЂ on 11.07.2019.
+ * Created by Александр on 11.07.2019.
  */
 public class FileScanHelper {
     public static Comparator<Path> comparator=new Comparator <Path>() {
@@ -22,13 +22,13 @@ public class FileScanHelper {
                 atr1 = Files.readAttributes(o1, BasicFileAttributes.class);
                 System.out.println(atr1.creationTime());
             } catch (IOException e) {
-                System.out.println(o1+" РЅРµС‚ Р°С‚СЂРёР±СѓС‚РѕРІ");
+                System.out.println(o1+" нет атрибутов");
             }
             BasicFileAttributes atr2 = null;
             try {
                 atr2 = Files.readAttributes(o2, BasicFileAttributes.class);
             } catch (IOException e) {
-                System.out.println(o2+" РЅРµС‚ Р°С‚СЂРёР±СѓС‚РѕРІ");
+                System.out.println(o2+" нет атрибутов");
             }
             System.out.println(atr2.creationTime().compareTo(atr1.creationTime()));
             return atr2.creationTime().compareTo(atr1.creationTime());

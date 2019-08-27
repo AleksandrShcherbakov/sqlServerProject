@@ -31,10 +31,10 @@ public class Cell4G extends Cell {
             Cell4G p=(Cell4G)c;
             String[] temp=null;
             try {
-                temp=this.findAverRSRPerPCI(Integer.parseInt(p.getPCI()+"")).split(" ");
+                temp=this.findAverRSRPerPCI(p.getPCI()+"").split(" ");
             }
             catch (NumberFormatException e){
-                temp=this.findAverRSRPerPCI(0).split(" ");
+                temp=this.findAverRSRPerPCI(0+"").split(" ");
             }
             double tempRSRP = Double.parseDouble(temp[0]);
             double tempRSRPWEight = Double.parseDouble(temp[1]);
@@ -76,7 +76,7 @@ public class Cell4G extends Cell {
         }
         else
         if (ok1 || ok2){
-           super.setOk(true);
+            super.setOk(true);
             if (ok1) {
                 super.setBestCellID(best1);
             }
@@ -95,23 +95,13 @@ public class Cell4G extends Cell {
         else super.setOk(false);
     }
 
-    public String findAverRSRPerPCI(Integer pci){
-        Map<Integer, Double> map=null;
+    public String findAverRSRPerPCI(String pci){
+        Map<String, Double> map=null;
         Double tempRSCP=null;
         Double common=0.0;
         int count=0;
         for (Point p : super.getPointsInCell()){
-            if (super.getBand()==2600) {
-                map = p.getRSRP3300();
-            }
-            else
-            if (super.getBand()==800) {
-                map = p.getRSRP6413();
-            }
-            else
-            if (super.getBand()==1800) {
-                map = p.getRSRP1301();
-            }
+            map=p.getMainMap().get("LTE "+ch);
             tempRSCP = map.get(pci);
             if (tempRSCP!=null){
                 common=common+tempRSCP;
@@ -134,7 +124,7 @@ public class Cell4G extends Cell {
     public String toString() {
         String r =null;
         if (super.getBestCellID()==0){
-            r=" РёР·РјРµСЂРµРЅРёР№ РІ Р·РѕРЅРµ СЌС‚РѕРіРѕ СЃРµРєС‚РѕСЂР° РЅРµС‚";
+            r=" измерений в зоне этого сектора нет";
         }
         else
             r=" ok: "+super.isOk();
@@ -142,7 +132,7 @@ public class Cell4G extends Cell {
         return "system: "+super.getSystem()+" "+super.getBand()+
                 " selfCI: "+super.getCi()+
                 " bestScanCI: "+super.getBestCellID()+
-                " Р°Р·РёРјСѓС‚: "+super.getAzimuth()+r;
+                " азимут: "+super.getAzimuth()+r;
 
     }
 

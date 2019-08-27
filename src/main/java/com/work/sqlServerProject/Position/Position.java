@@ -1,5 +1,6 @@
 package com.work.sqlServerProject.Position;
 
+import com.work.sqlServerProject.Helper.NoCarrierException;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.Point;
 
@@ -48,7 +49,7 @@ public class Position {
     }
 
     public void findBestScan(){
-        Set<Short> techAndDiapazon = cells.stream() //РёРјРµСЋС‰РёРµСЃСЏ РґРёР°РїР°РѕРЅС‹ Рё С‚РµС…РЅРѕР»РѕРіРёРё
+        Set<Integer> techAndDiapazon = cells.stream() //????????? ???????? ? ??????????
                 .map(p->p.getNumID())
                 .distinct()
                 .collect(Collectors.toSet());
@@ -83,7 +84,7 @@ public class Position {
             ab=c.getAbout();
         }
 
-        for (Short i : techAndDiapazon){
+        for (Integer i : techAndDiapazon){
             Map<Integer,Cell>selfAndBestCI= new HashMap<>();
             List<Cell>cellsOfOneBand=cells.stream().filter(p->p.getNumID()==i).peek(p->selfAndBestCI.put(p.getCi(),p)).collect(Collectors.toList());
             List<Cell>cellsOfFalseWithExistBest=cellsOfOneBand.stream().filter(p->p.isOk()==false && p.getBestCellID()!=0).collect(Collectors.toList());
@@ -118,17 +119,17 @@ public class Position {
             String res=null;
             res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "&posName="+cellsOfOneBand.get(0).getPosname()+"' target=\"_blank\">" + cellsOfOneBand.get(0).getAbout() + "</a>";
             if (countOfExistBest==0){
-                stringBuilder.append(res+" - <span style='color:orange'>РёР»Рё СЃРµРєС‚РѕСЂР° РЅРµ РІ СЌС„РёСЂРµ, РёР»Рё Ch, SCR, PCI РЅР° СЃРµС‚Рё РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‚ Р‘Р” General. Р›РёР±Рѕ СЃС‚Р°РЅРёСЋ РЅРµ РѕР±СЉРµС…Р°Р»Рё.</span>");
+                stringBuilder.append(res+" - <span style='color:orange'>или сектора не в эфире, или Ch, SCR, PCI на сети не соответствуют БД General. Либо станцию не объехали.</span>");
                 stringBuilder.append("<br>");
             }
             else
             if (countOfUniques<countOfFindedBests && countOfTrue<cellsOfOneBand.size()-1){
-                stringBuilder.append(res+" - <span style='color: #31372b'>РёРјРµРµС‚СЃСЏ РЅРµРѕРґРЅРѕР·РЅР°С‡РЅРѕСЃС‚СЊ.</span>");
+                stringBuilder.append(res+" - <span style='color: #31372b'>имеется неоднозначность.</span>");
                 stringBuilder.append("<br>");
             }
             else
             if (cellsOfOneBand.size()==2 && ((countOfTrue==1)||unicBest.size()==1)){
-                stringBuilder.append(res+" - <span style='color: #31372b'>РёРјРµРµС‚СЃСЏ РЅРµРѕРґРЅРѕР·РЅР°С‡РЅРѕСЃС‚СЊ.</span>");
+                stringBuilder.append(res+" - <span style='color: #31372b'>имеется неоднозначность.</span>");
                 stringBuilder.append("<br>");
             }
             else
@@ -138,12 +139,12 @@ public class Position {
             }
             else
             if (countOfNoBest>=2 || (cellsOfFalseWithExistBest.size()>=2 &&countOfDifBests<cellsOfFalseWithExistBest.size())){
-                stringBuilder.append(res+" - <span style='color:blue'>РґР°РЅРЅС‹С… РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.</span>");
+                stringBuilder.append(res+" - <span style='color:blue'>данных недостаточно.</span>");
                 stringBuilder.append("<br>");
             }
             else
             {
-                stringBuilder.append(res+" - <span style='color:red'>СЃРµРєС‚РѕСЂР° РїРµСЂРµРїСѓС‚Р°РЅС‹.</span>");
+                stringBuilder.append(res+" - <span style='color:red'>сектора перепутаны.</span>");
                 stringBuilder.append("<br>");
             }
         }
@@ -182,26 +183,32 @@ public class Position {
                 cells.add(new Cell4G(cell, distance));
             }
         }
-        cells.sort(new Comparator<Cell>() {
+        cells.sort(new Comparator<Cell>()  {
             @Override
-            public int compare(Cell o1, Cell o2) {
-                if (o1.getNumID()>o2.getNumID())
-                    return 1;
-                else
-                if (o1.getNumID()<o2.getNumID()){
-                    return -1;
+            public int compare(Cell o1, Cell o2) throws NoCarrierException {
+                    try{
+                        if (o1.getNumID()>o2.getNumID())
+                            return 1;
+                        else
+                        if (o1.getNumID()<o2.getNumID()){
+                            return -1;
+                        }
+                        else
+                        if (o1.getAzimuth()>o2.getAzimuth()){
+                            return 1;
+                        }
+                        else
+                        if (o1.getAzimuth()<o2.getAzimuth()){
+                            return -1;
+                        }
+                        else
+                            return 0;
+                    }
+                    catch (NullPointerException e){
+                        throw new NoCarrierException(o1);
+
+                    }
                 }
-                else
-                if (o1.getAzimuth()>o2.getAzimuth()){
-                    return 1;
-                }
-                else
-                if (o1.getAzimuth()<o2.getAzimuth()){
-                    return -1;
-                }
-                else
-                    return 0;
-            }
         });
         for (Cell cell : cells){
             cell.setAllCellsInBand(cells);

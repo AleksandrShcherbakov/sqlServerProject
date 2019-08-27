@@ -7,21 +7,32 @@ import com.work.sqlServerProject.form.FormCellForSZ;
 import com.work.sqlServerProject.form.SZFormPos;
 import com.work.sqlServerProject.model.CellForSZ;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by a.shcherbakov on 14.03.2019.
  */
 @Controller
 public class SZController {
+    @Value("${executorsList}")
+    String[] executors;
+
+    public static String[]LTE;
+    public static String[]UMTS;
+
+    static Set<String> exec = new HashSet<>();
 
     private String pathDir;
 
@@ -68,10 +79,26 @@ public class SZController {
         this.executor = executor;
     }
 
+
     @RequestMapping(value = "/szPos", method = RequestMethod.GET)
-    public String showInfoForSZ(Model model){
+    public String showInfoForSZ(Model model) throws UnsupportedEncodingException {
         SZFormPos szFormPos = new SZFormPos();
+        LTE=MainController.LTE;
+        UMTS=MainController.UMTS;
         model.addAttribute("szFormPos", szFormPos);
+
+        for (String s : executors){
+            exec.add(new String (s.getBytes("ISO-8859-1"), "Cp1251"));
+            System.out.println(new String (s.getBytes("ISO-8859-1"), "Cp1251"));
+            System.out.println(s);
+            //exec.add(s);
+        }
+        /*for (String s : executors){
+           exec.add(s);
+        }*/
+        model.addAttribute("executors",exec);
+        model.addAttribute("LTE",LTE);
+        model.addAttribute("UMTS",UMTS);
         return "checkPos";
     }
 
@@ -80,31 +107,43 @@ public class SZController {
                                @RequestParam (required=false, name = "system") String system,
                                @RequestParam (required=false, name="executor") String ex) throws IOException {
         if (ex==null){
-            model.addAttribute("noExecutor", "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РёРјСЏ РёСЃРїРѕР»РЅРёС‚РµР»СЏ.");
+            model.addAttribute("noExecutor", "Необходимо указать имя исполнителя.");
+            model.addAttribute("executors",exec);
+            model.addAttribute("LTE",LTE);
+            model.addAttribute("UMTS",UMTS);
             return "checkPos";
         }
         this.setExecutor(ex);
 
-            if (szFormPos.getPosName() == 0) {
-                model.addAttribute("nopos", "РќРѕРјРµСЂ РїРѕР·РёС†РёРё РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ \"0\"");
-                return "checkPos";
-            }
-            numOfBS = szFormPos.getPosName();
-            if (system == null) {
-                model.addAttribute("nothing", "Р’С‹ РЅРµ СѓРєР°Р·Р°Р»Рё РЅРё РѕРґРЅРѕРіРѕ РґРёР°РїР°Р·РѕРЅР°.");
-                return "checkPos";
-            }
-            if (szFormPos.getPathDir().equals("")) {
-                this.pathDir = Helper.createDefPath();
-            } else {
-                this.pathDir = Helper.createDefPath(szFormPos.getPathDir());
-            }
+        if (szFormPos.getPosName() == 0) {
+            model.addAttribute("nopos", "Номер позиции не может быть \"0\"");
+            model.addAttribute("executors",exec);
+            model.addAttribute("LTE",LTE);
+            model.addAttribute("UMTS",UMTS);
+            return "checkPos";
+        }
+        numOfBS = szFormPos.getPosName();
+        if (system == null) {
+            model.addAttribute("nothing", "Вы не указали ни одного диапазона.");
+            model.addAttribute("executors",exec);
+            model.addAttribute("LTE",LTE);
+            model.addAttribute("UMTS",UMTS);
+            return "checkPos";
+        }
+        if (szFormPos.getPathDir().equals("")) {
+            this.pathDir = Helper.createDefPath();
+        } else {
+            this.pathDir = Helper.createDefPath(szFormPos.getPathDir());
+        }
 
-            list = cellNameDAO.getBSforSZ(szFormPos.getPosName());
-            if (list.size() == 0) {
-                model.addAttribute("noposonnetwork", "Р‘РЎ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РЅРѕРјРµСЂРѕРј РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.");
-                return "checkPos";
-            }
+        list = cellNameDAO.getBSforSZ(szFormPos.getPosName());
+        if (list.size() == 0) {
+            model.addAttribute("noposonnetwork", "БС с указанным номером не существует.");
+            model.addAttribute("executors",exec);
+            model.addAttribute("LTE",LTE);
+            model.addAttribute("UMTS",UMTS);
+            return "checkPos";
+        }
 
         String[] bands = system.split(",");
         List<CellForSZ>checkedList = new ArrayList<>();
@@ -152,9 +191,9 @@ public class SZController {
     @ResponseBody
     public String createword(Model model, @ModelAttribute("szcontr") SZController szController) throws IOException, KeyManagementException, NoSuchAlgorithmException {
         CreateWord.createWordFile(list,szController.getNumOfSZ(),pathDir);
-        return "РЎР— СЃРѕР·РґР°РЅР°.<br>" +
-                "<p><a href='/'>РќР° РіР»Р°РІРЅСѓСЋ.</a></p>" +
-                "<p><a href='/szPos'>РЎРѕР·РґР°С‚СЊ РµС‰Рµ РѕРґРЅСѓ РЎР—.</a>";
+        return "СЗ создана.<br>" +
+                "<p><a href='/'>На главную.</a></p>" +
+                "<p><a href='/szPos'>Создать еще одну СЗ.</a>";
     }
 
 

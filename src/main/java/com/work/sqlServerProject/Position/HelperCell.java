@@ -1,11 +1,38 @@
 package com.work.sqlServerProject.Position;
 
+import com.work.sqlServerProject.controller.CheckingController;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by a.shcherbakov on 05.07.2019.
  */
 public class HelperCell {
+    @Value("${LTEcarriers}")
+    static String[] LTEcarrierBand;
+    @Value("${UMTScarriers}")
+    static String[] UMTScarriers;
     final static double pi=3.1415926535898;
     final static double EarthRadius= 6372795.0;
+    static Map<String,Integer>numIds;
+    static {
+        numIds=new HashMap<>();
+        Integer id=1;
+        numIds.put("GSM 900",id);
+        id++;
+        numIds.put("GSM 1800",id);
+        id++;
+        for (String s : CheckingController.UMTS){
+            numIds.put("UMTS "+s,id);
+            id++;
+        }
+        for (String s : CheckingController.LTE){
+            numIds.put("LTE "+s.split("_")[0],id);
+            id++;
+        }
+    }
 
     public static double toDist(double latA, double lonA, double latB, double lonB){
         double latArad=latA*pi/180;
@@ -28,6 +55,8 @@ public class HelperCell {
         double dist=ad*EarthRadius;
         return dist;
     }
+
+
 
 
 }

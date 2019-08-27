@@ -30,7 +30,7 @@ public class Cell3G extends Cell {
         allRSCPWeight = new HashMap<>();
         for (Cell c : super.getCellsInBand()){
             Cell3G p=(Cell3G)c;
-            String[] temp = this.findAverRSCPPerSCr(Integer.parseInt(p.getScr()+"")).split(" ");
+            String[] temp = this.findAverRSCPPerSCr(p.getScr()+"").split(" ");
             double tempRSCP = Double.parseDouble(temp[0]);
             double tempRSCPWeight = Double.parseDouble(temp[1]);
             allRSCP.put(c.getCi(), tempRSCP);
@@ -91,35 +91,13 @@ public class Cell3G extends Cell {
         else super.setOk(false);
     }
 
-    public String findAverRSCPPerSCr(Integer scr){
-        Map<Integer, Double> map=null;
+    public String findAverRSCPPerSCr(String scr){
+        Map<String, Double> map=null;
         Double tempRSCP=null;
         Double common=0.0;
         int count=0;
         for (Point p : super.getPointsInCell()){
-            if (super.getBand()==2100){
-                if (this.carrierFrequency==10813) {
-                    map = p.getRSCP10813();
-                }
-                else
-                if (this.carrierFrequency==10788) {
-                    map = p.getRSCP10788();
-                }
-                else
-                if (this.carrierFrequency==10836) {
-                    map = p.getRSCP10836();
-                }
-            }
-            else
-            if (super.getBand()==900){
-                if (this.carrierFrequency==3036) {
-                    map = p.getRSCP3036();
-                }
-                else
-                if (this.carrierFrequency==3012) {
-                    map = p.getRSCP3012();
-                }
-            }
+            map=p.getMainMap().get("UMTS "+carrierFrequency);
             tempRSCP = map.get(scr);
             if (tempRSCP!=null){
                 common=common+tempRSCP;
@@ -139,7 +117,7 @@ public class Cell3G extends Cell {
     public String toString() {
         String r =null;
         if (super.getBestCellID()==0){
-            r=" РёР·РјРµСЂРµРЅРёР№ РІ Р·РѕРЅРµ СЌС‚РѕРіРѕ СЃРµРєС‚РѕСЂР° РЅРµС‚";
+            r=" измерений в зоне этого сектора нет";
         }
         else
             r=" ok: "+super.isOk();
@@ -147,7 +125,7 @@ public class Cell3G extends Cell {
         return "system: "+super.getSystem()+" "+super.getBand()+" "+super.getChannel()+
                 " selfCI: "+super.getCi()+
                 " bestScanCI: "+super.getBestCellID()+
-                " Р°Р·РёРјСѓС‚: "+super.getAzimuth()+r;
+                " азимут: "+super.getAzimuth()+r;
 
     }
 

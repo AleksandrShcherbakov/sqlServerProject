@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
-    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+  <component name="Encoding" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/ColorHelper.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/CreateWord.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/FileScanHelper.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/Helper.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/NoCarrierException.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/Parser.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/ParserHalper.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell3G.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell4G.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Position.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/CheckingController.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/MainController.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/SZController.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/form/BTSForm.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/form/CellNameForm.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/BS.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/CellForSZ.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/PathScanFile.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/Point.java" charset="windows-1251" />
+    <file url="PROJECT" charset="windows-1251" />
   </component>
 </project>

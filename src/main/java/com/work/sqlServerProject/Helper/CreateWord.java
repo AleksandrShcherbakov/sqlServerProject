@@ -17,7 +17,7 @@ public class CreateWord {
     public static String createZagolovok(Integer numOfSZ){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         String date = sdf.format(new Date());
-        return "РЎР»СѓР¶РµР±РЅР°СЏ Р·Р°РїРёСЃРєР° в„–"+numOfSZ+" РѕС‚ "+date;
+        return "Служебная записка №"+numOfSZ+" от "+date;
     }
 
     public static String createSZname(Integer numOfSz){
@@ -68,13 +68,13 @@ public class CreateWord {
             stringBuilder.append(c + ", ");
         }
         stringBuilder.replace(stringBuilder.length()-2,stringBuilder.length(),"");
-        String diapazonah="РґРёР°РїР°Р·РѕРЅРµ";
+        String diapazonah="диапазоне";
         if (set.size()>1){
-            diapazonah="РґРёР°РїР°Р·РѕРЅР°С…";
+            diapazonah="диапазонах";
         }
-        String res = "Р’ СЂРµР·СѓР»СЊС‚Р°С‚Рµ Р°РЅР°Р»РёР·Р° РѕР±СЉРµР·РґР° РЅР° Р‘РЎ "+list.get(0).getPosname() +
-                " ("+list.get(0).getNameAddress()+") РІС‹СЏРІР»РµРЅР° РЅРµРїСЂР°РІРёР»СЊРЅР°СЏ РѕСЂРёРµРЅС‚Р°С†РёСЏ СЃРµРєС‚РѕСЂРѕРІ " +
-                "РІ "+diapazonah+" "+stringBuilder.toString();
+        String res = "В результате анализа объезда на БС "+list.get(0).getPosname() +
+                " ("+list.get(0).getNameAddress()+") выявлена неправильная ориентация секторов " +
+                "в "+diapazonah+" "+stringBuilder.toString();
         return res;
     }
 
@@ -82,48 +82,48 @@ public class CreateWord {
     public static void createWordFile(List<CellForSZ> list, Integer numOfSZ, String filePath) throws IOException {
         XWPFDocument document = new XWPFDocument();
 
-        //СЃРѕР·РґР°РµРј РІРµСЂС…РЅСЋСЋ РїСЂР°РІСѓСЋ РїРѕРґРїРёСЃСЊ
+        //создаем верхнюю правую подпись
         XWPFParagraph paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.RIGHT);
         XWPFRun run = paragraph.createRun();
         run.setFontFamily("Times new roman");
         run.setBold(true);
         run.setFontSize(14);
-        run.setText("Р СѓРєРѕРІРѕРґРёС‚РµР»СЋ");
+        run.setText("Руководителю");
         run.addCarriageReturn();
-        run.setText("СЃР»СѓР¶Р±С‹ СЌРєСЃРїР»СѓР°С‚Р°С†РёРё");
+        run.setText("службы эксплуатации");
         run.addCarriageReturn();
-        run.setText("Р±Р°Р·РѕРІС‹С… СЃС‚Р°РЅС†РёР№");
+        run.setText("базовых станций");
         run.addCarriageReturn();
-        run.setText("РўРёРјРѕС„РµРµРІСѓ РЎ.Р’.");
+        run.setText("Тимофееву С.В.");
         run.addCarriageReturn();
 
 
-        //СЃРѕР·РґР°РµРј Р·Р°РіРѕР»РѕРІРѕРє СЃ РЅРѕРјРµСЂРѕРј РЎР—
+        //создаем заголовок с номером СЗ
         XWPFParagraph zagolovok = document.createParagraph();
         zagolovok.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun run1 = zagolovok.createRun();
         run1.setFontFamily("Times new roman");
         run1.setBold(true);
         run1.setFontSize(18);
-        run1.setText(createZagolovok(numOfSZ));//СѓРєР°Р·С‹РІР°РµС‚СЃСЏ РЅРѕРјРµСЂ РЎР—
+        run1.setText(createZagolovok(numOfSZ));//указывается номер СЗ
 
-        //СЃРѕР·РґР°РµРј РїРѕРґРїРёСЃСЊ СЃ С…Р°СЂР°РєС‚РёСЂРёСЃС‚РёРєР°РјРё РЎР—
+        //создаем подпись с характиристиками СЗ
         XWPFParagraph characteristiky = document.createParagraph();
         characteristiky.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun run2 = characteristiky.createRun();
         run2.setFontFamily("Times new roman");
         run2.setFontSize(14);
-        run2.setText("РўРёРї СЂР°Р±РѕС‚: РїСЂРѕРІРµСЂРєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ RU;");
+        run2.setText("Тип работ: проверка подключения RU;");
         run2.addCarriageReturn();
-        run2.setText("РЎСЂРѕРє РёСЃРїРѕР»РЅРµРЅРёСЏ: "+createDateIspolneniya()+";");
+        run2.setText("Срок исполнения: "+createDateIspolneniya()+";");
         run2.addCarriageReturn();
-        run2.setText("Р—РѕРЅР°: "+ createVendorDiapazons(list));
+        run2.setText("Зона: "+ createVendorDiapazons(list));
         run2.addCarriageReturn();
-        run2.setText("РљРѕРјРјРµРЅС‚Р°СЂРёР№: СѓСЃС‚СЂР°РЅРµРЅРёРµ РЅРµРїСЂР°РІРёР»СЊРЅРѕРіРѕ РїРѕРґРєР»СЋС‡РµРЅРёСЏ RU.");
+        run2.setText("Комментарий: устранение неправильного подключения RU.");
         run2.addCarriageReturn();
 
-        //СЃРѕР·РґР°РµРј РѕР±С‰СѓСЋ РІРІРѕРґРЅСѓСЋ С„СЂР°Р·Сѓ РґР»СЏ РЎР—
+        //создаем общую вводную фразу для СЗ
         XWPFParagraph vvodnaya = document.createParagraph();
         vvodnaya.setIndentationFirstLine(1000);
         XWPFRun run3 = vvodnaya.createRun();
@@ -133,18 +133,18 @@ public class CreateWord {
         run3.addCarriageReturn();
 
 
-        //РЎРѕР·РґР°РµРј С‚Р°Р±Р»РёС†Сѓ
+        //Создаем таблицу
         XWPFTable table = document.createTable();
         table.setRowBandSize(14);
         table.setStyleID("tymes new roman");
         XWPFTableRow tableRowZag = table.getRow(0);
         tableRowZag.setHeight(10);
-        tableRowZag.getCell(0).setText("РђР·РёРјСѓС‚, РіСЂР°Рґ.");
-        tableRowZag.createCell().setText("Р”РёР°РїР°Р·РѕРЅ");
-        tableRowZag.createCell().setText("РќРµСЃСѓС‰Р°СЏ С‡Р°СЃС‚РѕС‚Р°");
-        tableRowZag.createCell().setText("РќР°РёРјРµРЅРѕРІР°РЅРёРµ");
-        tableRowZag.createCell().setText("РЎРµРєС‚РѕСЂ РїРѕ РїСЂРѕРµРєС‚Сѓ");
-        tableRowZag.createCell().setText("РЎРµРєС‚РѕСЂ РЅР° СЃРµС‚Рё");
+        tableRowZag.getCell(0).setText("Азимут, град.");
+        tableRowZag.createCell().setText("Диапазон");
+        tableRowZag.createCell().setText("Несущая частота");
+        tableRowZag.createCell().setText("Наименование");
+        tableRowZag.createCell().setText("Сектор по проекту");
+        tableRowZag.createCell().setText("Сектор на сети");
         for (int i = 0; i < list.size(); i++) {
             XWPFTableRow tableRow = table.createRow();
             tableRow.setHeight(10);
@@ -162,21 +162,21 @@ public class CreateWord {
         run4.setFontFamily("Times new roman");
         run4.setFontSize(14);
         run4.addCarriageReturn();
-        run4.setText("РџСЂРѕС€Сѓ Р’Р°СЃ РґР°С‚СЊ СѓРєР°Р·Р°РЅРёРµ РїСЂРѕРІРµСЂРёС‚СЊ РЅР° СЃС‚Р°РЅС†РёРё СЃРѕСЃС‚РѕСЏРЅРёРµ С‚СЂР°РЅСЃРёРІРµСЂРѕРІ, Р°РЅС‚РµРЅРЅРѕРіРѕ С‚СЂР°РєС‚Р° Рё РїСЂР°РІРёР»СЊРЅРѕСЃС‚СЊ РїРѕРґРєР»СЋС‡РµРЅРёСЏ С‚СЂР°РЅСЃРёРІРµСЂРѕРІ Рє Р°РЅС‚РµРЅРЅР°Рј.");
+        run4.setText("Прошу Вас дать указание проверить на станции состояние трансиверов, антенного тракта и правильность подключения трансиверов к антеннам.");
 
 
-        //РїРѕРґРїРёСЃСЊ
+        //подпись
         XWPFParagraph podpis = document.createParagraph();
         XWPFRun run5 =podpis.createRun();
         run5.setFontFamily("Times new roman");
         run5.setFontSize(14);
         run5.addCarriageReturn();
-        run5.setText("Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ СЃР»СѓР¶Р±С‹ РѕРїС‚РёРјРёР·Р°С†РёРё");
-        run5.setText("                 Р›РѕР±Р°РЅРѕРІ Рњ.Рђ.");
+        run5.setText("Руководитель службы оптимизации");
+        run5.setText("                 Лобанов М.А.");
         run5.addCarriageReturn();
-        run5.setText("РјРѕР±РёР»СЊРЅРѕР№ СЃРµС‚Рё:");
+        run5.setText("мобильной сети:");
         run5.addCarriageReturn();
-        run5.setText("РСЃРїРѕР»РЅРёС‚РµР»СЊ:                                                       ");
+        run5.setText("Исполнитель:                                                       ");
         run5.setText(SZController.getExecutor());
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(new File(filePath + "/" + createSZname(numOfSZ)));

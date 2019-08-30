@@ -67,35 +67,42 @@ public class CellMapper implements RowMapper<CellInfo> {
             "and a.geo_zone like 'Mck%'\n";
 
     public static final String SQL_LTE_Huawei = "select distinct\n" +
-            "            case a.ran when '4G' then 'LTE' end as SYSTEM,\n" +
+            "case a.ran when '4G' then 'LTE' end as SYSTEM,\n" +
+            "a.posname as SITE,\n" +
+            "a.ci as CID,\n" +
+            "a.latitude as LAT,\n" +
+            "a.longitude as LON,\n" +
+            "a.name as CELL,\n" +
+            "         a.LAC as LAC,\n" +
+            "                       a.TAC,\n" +
+            "                       a.frequency as BAND,\n" +
+            "                       a.BSC as BSC,\n" +
+            "                        b.dlearfcn as CH,\n" +
+            "                        null as BSIC,\n" +
+            "                        null as SCR,\n" +
+            "                        b.phycellid as PCI,\n" +
+            "                        a.azimuth as DIR,\n" +
+            "                        a.HEIGHT,\n" +
+            "                        a.TILT,\n" +
+            "                        a.BSC as RNCID,\n" +
+            "                        a.geo_zone as REGION\n" +
+            "                        from  pmc.bs_general_table_cr as a inner join \n" +
             "            \n" +
-            "            a.posname as SITE,\n" +
-            "            a.ci as CID,\n" +
-            "            a.latitude as LAT,\n" +
-            "            a.longitude as LON,\n" +
-            "            a.name as CELL,\n" +
-            "            a.LAC as LAC,\n" +
-            "            a.TAC,\n" +
-            "            a.frequency as BAND,\n" +
-            "            a.BSC as BSC,\n" +
-            "            b.dlearfcn as CH,\n" +
-            "            null as BSIC,\n" +
-            "            null as SCR,\n" +
-            "            b.phycellid as PCI,\n" +
-            "            a.azimuth as DIR,\n" +
-            "            a.HEIGHT,\n" +
-            "            a.TILT,\n" +
-            "            a.BSC as RNCID,\n" +
-            "            a.geo_zone as REGION\n" +
-            "            from  pmc.bs_general_table_cr as a inner join (select \n" +
-            "case when isnumeric(cellname)=1 then cellname else 0 end as cellname, cellid, phycellid, dlearfcn from pmc.EXPORT_HU_CELL_BTS3900\n" +
-            "union\n" +
-            "select\n" +
-            "case when isnumeric(cellname)=1 then cellname else 0 end as cellname, cellid, phycellid, dlearfcn from pmc.EXPORT_HU_CELL_BTS5900) as b\n" +
-            "            on b.cellname = a.ci\n" +
-            "            where a.vendor = 'H' \n" +
-            "            and a.form = 'out'\n" +
-            "            and a.geo_zone like 'Mck%'";
+            "            (            \n" +
+            "            select \n" +
+            "            case when isnumeric(cellname)=1 then cellname else 0 end as cellname, cellid, phycellid, dlearfcn from pmc.EXPORT_HU_CELL_BTS3900\n" +
+            "            union\n" +
+            "            select\n" +
+            "            case when isnumeric(cellname)=1 then cellname else 0 end as cellname, cellid, phycellid, dlearfcn from pmc.EXPORT_HU_CELL_BTS5900\n" +
+            "            union\n" +
+            "            select\n" +
+            "            case when isnumeric(cellname)=1 then cellname else 0 end as cellname, cellid, phycellid, dlearfcn from pmc.EXPORT_HU_eNodeBCell_eNodeB\n" +
+            "            )     \n" +
+            "             as b\n" +
+            "                        on b.cellname = a.ci\n" +
+            "                        where a.vendor = 'H' \n" +
+            "                        and a.form = 'out'\n" +
+            "                        and a.geo_zone like 'Mck%'";
 
     @Override
     public CellInfo mapRow(ResultSet resultSet, int i) throws SQLException {

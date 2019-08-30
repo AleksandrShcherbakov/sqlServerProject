@@ -47,11 +47,8 @@
         detailDiv.id= 'div'+i;
         $('#main').append('<h3>'+partsOfText[0]+'</h3>');
         $('#main').append(partsOfText[1]+'<br>');
-        if (partsOfText[1].toString().includes("сектора перепутаны")){
-            $('#main').append('<a href="/szPos" target="_blank">Создать СЗ на перепутку</a><br><br>')
-            //$('#main').append('<div id='+partsOfText[0]+'></div>');
-            //openSZ(partsOfText[0]);
-        }
+        $('#main').append('<a href="/szPos" target="_blank">Создать СЗ на перепутку</a><br><br>');
+
         main.appendChild(ch);
         main.appendChild(label);
         main.appendChild(document.createElement('br'));

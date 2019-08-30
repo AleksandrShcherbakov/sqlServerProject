@@ -1,5 +1,6 @@
 package com.work.sqlServerProject.Helper;
 
+import com.work.sqlServerProject.controller.MainController;
 import com.work.sqlServerProject.controller.SZController;
 import com.work.sqlServerProject.model.CellForSZ;
 import org.apache.poi.xwpf.usermodel.*;
@@ -95,7 +96,7 @@ public class CreateWord {
         run.addCarriageReturn();
         run.setText("базовых станций");
         run.addCarriageReturn();
-        run.setText("Тимофееву С.В.");
+        run.setText(MainController.headerExp);
         run.addCarriageReturn();
 
 
@@ -172,7 +173,7 @@ public class CreateWord {
         run5.setFontSize(14);
         run5.addCarriageReturn();
         run5.setText("Руководитель службы оптимизации");
-        run5.setText("                 Лобанов М.А.");
+        run5.setText("                 "+MainController.headerSOMS);
         run5.addCarriageReturn();
         run5.setText("мобильной сети:");
         run5.addCarriageReturn();

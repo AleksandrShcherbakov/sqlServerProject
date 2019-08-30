@@ -8,6 +8,8 @@ import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.CellNameInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,23 +33,34 @@ public class MainController {
     String [] LTEcarrierBand;
     @Value("${umtscarriers}")
     String [] UMTScarriers;
+    @Value("${headerOfSOMS}")
+    String headerOfSOMS;
+    @Value("${headerOfExpluatation}")
+    String heagerOfExpl;
 
     public static String[]LTE;
     public static String[]UMTS;
+    public static String headerSOMS;
+    public static String headerExp;
 
     @Autowired
     private CellNameDAO cellNameDAO;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String openStartPage(){
+    @EventListener(ApplicationReadyEvent.class)
+    public void setStaticVariables() throws UnsupportedEncodingException {
+        headerSOMS=this.headerOfSOMS;
+        System.out.println(headerSOMS);
+        headerSOMS=new String (headerSOMS.getBytes("ISO-8859-1"), "Cp1251");
+        System.out.println(headerSOMS);
+        headerExp=this.heagerOfExpl;
+        headerExp=new String (headerExp.getBytes("ISO-8859-1"), "Cp1251");
         LTE=this.LTEcarrierBand;
         UMTS=this.UMTScarriers;
-        for (String s : LTEcarrierBand){
-            System.out.println(s);
-        }
-        for (String s : UMTScarriers){
-            System.out.println(s);
-        }
+        System.out.println("статические переменный установлены");
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String openStartPage(){
         return "start";
     }
 

@@ -6,6 +6,7 @@ import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.FormCellForSZ;
 import com.work.sqlServerProject.form.SZFormPos;
 import com.work.sqlServerProject.model.CellForSZ;
+import com.work.sqlServerProject.model.CellInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by a.shcherbakov on 14.03.2019.
@@ -135,8 +133,16 @@ public class SZController {
         } else {
             this.pathDir = Helper.createDefPath(szFormPos.getPathDir());
         }
-
+        List<CellInfo> tempList=cellNameDAO.getInfoForBS(szFormPos.getPosName());
+        Map<Integer,Integer> mapp=new HashMap<>();
+        tempList.stream().filter(p->p.getSystem().equals("LTE")||p.getSystem().equals("UMTS")).peek(p->mapp.put(p.getCi(),p.getCh())).close();
+        list=new ArrayList<>();
         list = cellNameDAO.getBSforSZ(szFormPos.getPosName());
+        for (CellForSZ c : list){
+            if (mapp.get(c.getPosname())!=null) {
+                c.setDlCh(mapp.get(c.getPosname()));
+            }
+        }
         if (list.size() == 0) {
             model.addAttribute("noposonnetwork", "БС с указанным номером не существует.");
             model.addAttribute("executors",exec);

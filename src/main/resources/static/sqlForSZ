@@ -1,0 +1,28 @@
+select posname,
+a.ran,
+a.vendor,
+            a.cellname
+            azimuth,
+            frequency,
+            carriernum,
+            name,
+            address,
+            a.ci,
+            geo_zone,
+            b.uarfcnDL
+            from pmc.bs_general_table_cr as a left join (select a.cellname, uarfcndl from pmc.cellstatus as a  join (
+            select max(date) as date, cellname from pmc.cellstatus group by cellname
+            ) as b on a.cellname=b.cellname and a.date=b.date
+
+union
+select
+case when isnumeric(cellname)=1 then concat(1,cellname) else 0 end as cellname, dlearfcn from pmc.EXPORT_HU_CELL_BTS3900
+union
+select
+case when isnumeric(cellname)=1 then concat(1,cellname) else 0 end as cellname,dlearfcn from pmc.EXPORT_HU_CELL_BTS5900
+union
+select
+case when isnumeric(cellname)=1 then concat(1,cellname) else 0 end as cellname, dlearfcn from pmc.EXPORT_HU_eNodeBCell_eNodeB
+            )as b on a.cellname=b.cellname
+            where a.ant_location = 'outdoor'
+            and (a.duplexmode is null or a.duplexmode!='nb-iot')

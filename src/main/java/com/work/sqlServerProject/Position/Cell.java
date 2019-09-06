@@ -31,6 +31,7 @@ public class Cell {
     private String about;
     private boolean ok;
     private int bestCellID;
+    private String param;
 
     private int best1;
     private int best2;
@@ -419,5 +420,13 @@ public class Cell {
 
     public void setOk2(boolean ok2) {
         this.ok2 = ok2;
+    }
+
+    public String getParam() {
+        return param;
+    }
+
+    public void setParam(String param) {
+        this.param = param;
     }
 }

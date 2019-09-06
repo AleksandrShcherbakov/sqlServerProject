@@ -25,6 +25,7 @@ public class Cell2G extends Cell {
         this.BCCH=cellInfo.getCh();
         this.BSIC=cellInfo.getBsic();
         this.bcchBsic=BCCH+" "+BSIC;
+        super.setParam(bcchBsic);
         if (super.getPosname()==3412){
             System.out.println("Проверка :"+super.getAzimuth()+" "+this.BSIC);
         }

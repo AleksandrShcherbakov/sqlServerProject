@@ -22,6 +22,7 @@ public class Cell3G extends Cell {
     public Cell3G(CellInfo cellInfo, int distance) {
         super(cellInfo, distance);
         this.Scr=  cellInfo.getScr();
+        super.setParam(Scr+"");
         this.carrierFrequency=cellInfo.getCh();
     }
 

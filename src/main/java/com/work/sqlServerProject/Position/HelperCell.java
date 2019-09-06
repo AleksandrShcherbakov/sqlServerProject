@@ -17,6 +17,34 @@ public class HelperCell {
     final static double pi=3.1415926535898;
     final static double EarthRadius= 6372795.0;
     static Map<String,Integer>numIds;
+
+    final static Map<String, String> colerSet2G= new HashMap<>();
+    static {
+        colerSet2G.put("0_-65","#008000");
+        colerSet2G.put("-65_-75","#00FF00");
+        colerSet2G.put("-75_-85","#FFFF00");
+        colerSet2G.put("-85_-95","#FFA500");
+        colerSet2G.put("-95_-104","#FF0000");
+    }
+
+    final static Map<String,String> colorSet3G= new HashMap<>();
+    static {
+        colorSet3G.put("0_-80","#008000");
+        colorSet3G.put("-80_-90","#FFFF00");
+        colorSet3G.put("-90_-100","#FFA500");
+        colorSet3G.put("-100_-200","#FF0000");
+    }
+
+    final static Map<String,String> colorSet4G= new HashMap<>();
+    static {
+        colorSet4G.put("0_-65","#008000");
+        colorSet4G.put("-65_-80","#00FF00");
+        colorSet4G.put("-80_-90","#FFFF00");
+        colorSet4G.put("-90_-105","#FFA500");
+        colorSet4G.put("-105_-115", "#FF0000");
+        colorSet4G.put("-115_-200", "#800000");
+    }
+
     static {
         numIds=new HashMap<>();
         Integer id=1;
@@ -32,6 +60,36 @@ public class HelperCell {
             numIds.put("LTE "+s.split("_")[0],id);
             id++;
         }
+    }
+
+    public static String getLevelColor(String system, Double level){
+        String res = "#808080";
+        Map<String,String>map=null;
+        if (system.equals("GSM")){
+            map=colerSet2G;
+        }
+        else
+        if (system.equals("UMTS")){
+            map=colorSet3G;
+        }
+        else
+        if (system.equals("LTE")){
+            map=colorSet4G;
+        }
+        String key="";
+        for (String s : map.keySet()){
+            System.out.println(s);
+        }
+        for (String s : map.keySet()){
+            String[] borders = s.split("_");
+            double leftBorder=Double.parseDouble(borders[0]);
+            double rightBorder =Double.parseDouble(borders[1]);
+            if (level<leftBorder && level>=rightBorder){
+                key=s;
+                break;
+            }
+        }
+        return map.get(key);
     }
 
     public static double toDist(double latA, double lonA, double latB, double lonB){
@@ -55,8 +113,6 @@ public class HelperCell {
         double dist=ad*EarthRadius;
         return dist;
     }
-
-
 
 
 }

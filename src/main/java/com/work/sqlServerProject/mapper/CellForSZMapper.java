@@ -14,6 +14,7 @@ public class CellForSZMapper implements RowMapper<CellForSZ> {
     public static final String SQL_SZ = "select posname,\n" +
             "a.ran,\n" +
             "            a.vendor,\n" +
+            "          \n" +
             "            azimuth,\n" +
             "            frequency,\n" +
             "            carriernum,\n" +
@@ -21,22 +22,50 @@ public class CellForSZMapper implements RowMapper<CellForSZ> {
             "            address,\n" +
             "            a.ci,\n" +
             "            geo_zone,\n" +
-            "            b.uarfcnDL \n" +
-            "            from pmc.bs_general_table_cr as a left join (select a.cellname, uarfcndl from pmc.cellstatus as a  join (\n" +
-            "            select max(date) as date, cellname from pmc.cellstatus group by cellname\n" +
-            "            ) as b on a.cellname=b.cellname and a.date=b.date \n" +
+            "            case when a.ran = '2G' then null else b.uarfcnDL end as uarfcndl\n" +
+            "            from pmc.bs_general_table_cr as a left join (\n" +
             "            \n" +
+            "select cellid, uarfcndownlink as uarfcndl, 'H'as vendor\n" +
+            "from pmc.EXPORT_HU_UCELL_BSC6900GU\n" +
+            "union\n" +
+            "select cellid, uarfcndownlink, 'H'as vendor\n" +
+            "from pmc.EXPORT_HU_UCELL_BSC6910UMTS\n" +
+            "union\n" +
+            "select utrancellid, utrandlarfcn,'H'as vendor\n" +
+            "from pmc.EXPORT_HU_eNodeBUtranExternalCell_eNodeB\n" +
+            "union\n" +
+            "select cellid, utrandlarfcn,'H'as vendor\n" +
+            "from pmc.EXPORT_HU_UTRANEXTERNALCELL_BTS5900\n" +
+            "union\n" +
+            "select cellid, utrandlarfcn,'H'as vendor\n" +
+            "from pmc.EXPORT_HU_UTRANEXTERNALCELL_BTS3900\n" +
+            "union\n" +
+            "select cellid, utrandlarfcn,'H'as vendor\n" +
+            "from pmc.EXPORT_HU_UTRANEXTERNALCELL_MICROBTS3900\n" +
             "union\n" +
             "select\n" +
-            "case when isnumeric(cellname)=1 then concat(1,cellname) else 0 end as cellname, dlearfcn from pmc.EXPORT_HU_CELL_BTS3900\n" +
+            "case when isnumeric(cellname)=1 then cellname else 0 end as cellname, dlearfcn,'H'as vendor\n" +
+            "from pmc.EXPORT_HU_CELL_BTS3900\n" +
             "union\n" +
             "select\n" +
-            "case when isnumeric(cellname)=1 then concat(1,cellname) else 0 end as cellname,dlearfcn from pmc.EXPORT_HU_CELL_BTS5900\n" +
+            "case when isnumeric(cellname)=1 then cellname else 0 end as cellname,dlearfcn,'H'as vendor \n" +
+            "from pmc.EXPORT_HU_CELL_BTS5900\n" +
             "union\n" +
             "select\n" +
-            "case when isnumeric(cellname)=1 then concat(1,cellname) else 0 end as cellname, dlearfcn from pmc.EXPORT_HU_eNodeBCell_eNodeB\n" +
-            "            )as b on a.cellname=b.cellname\n" +
+            "case when isnumeric(cellname)=1 then cellname else 0 end as cellname, dlearfcn,'H'as vendor \n" +
+            "from pmc.EXPORT_HU_eNodeBCell_eNodeB\n" +
+            "union\n" +
+            "select eutrancellfddid, earfcndl,'E'as vendor \n" +
+            "from pmc.LTE_data_Ericsson \n" +
+            "where isnumeric(azimuth)=1\n" +
+            "union\n" +
+            "select cid, uarfcndl,'E'as vendor \n" +
+            "from pmc.umts_data_Ericsson\n" +
+            "\n" +
+            ") as b on a.ci=b.cellid and a.vendor =b.vendor\n" +
             "            where a.ant_location = 'outdoor'\n" +
+            "            \n" +
+            "            \n" +
             "            and (a.duplexmode is null or a.duplexmode!='nb-iot') ";
 
 

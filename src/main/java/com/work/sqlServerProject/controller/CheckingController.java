@@ -338,7 +338,8 @@ public class CheckingController {
     @RequestMapping(value = "/map", method = RequestMethod.GET)
     public String getMap(Model model,
                          @RequestParam(required = false, name = "about") String about,
-                         @RequestParam(required = false, name = "posName") String number){
+                         @RequestParam(required = false, name = "posName") String number,
+                         @RequestParam(required = false, name = "cell") String cell){
         Integer pos = Integer.parseInt(number);
         List<Cell>cellList= positions.get(pos).getCells().stream().filter(p->p.getAbout().equals(about)).collect(Collectors.toList());
         Map<String, String> paramColor=new HashMap<>();
@@ -390,7 +391,21 @@ public class CheckingController {
                 pointsTomap.addAll(set);
             }
         }
+        if (cell!=null){
+            String param="";
+            for (Cell c : cellList){
+                if (c.getCi()==Integer.parseInt(cell)){
+                    param=c.getParam();
+                    model.addAttribute("azimuthOfsector",c.getAzimuth());
+                }
+            }
+            String finalParam = param;
+            List<PointToMap> listWithLevels = pointsTomap.stream().map(m->new PointToMap(m, about, finalParam)).
+                    peek(p-> System.out.println(p.getLongitude()+" "+p.getLatitude()+" "+p.getColor()+" "+p.getParam())).collect(Collectors.toList());
+            model.addAttribute("listWithLevels",listWithLevels);
+        }
         List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).collect(Collectors.toList());
+
         double maxDist=500;
         boolean nopoints=false;
         try {

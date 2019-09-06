@@ -21,6 +21,7 @@ public class Cell4G extends Cell {
     public Cell4G(CellInfo cellInfo, int distance) {
         super(cellInfo, distance);
         this.PCI= cellInfo.getPci();
+        super.setParam(PCI+"");
         this.ch=cellInfo.getCh();
     }
 

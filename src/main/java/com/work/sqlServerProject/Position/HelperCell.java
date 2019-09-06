@@ -18,7 +18,7 @@ public class HelperCell {
     final static double EarthRadius= 6372795.0;
     static Map<String,Integer>numIds;
 
-    final static Map<String, String> colerSet2G= new HashMap<>();
+    public final static Map<String, String> colerSet2G= new HashMap<>();
     static {
         colerSet2G.put("0_-65","#008000");
         colerSet2G.put("-65_-75","#00FF00");
@@ -27,7 +27,7 @@ public class HelperCell {
         colerSet2G.put("-95_-104","#FF0000");
     }
 
-    final static Map<String,String> colorSet3G= new HashMap<>();
+    public final static Map<String,String> colorSet3G= new HashMap<>();
     static {
         colorSet3G.put("0_-80","#008000");
         colorSet3G.put("-80_-90","#FFFF00");
@@ -35,7 +35,7 @@ public class HelperCell {
         colorSet3G.put("-100_-200","#FF0000");
     }
 
-    final static Map<String,String> colorSet4G= new HashMap<>();
+    public final static Map<String,String> colorSet4G= new HashMap<>();
     static {
         colorSet4G.put("0_-65","#008000");
         colorSet4G.put("-65_-80","#00FF00");

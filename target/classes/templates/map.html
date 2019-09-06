@@ -13,7 +13,7 @@
         }
         #map {
             width: 100%;
-            height: 90%;
+            height: 80%;
         }
     </style>
 </head>
@@ -21,6 +21,7 @@
 <body>
 <div th:if="${nopoints}" th:utext="${nopoints}" style="color: red"></div>
 <div id="map"></div>
+<div id="color"></div>
 <div id="note"></div>
 <script th:inline="javascript">
     var precision = 30;
@@ -42,6 +43,7 @@
     var rad=[[${radius}]];
     var pos=[[${pos}]];
     var about=[[${about}]];
+    var colorSet=[[${colorSet}]];
     document.title=pos+" "+about;
 
     function init() {
@@ -56,13 +58,14 @@
 
 
         if (listWithLevels!==null){
+
             //alert(listWithLevels.length);
             for (i = 0; i < cellss.length; i++) {
                 if (cellss[i].azimuth===azimuthOfSector) {
                     createsectors(cellss[i].azimuth, "#FF0000", 0, 1);
                 }
                 else {
-                    createsectors(cellss[i].azimuth, "#FFFFFF", 0, 1);
+                    createsectors(cellss[i].azimuth, "#808080", 0, 1);
                 }
             }
             for (i=0;i<listWithLevels.length;i++) {
@@ -70,6 +73,21 @@
                     //alert(listWithLevels[i].longitude+" "+listWithLevels[i].language+" "+listWithLevels[i].color+" "+listWithLevels[i].param);
                     createPoint(listWithLevels[i].longitude, listWithLevels[i].latitude, listWithLevels[i].color, listWithLevels[i].param);
                 }
+            }
+            var divColor = document.getElementById("color");
+
+
+            for (i=colorSet.length-1;i>=0;i--){
+                var canvas = document.createElement("canvas");
+                canvas.width=10;
+                canvas.height=10;
+                var context=canvas.getContext("2d");
+                context.arc(5,5,5,0,Math.PI*2,false);
+                context.fillStyle=colorSet[i].split(" ")[1];
+                context.fill();
+                divColor.appendChild(canvas);
+                divColor.appendChild(document.createElement("label").appendChild(document.createTextNode(colorSet[i].split(" ")[0])));
+                divColor.appendChild(document.createElement("br"));
             }
 
         }

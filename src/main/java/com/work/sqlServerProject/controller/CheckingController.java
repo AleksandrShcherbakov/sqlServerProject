@@ -403,6 +403,77 @@ public class CheckingController {
             List<PointToMap> listWithLevels = pointsTomap.stream().map(m->new PointToMap(m, about, finalParam)).
                     peek(p-> System.out.println(p.getLongitude()+" "+p.getLatitude()+" "+p.getColor()+" "+p.getParam())).collect(Collectors.toList());
             model.addAttribute("listWithLevels",listWithLevels);
+            if (about.startsWith("GSM")){
+                Set<String> set=new TreeSet<>(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        String a=o1.split(" ")[0].split("_")[0];
+                        String b=o2.split(" ")[0].split("_")[0];
+                        double a1=Double.parseDouble(a);
+                        double b1=Double.parseDouble(b);
+                        if (a1>b1){
+                            return 1;
+                        }
+                        else
+                        if (a1<b1){
+                            return -1;
+                        }
+                        else return 0;
+                    }
+                });
+                for (Map.Entry s : HelperCell.colerSet2G.entrySet()){
+                    set.add(s.getKey().toString()+" "+s.getValue().toString());
+                }
+                model.addAttribute("colorSet",set);
+            }
+            else
+            if (about.startsWith("UMTS")){
+                Set<String> set=new TreeSet<>(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        String a=o1.split(" ")[0].split("_")[0];
+                        String b=o2.split(" ")[0].split("_")[0];
+                        double a1=Double.parseDouble(a);
+                        double b1=Double.parseDouble(b);
+                        if (a1>b1){
+                            return 1;
+                        }
+                        else
+                        if (a1<b1){
+                            return -1;
+                        }
+                        else return 0;
+                    }
+                });
+                for (Map.Entry s : HelperCell.colorSet3G.entrySet()){
+                    set.add(s.getKey().toString()+" "+s.getValue().toString());
+                }
+                model.addAttribute("colorSet", set);
+            }
+            else
+            if (about.startsWith("LTE")){
+                Set<String> set=new TreeSet<>(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        String a=o1.split(" ")[0].split("_")[0];
+                        String b=o2.split(" ")[0].split("_")[0];
+                        double a1=Double.parseDouble(a);
+                        double b1=Double.parseDouble(b);
+                        if (a1>b1){
+                            return 1;
+                        }
+                        else
+                        if (a1<b1){
+                            return -1;
+                        }
+                        else return 0;
+                    }
+                });
+                for (Map.Entry s : HelperCell.colorSet4G.entrySet()){
+                    set.add(s.getKey().toString()+" "+s.getValue().toString());
+                }
+                model.addAttribute("colorSet",set);
+            }
         }
         List<PointToMap> list = pointsTomap.stream().map(p->new PointToMap(p, about, paramColor)).collect(Collectors.toList());
 

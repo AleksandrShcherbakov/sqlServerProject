@@ -44,6 +44,7 @@
     var pos=[[${pos}]];
     var about=[[${about}]];
     var colorSet=[[${colorSet}]];
+    var cellto=[[${cellTo}]];
     document.title=pos+" "+about;
 
     function init() {
@@ -75,7 +76,21 @@
                 }
             }
             var divColor = document.getElementById("color");
-
+            var text;
+            if (about.split(" ")[0]==="GSM"){
+                text="2G RxLevel (dBm)";
+            }
+            else
+            if (about.split(" ")[0]==="UMTS"){
+                text="3G RSCP (dBm)";
+            }
+            else
+            if (about.split(" ")[0]==="LTE"){
+                text="4G RSRP (dBm)";
+            }
+            document.title=pos+" "+about+" CI: "+cellto+" azimuth: "+azimuthOfSector;
+            divColor.appendChild(document.createElement("h3").appendChild(document.createTextNode(text)));
+            divColor.appendChild(document.createElement("br"));
 
             for (i=colorSet.length-1;i>=0;i--){
                 var canvas = document.createElement("canvas");
@@ -89,6 +104,7 @@
                 divColor.appendChild(document.createElement("label").appendChild(document.createTextNode(colorSet[i].split(" ")[0])));
                 divColor.appendChild(document.createElement("br"));
             }
+            divColor.appendChild(document.createElement("br"));
 
         }
         else {

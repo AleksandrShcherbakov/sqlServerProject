@@ -17,6 +17,7 @@
 
     </div>
     <form id="formForExist" th:action="@{/reset}" th:method="get">
+
         <input type="submit" value="удалить загруженные файлы">
     </form>
 </div>
@@ -53,6 +54,7 @@
             });
         </script>
         <script th:inline="javascript">
+
             $('#formForExist').hide();
             var alredy=[[${loaded}]];
             var count = [[${countOfPoints}]];

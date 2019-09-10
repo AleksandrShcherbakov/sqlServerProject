@@ -37,7 +37,7 @@ public class PointToMap {
         Map<String, Double> map=point.getMainMap().get(about);
         String system=about.split(" ")[0];
         if (map.get(param)!=null) {
-            this.param = param;
+            this.param = map.get(param)+"";
             this.color = HelperCell.getLevelColor(system, map.get(param));
         }
         else {

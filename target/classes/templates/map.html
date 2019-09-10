@@ -21,7 +21,6 @@
 <body>
 <div th:if="${nopoints}" th:utext="${nopoints}" style="color: red"></div>
 <div id="map"></div>
-<br>
 <div id="color"></div>
 <div id="note"></div>
 <script th:inline="javascript">
@@ -45,7 +44,6 @@
     var pos=[[${pos}]];
     var about=[[${about}]];
     var colorSet=[[${colorSet}]];
-    var cellto=[[${cellTo}]];
     document.title=pos+" "+about;
 
     function init() {
@@ -76,22 +74,20 @@
                     createPoint(listWithLevels[i].longitude, listWithLevels[i].latitude, listWithLevels[i].color, listWithLevels[i].param);
                 }
             }
+
             var divColor = document.getElementById("color");
-            var text;
             if (about.split(" ")[0]==="GSM"){
-                text="2G RxLevel (dBm)";
+                $('#color').append('<h3>2G RxLevel (dBm):</h3>');
             }
             else
             if (about.split(" ")[0]==="UMTS"){
-                text="3G RSCP (dBm)";
+                $('#color').append('<h3>3G RSCP (dBm):</h3>');
             }
             else
             if (about.split(" ")[0]==="LTE"){
-                text="4G RSRP (dBm)";
+                $('#color').append('<h3>4G RSRP (dBm):</h3>');
             }
-            document.title=pos+" "+about+" CI: "+cellto+" azimuth: "+azimuthOfSector;
-            divColor.appendChild(document.createElement("h3").appendChild(document.createTextNode(text)));
-            divColor.appendChild(document.createElement("br"));
+
 
             for (i=colorSet.length-1;i>=0;i--){
                 var canvas = document.createElement("canvas");
@@ -105,7 +101,6 @@
                 divColor.appendChild(document.createElement("label").appendChild(document.createTextNode(colorSet[i].split(" ")[0])));
                 divColor.appendChild(document.createElement("br"));
             }
-            divColor.appendChild(document.createElement("br"));
 
         }
         else {

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -101,6 +102,25 @@ public class CheckingController {
         else
         if (isBts!=null){
             this.useBTSFile=true;
+            if (!pathScanFile.getBtsFile().isEmpty()){
+                String btsFileName=pathScanFile.getBtsFile().getOriginalFilename();
+                if ((btsFileName.endsWith(".csv")|| btsFileName.endsWith(".nbf"))&&btsFileName.length()>0){
+                    btsLines=new ArrayList<>();
+                    try {
+                        BufferedReader reader=new BufferedReader(new InputStreamReader(new ByteArrayInputStream(pathScanFile.getBtsFile().getBytes())));
+                        while (reader.ready()){
+                            btsLines.add(reader.readLine());
+                        }
+                        reader.close();
+                    } catch (IOException e) {
+                        System.out.println("Файл БТС не удалось прочитать");
+                        e.printStackTrace();
+                    }
+
+                }
+                else model.addAttribute("wrongBtsFile","Некорректно выбран БТС файл");
+            }
+            else
             if (!pathScanFile.getToBts().equals("")){
                 this.pathToBts=pathScanFile.getToBts();
                 try {
@@ -142,12 +162,27 @@ public class CheckingController {
             }
         }
         StringBuilder stringBuilder=new StringBuilder();
+        if (!pathScanFile.getScanFile().isEmpty()){
+            String scanFileName=pathScanFile.getScanFile().getOriginalFilename().intern();
+            if(!this.alredyLoadedFiles.contains(scanFileName)){
+                if (scanFileName.endsWith(".nmf")&& scanFileName.length()>0){
+                stringBuilder.append(readFiles(pathScanFile.getScanFile()));
+                this.alredyLoadedFiles.add(scanFileName);
+                }
+            else model.addAttribute("wrongNmfFile","Некорректно выбран файл сканнера");
+            }
+            else System.out.println("файл "+scanFileName+" уже загружен");
+        }
         if (!pathScanFile.getUrl().equals("")) {
             if (alredyLoadedFiles.contains(pathScanFile.getUrl())) {
                 System.out.println(pathScanFile.getUrl() + " уже загружен");
             } else {
                 stringBuilder.append(readFiles(pathScanFile.getUrl()));
-                alredyLoadedFiles.add(pathScanFile.getUrl());
+
+                System.out.println(pathScanFile.getUrl());
+                String tmp=pathScanFile.getUrl();
+                System.out.println(tmp.substring(tmp.lastIndexOf("\\")+1,tmp.length()).intern());
+                alredyLoadedFiles.add(tmp.substring(tmp.lastIndexOf("\\")+1,tmp.length()).intern());
             }
         }
         if (files!=null) {
@@ -157,7 +192,8 @@ public class CheckingController {
                     System.out.println(s + " уже загружен");
                 } else {
                     stringBuilder.append(readFiles(s));
-                    alredyLoadedFiles.add(s);
+                    System.out.println(s.substring(s.lastIndexOf("\\")+1,s.length()));
+                    alredyLoadedFiles.add(s.substring(s.lastIndexOf("\\")+1,s.length()).intern());
                 }
             }
         }
@@ -173,7 +209,6 @@ public class CheckingController {
             model.addAttribute("listFiles",this.listWithNmf);
             return "checking/checkPathFileScan";
         }
-        System.out.println(stringBuilder.toString());
         return "redirect:/checkPos";
     }
 
@@ -198,6 +233,29 @@ public class CheckingController {
     }
 
     public String readFiles(String path){
+        List<String> parsered;
+        try {
+            parsered = ParserHalper.createinSrtings(path);
+        }
+        catch (IOException e){
+            return "Путь к файлу сканера указан не верно.";
+        }
+        int size1=0;
+        if (points!=null){
+            size1=points.size();
+        }
+        if (points==null) {
+            points = Parser.getPointsFromScan(parsered);
+        }
+        else points.addAll(Parser.getPointsFromScan(parsered));
+        int size2=points.size();
+        if (points.size()!=0 && size1!=size2) {
+            return "файл " + path + " прочитан";
+        }
+        else return "файл "+ path + " не прочитан";
+    }
+
+    public String readFiles(MultipartFile path){
         List<String> parsered;
         try {
             parsered = ParserHalper.createinSrtings(path);

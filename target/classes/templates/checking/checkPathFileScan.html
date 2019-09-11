@@ -27,14 +27,19 @@
         <p>
             Выберите файл сканнера:
             <br>
-            <input type="file" th:field="*{scanFile}">
-            <br>
+            <input type="file" th:field="*{scanFile}" accept=".nmf">
+            <br><br>
             Или введите путь к файлу сканнера:
             <input type="text" th:field="*{url}" style="width: 100%">
-            <br>
+            <br><br>
             Или выберите из списка последних файлов:
             <div id="files"></div>
-            <input type="submit" value="загрузить файл">
+            <input id="mainButton" type="submit" value="загрузить файл" style="color: red">
+        <script>
+            if(alredy!==null){
+                $('#mainButton').value="загрузить файл/ проверить загруженные";
+            }
+        </script>
         </p>
         <p>
             <input type="checkbox" id="useBts" name="isBTS" value="ок"> Использовать БТС файл (если компьютер не подключен к базе данных General)
@@ -42,11 +47,12 @@
         <div id="checkBts">
             Выберите БТС файл:
             <br>
-            <input type="file" th:field="*{btsFile}"><br>
+            <input type="file" th:field="*{btsFile}" accept=".csv,.nbf"><br><br>
             Или укажите путь к bts файлу:
             <input type="text" id="pathToBts" th:field="*{toBts}" style="width: 100%">
+        <br><br>
 
-            или выберите из имеющихся:
+            Или выберите из имеющихся:
             <div id="listOfBts"></div>
         </div>
 

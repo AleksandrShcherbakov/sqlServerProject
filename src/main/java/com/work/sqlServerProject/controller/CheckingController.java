@@ -162,6 +162,7 @@ public class CheckingController {
             }
         }
         StringBuilder stringBuilder=new StringBuilder();
+
         if (!pathScanFile.getScanFile().isEmpty()){
             String scanFileName=pathScanFile.getScanFile().getOriginalFilename().intern();
             if(!this.alredyLoadedFiles.contains(scanFileName)){
@@ -173,30 +174,34 @@ public class CheckingController {
             }
             else System.out.println("файл "+scanFileName+" уже загружен");
         }
+
         if (!pathScanFile.getUrl().equals("")) {
-            if (alredyLoadedFiles.contains(pathScanFile.getUrl())) {
+            String fullPath=pathScanFile.getUrl();
+            String nameOfFile=fullPath.substring(fullPath.lastIndexOf("\\")+1,fullPath.length()).intern();
+            if (alredyLoadedFiles.contains(nameOfFile)) {
                 System.out.println(pathScanFile.getUrl() + " уже загружен");
             } else {
-                stringBuilder.append(readFiles(pathScanFile.getUrl()));
-
+                stringBuilder.append(readFiles(fullPath));
                 System.out.println(pathScanFile.getUrl());
-                String tmp=pathScanFile.getUrl();
-                System.out.println(tmp.substring(tmp.lastIndexOf("\\")+1,tmp.length()).intern());
-                alredyLoadedFiles.add(tmp.substring(tmp.lastIndexOf("\\")+1,tmp.length()).intern());
+                System.out.println(nameOfFile);
+                alredyLoadedFiles.add(nameOfFile);
             }
         }
+
         if (files!=null) {
             String[] file = files.split(",");
             for (String s : file) {
-                if (alredyLoadedFiles.contains(s)) {
+                String nameOfFile=s.substring(s.lastIndexOf("\\")+1,s.length()).intern();
+                if (alredyLoadedFiles.contains(nameOfFile)) {
                     System.out.println(s + " уже загружен");
                 } else {
                     stringBuilder.append(readFiles(s));
-                    System.out.println(s.substring(s.lastIndexOf("\\")+1,s.length()));
-                    alredyLoadedFiles.add(s.substring(s.lastIndexOf("\\")+1,s.length()).intern());
+                    System.out.println(nameOfFile);
+                    alredyLoadedFiles.add(nameOfFile.intern());
                 }
             }
         }
+
         if (pathScanFile.getUrl().equals("") && files==null && alredyLoadedFiles.size()==0){
             model.addAttribute("nofiles", "Не указан и не загружен ни один файл сканера.");
             model.addAttribute("btss",this.listFilesBts);

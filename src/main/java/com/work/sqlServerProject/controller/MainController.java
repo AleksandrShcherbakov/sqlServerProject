@@ -92,7 +92,10 @@ public class MainController {
         if (file.exists()){
             return "BTS файл за сегодня уже создан.<br><p><a href='/'>На стартовую страницу</a></p>";
         }
-        List<CellInfo>list=cellNameDAO.getAllCells();
+        List<CellInfo>list2G=cellNameDAO.getAll2GCells();
+        List<CellInfo>listUmtsEricsson=cellNameDAO.getAll3GECells();
+        List<CellInfo>listUmtsHuawei=cellNameDAO.getAll3GHCells();
+
         List<CellInfo>listLteEricsson = cellNameDAO.getAllLteEricssonCells();
         List<CellInfo>listLteHuawei = cellNameDAO.getAllLteHuaweiCells();
         StringBuilder log = new StringBuilder();
@@ -113,7 +116,9 @@ public class MainController {
         if (path.equals("")){
             path="C://";
         }
-        log.append(Helper.writeToCSV(path,list));
+        log.append(Helper.writeToCSV(path,list2G));
+        log.append(Helper.writeToCSV(path,listUmtsEricsson));
+        log.append(Helper.writeToCSV(path,listUmtsHuawei));
         log.append(Helper.writeToCSV(path,listLteEricsson));
         log.append(Helper.writeToCSV(path,listLteHuawei));
         /*StringBuilder stringBuilder = new StringBuilder();

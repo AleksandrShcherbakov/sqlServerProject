@@ -23,11 +23,11 @@
     </form>
 </div>
 <div>
-    <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post"  enctype="multipart/form-data">
+    <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post"  enctype="multipart/form-data" >
         <p>
             Выберите файл сканнера:
             <br>
-            <input type="file" th:field="*{scanFile}" accept=".nmf">
+            <input type="file" th:field="*{scanFile}" accept=".nmf" multiple>
             <br><br>
             Или введите путь к файлу сканнера:
             <input type="text" th:field="*{url}" style="width: 100%">

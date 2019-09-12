@@ -162,17 +162,19 @@ public class CheckingController {
             }
         }
         StringBuilder stringBuilder=new StringBuilder();
+        if(pathScanFile.getScanFile().length>0) {
+            for (MultipartFile multipartFile:pathScanFile.getScanFile()) {
 
-        if (!pathScanFile.getScanFile().isEmpty()){
-            String scanFileName=pathScanFile.getScanFile().getOriginalFilename().intern();
-            if(!this.alredyLoadedFiles.contains(scanFileName)){
-                if (scanFileName.endsWith(".nmf")&& scanFileName.length()>0){
-                stringBuilder.append(readFiles(pathScanFile.getScanFile()));
-                this.alredyLoadedFiles.add(scanFileName);
+                if (!multipartFile.isEmpty()) {
+                    String scanFileName = multipartFile.getOriginalFilename().intern();
+                    if (!this.alredyLoadedFiles.contains(scanFileName)) {
+                        if (scanFileName.endsWith(".nmf") && scanFileName.length() > 0) {
+                            stringBuilder.append(readFiles(multipartFile));
+                            this.alredyLoadedFiles.add(scanFileName);
+                        } else model.addAttribute("wrongNmfFile", "Некорректно выбран файл сканнера");
+                    } else System.out.println("файл " + scanFileName + " уже загружен");
                 }
-            else model.addAttribute("wrongNmfFile","Некорректно выбран файл сканнера");
             }
-            else System.out.println("файл "+scanFileName+" уже загружен");
         }
 
         if (!pathScanFile.getUrl().equals("")) {

@@ -8,14 +8,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class PathScanFile {
     private String url;
     private String toBts;
-    private MultipartFile scanFile;
+    private MultipartFile[] scanFile;
     private MultipartFile btsFile;
 
-    public MultipartFile getScanFile() {
+    public MultipartFile[] getScanFile() {
         return scanFile;
     }
 
-    public void setScanFile(MultipartFile scanFile) {
+    public void setScanFile(MultipartFile[] scanFile) {
         this.scanFile = scanFile;
     }
 

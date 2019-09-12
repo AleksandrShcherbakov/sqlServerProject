@@ -23,23 +23,18 @@
     </form>
 </div>
 <div>
-    <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post"  enctype="multipart/form-data">
+    <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post"  enctype="multipart/form-data" >
         <p>
             Выберите файл сканнера:
             <br>
-            <input type="file" th:field="*{scanFile}" accept=".nmf">
+            <input type="file" th:field="*{scanFile}" accept=".nmf" multiple>
             <br><br>
             Или введите путь к файлу сканнера:
             <input type="text" th:field="*{url}" style="width: 100%">
             <br><br>
             Или выберите из списка последних файлов:
             <div id="files"></div>
-            <input id="mainButton" type="submit" value="загрузить файл" style="color: red">
-        <script>
-            if(alredy!==null){
-                $('#mainButton').value="загрузить файл/ проверить загруженные";
-            }
-        </script>
+            <input id="mainButton" type="submit" value="загрузить файл">
         </p>
         <p>
             <input type="checkbox" id="useBts" name="isBTS" value="ок"> Использовать БТС файл (если компьютер не подключен к базе данных General)

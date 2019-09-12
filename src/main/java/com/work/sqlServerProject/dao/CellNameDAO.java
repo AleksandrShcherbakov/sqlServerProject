@@ -27,8 +27,24 @@ public class CellNameDAO extends JdbcDaoSupport {
         this.setDataSource(dataSource);
     }
 
-    public List<CellInfo> getAllCells(){
-        String sql = CellMapper.All_SQL;
+    public List<CellInfo> getAll2GCells(){
+        String sql = CellMapper.All_2G_SQL;
+
+        Object[]params=new Object[]{};
+        CellMapper mapper = new CellMapper();
+        List<CellInfo>list=this.getJdbcTemplate().query(sql,params,mapper);
+        return list;
+    }
+    public List<CellInfo> getAll3GECells(){
+        String sql = CellMapper.SQL_UMTS_Huawei;
+
+        Object[]params=new Object[]{};
+        CellMapper mapper = new CellMapper();
+        List<CellInfo>list=this.getJdbcTemplate().query(sql,params,mapper);
+        return list;
+    }
+    public List<CellInfo> getAll3GHCells(){
+        String sql = CellMapper.SQL_UMTS_Huawei;
 
         Object[]params=new Object[]{};
         CellMapper mapper = new CellMapper();
@@ -62,13 +78,17 @@ public class CellNameDAO extends JdbcDaoSupport {
     }
 
     public  List<CellInfo> getInfoForBS (int posname){
-        String sql2G3G = CellMapper.All_SQL+" and a.posname="+posname;
+        String sql2G = CellMapper.All_2G_SQL+" and a.posname="+posname;
+        String sql3GE= CellMapper.SQL_UMTS_Erisccon+" and a.posname="+posname;
+        String sql3GH= CellMapper.SQL_UMTS_Huawei+" and a.posname="+posname;
         String sql4GE= CellMapper.SQL_LTE_Ericsson+" and a.posname="+posname;
         String sql4GH= CellMapper.SQL_LTE_Huawei+" and a.posname="+posname;
         CellMapper mapper = new CellMapper();
         Object[]params= new Object[]{};
         List<CellInfo>result = new ArrayList<>();
-        result.addAll(this.getJdbcTemplate().query(sql2G3G,params,mapper));
+        result.addAll(this.getJdbcTemplate().query(sql2G,params,mapper));
+        result.addAll(this.getJdbcTemplate().query(sql3GE,params,mapper));
+        result.addAll(this.getJdbcTemplate().query(sql3GH,params,mapper));
         result.addAll(this.getJdbcTemplate().query(sql4GE,params,mapper));
         result.addAll(this.getJdbcTemplate().query(sql4GH,params,mapper));
         return result;

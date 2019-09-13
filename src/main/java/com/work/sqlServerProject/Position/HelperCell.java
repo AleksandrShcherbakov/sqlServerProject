@@ -20,33 +20,21 @@ public class HelperCell {
 
     public final static Map<String, String> colerSet2G= new HashMap<>();
     static {
-        colerSet2G.put("0_-40","#006400");
-        colerSet2G.put("-40_-45","#008000");
-        colerSet2G.put("-45_-50","#32CD32");
-        colerSet2G.put("-50_-60","#00FF00");
-
-
-        colerSet2G.put("-60_-65","#FFFF00");
-        colerSet2G.put("-65_-70","#FFD700");
-        colerSet2G.put("-70_-75","#FFA500");
-        colerSet2G.put("-75_-80","#FF8C00");
-        colerSet2G.put("-80_-85","#FF4500");
-        colerSet2G.put("-85_-90","#FF0000");
-        colerSet2G.put("-90_-95","#B22222");
-        colerSet2G.put("-95_-100","#8B0000");
-        colerSet2G.put("-100_-200","#000000");
-
-
-
-
+        colerSet2G.put("0_-55","#009300");
+        colerSet2G.put("-55_-65","#00FF00");
+        colerSet2G.put("-65_-75","#FFFF00");
+        colerSet2G.put("-75_-85","#FF6820");
+        colerSet2G.put("-85_-95","#FF0000");
+        colerSet2G.put("-95_-105","#800000");
     }
 
     public final static Map<String,String> colorSet3G= new HashMap<>();
     static {
-        colorSet3G.put("0_-80","#008000");
-        colorSet3G.put("-80_-90","#FFFF00");
-        colorSet3G.put("-90_-100","#FFA500");
-        colorSet3G.put("-100_-200","#FF0000");
+        colorSet3G.put("0_-70","#008000");
+        colorSet3G.put("-70_-80","#FFFF00");
+        colorSet3G.put("-80_-90","#FFA500");
+        colorSet3G.put("-90_-100","#FF0000");
+        colorSet3G.put("-100_-200","#800000");
     }
 
     public final static Map<String,String> colorSet4G= new HashMap<>();

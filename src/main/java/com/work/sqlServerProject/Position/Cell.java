@@ -101,11 +101,71 @@ public class Cell {
         }
         //leftBorderAzimuth=((this.azimuth+previous.azimuth+sectorOfFinding)%360)/2;
         //rightBorderAzimuth=((this.azimuth+next.azimuth-sectorOfFinding)%360)/2;
-        leftBorderAzimuth=((this.azimuth-sectorOfFinding/2)%360);
-        if (leftBorderAzimuth<0){
-            leftBorderAzimuth=360+leftBorderAzimuth;
+        if (this.azimuth>previous.azimuth && this.azimuth<next.azimuth){
+            int leftDifferent=this.azimuth-previous.azimuth;
+            int rightDifferent=next.azimuth-this.azimuth;
+            if (leftDifferent<100 || rightDifferent<100){
+                if (leftDifferent<rightDifferent){
+                    setLeftAndRight(leftDifferent-20);
+                }
+                else {
+                    setLeftAndRight(rightDifferent-20);
+                }
+            }
+            else {
+                setLeftAndRight(sectorOfFinding);
+            }
         }
-        rightBorderAzimuth=((this.azimuth+sectorOfFinding/2)%360);
+        else
+
+        if (this.azimuth>previous.azimuth && this.azimuth>next.azimuth){
+            int leftDifferent=this.azimuth-previous.azimuth;
+            int rightDifferent=next.azimuth+360-this.azimuth;
+            if (leftDifferent<100 || rightDifferent<100){
+                if (leftDifferent<rightDifferent){
+                    setLeftAndRight(leftDifferent-20);
+                }
+                else {
+                    setLeftAndRight(rightDifferent-20);
+                }
+            }
+            else {
+                setLeftAndRight(sectorOfFinding);
+            }
+        }
+        else
+
+        if (this.azimuth<previous.azimuth && this.azimuth<next.azimuth){
+            int leftDifferent=this.azimuth+360-previous.azimuth;
+            int rightDifferent=next.azimuth-this.azimuth;
+            if (leftDifferent<100 || rightDifferent<100){
+                if (leftDifferent<rightDifferent){
+                    setLeftAndRight(leftDifferent-20);
+                }
+                else {
+                    setLeftAndRight(rightDifferent-20);
+                }
+            }
+            else {
+                setLeftAndRight(sectorOfFinding);
+            }
+        }
+        if (this.ci==15692){
+            System.out.println("225 границы: "+leftBorderAzimuth+" "+rightBorderAzimuth);
+        }
+        if (this.ci==15691){
+            System.out.println("90 границы: "+leftBorderAzimuth+" "+rightBorderAzimuth);
+        }
+
+
+    }
+
+    public void setLeftAndRight(int sector){
+        leftBorderAzimuth = ((this.azimuth - sector / 2) % 360);
+        if (leftBorderAzimuth < 0) {
+            leftBorderAzimuth = 360 + leftBorderAzimuth;
+        }
+        rightBorderAzimuth = ((this.azimuth + sector / 2) % 360);
     }
 
     public void setPointsInCell(List<Point>source, List<Point>target, int leftBorderAzimuth,int rightBorderAzimuth){
@@ -127,6 +187,7 @@ public class Cell {
             }
         }
     }
+
 
 
     public void checkNotNullAndAdd(Point p, List<Point>target){

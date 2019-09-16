@@ -95,6 +95,9 @@ public class Point {
         Map<String, Double> map=null;
         if (PciRsrp!=null && PciRsrp.size()>0){
             String carrierLTE = PciRsrp.get(0).split(",")[0];
+            if (carrierLTE.equals("1351")){
+                carrierLTE="1301";
+            }
             if (mainMap.get("LTE " + carrierLTE)!=null){
                 map=mainMap.get("LTE " + carrierLTE);
             }

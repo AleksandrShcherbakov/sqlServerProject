@@ -78,13 +78,15 @@
     for (i=0;i<lte.length;i++){
         var diapazon=lte[i].split("_")[2];
         var frequency=lte[i].split("_")[0];
-        var checkbox = document.createElement("input");
-        checkbox.type="checkbox";
-        checkbox.name="system";
-        checkbox.value="4G "+diapazon+" "+frequency;
-        ltes.appendChild(checkbox);
-        ltes.appendChild(document.createElement("label").appendChild(document.createTextNode("4G "+diapazon+" ch: "+frequency)));
-        ltes.appendChild(document.createElement("br"));
+        if (frequency!=="1351") {
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "system";
+            checkbox.value = "4G " + diapazon + " " + frequency;
+            ltes.appendChild(checkbox);
+            ltes.appendChild(document.createElement("label").appendChild(document.createTextNode("4G " + diapazon + " ch: " + frequency)));
+            ltes.appendChild(document.createElement("br"));
+        }
     }
 
     var div= document.getElementById("executors");

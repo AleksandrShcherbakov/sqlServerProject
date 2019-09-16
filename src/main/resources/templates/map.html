@@ -20,6 +20,7 @@
 
 <body>
 <div th:if="${nopoints}" th:utext="${nopoints}" style="color: red"></div>
+<h2 id="header"></h2>
 <div id="map"></div>
 <div id="color"></div>
 <div id="note"></div>
@@ -45,6 +46,7 @@
     var about=[[${about}]];
     var colorSet=[[${colorSet}]];
     document.title=pos+" "+about;
+    var cell;
 
     function init() {
         map = new ymaps.Map("map", {
@@ -59,16 +61,21 @@
 
         if (listWithLevels!==null){
 
+
             //alert(listWithLevels.length);
             for (i = 0; i < cellss.length; i++) {
                 if (cellss[i].azimuth===azimuthOfSector) {
                     createsectors(cellss[i].azimuth, "#FF0000", 0, 1);
+                    cell=cellss[i].ci;
                 }
                 else {
                     createsectors(cellss[i].azimuth, "#808080", 0, 1);
                 }
             }
+            document.title=pos+" "+about+" CI: "+cell+" азимут:"+azimuthOfSector;
             for (i=0;i<listWithLevels.length;i++) {
+
+
                 if (listWithLevels[i].param !== null) {
                     //alert(listWithLevels[i].longitude+" "+listWithLevels[i].language+" "+listWithLevels[i].color+" "+listWithLevels[i].param);
                     createPoint(listWithLevels[i].longitude, listWithLevels[i].latitude, listWithLevels[i].color, listWithLevels[i].param);
@@ -113,6 +120,7 @@
                 createPoint(pointsInPos[i].longitude, pointsInPos[i].latitude, pointsInPos[i].color, pointsInPos[i].param);
             }
         }
+        $('#header').append(document.title);
 
     }
 

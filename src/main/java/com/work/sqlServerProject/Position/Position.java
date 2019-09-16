@@ -123,6 +123,11 @@ public class Position {
                 stringBuilder.append("<br>");
             }
             else
+            if (cellsOfOneBand.size()==1){
+                stringBuilder.append(res+" - <span style='color:#FF4500'>Один сектор. Проверьте визуально.</span>");
+                stringBuilder.append("<br>");
+            }
+            else
             if (countOfUniques<countOfFindedBests && countOfTrue<cellsOfOneBand.size()-1){
                 stringBuilder.append(res+" - <span style='color: #31372b'>имеется неоднозначность.</span>");
                 stringBuilder.append("<br>");

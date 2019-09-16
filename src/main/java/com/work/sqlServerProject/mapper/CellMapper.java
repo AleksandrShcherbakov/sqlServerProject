@@ -105,12 +105,12 @@ public class CellMapper implements RowMapper<CellInfo> {
             "                      select utrancellid, utrandlarfcn, pscrambcode\n"+
             "                       from pmc.EXPORT_HU_eNodeBUtranExternalCell_eNodeB\n"+
             "                       union\n"+
-            "                       select cellid, utrandlarfcn, pscrambcode\n"+
+            /*"                       select cellid, utrandlarfcn, pscrambcode\n"+
             "                        from pmc.EXPORT_HU_UTRANEXTERNALCELL_BTS5900\n"+
             "                        union\n"+
             "                        select cellid, utrandlarfcn, pscrambcode\n"+
             "                        from pmc.EXPORT_HU_UTRANEXTERNALCELL_BTS3900\n"+
-            "                        union\n"+
+            "                        union\n"+*/
             "                        select cellid, utrandlarfcn, pscrambcode\n"+
             "                        from pmc.EXPORT_HU_UTRANEXTERNALCELL_MICROBTS3900) as b \n"+
             "                        on a.ci=b.cellid\n"+

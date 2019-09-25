@@ -7,8 +7,10 @@ import com.work.sqlServerProject.Position.Cell;
  */
 public class NoCarrierException extends RuntimeException {
     private int ch;
+    private int pos;
     public NoCarrierException(Cell cell) {
         this.ch=cell.getChannel();
+        this.pos=cell.getPosname();
     }
 
     public int getCh() {
@@ -17,5 +19,13 @@ public class NoCarrierException extends RuntimeException {
 
     public void setCh(int ch) {
         this.ch = ch;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 }

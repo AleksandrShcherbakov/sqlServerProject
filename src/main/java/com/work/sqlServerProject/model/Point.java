@@ -68,12 +68,7 @@ public class Point {
             String freq = scrEcNoRscp[0].split(" ")[0];
             try {
                 scrEcNoRscp[0] = scrEcNoRscp[0].split(" ")[1];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                for (String k : scrEcNoRscp) {
-                    System.out.println(k);
-                }
 
-            }
             Map<String, Double> map = null;
             if (mainMap.get("UMTS " + freq)!=null){
                 map=mainMap.get("UMTS " + freq);
@@ -87,6 +82,12 @@ public class Point {
                 String scr = temp[0];
                 Double rscp = Double.parseDouble(temp[2]);
                 map.put(scr, rscp);
+            }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                for (String k : scrEcNoRscp) {
+                    System.out.println(k);
+                }
+
             }
         }
     }

@@ -22,6 +22,7 @@ C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\mod
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\Position\HelperCell.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\controller\MainController.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\form\FormCellForSZ.java
+C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\model\ToJson.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\Position\Cell.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\SqlServerProjectApplication.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\Helper\NoCarrierException.java
@@ -29,7 +30,6 @@ C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\Pos
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\Helper\ColorHelper.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\Helper\Helper.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\mapper\CellMapper.java
-C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\controller\TastController.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\NBFparser\Parser.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\NBFparser\ParserHalper.java
 C:\projects\отладка\sqlServerProject\src\main\java\com\work\sqlServerProject\model\PosForCheck.java

@@ -1,5 +1,7 @@
 package com.work.sqlServerProject.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.sqlServerProject.Helper.ColorHelper;
 import com.work.sqlServerProject.Helper.FileScanHelper;
 import com.work.sqlServerProject.Helper.NoCarrierException;
@@ -309,7 +311,13 @@ public class CheckingController {
                 catch (NoCarrierException e ){
                     e.printStackTrace();
                     int ch = e.getCh();
-                    String wrang = "частота "+ch+" не указана в application.properties. Проверьте.<br>";
+                    String wrang="";
+                    if (ch==0){
+                        wrang = e.getPos()+" - скорее всего не в эфире. Частота не указана в БД.";
+                    }
+                    else {
+                        wrang = "БС "+e.getPos()+". Частота " + ch + " не указана в application.properties. Проверьте.<br>";
+                    }
                     wrangs.append(wrang);
                     res.append(wrang);
                 }
@@ -462,6 +470,7 @@ public class CheckingController {
                 if (c.getCi()==Integer.parseInt(cell)){
                     param=c.getParam();
                     model.addAttribute("azimuthOfsector",c.getAzimuth());
+
                 }
             }
             String finalParam = param;
@@ -563,5 +572,139 @@ public class CheckingController {
         model.addAttribute("lat", positions.get(pos).getCells().get(0).getLalitude());
         model.addAttribute("radius",maxDist);
         return "map";
+    }
+
+    @RequestMapping(value = "mapCell",method = RequestMethod.GET)
+    @ResponseBody
+    public String getMapCell(Model model,
+                         @RequestParam(required = false, name = "about") String about,
+                         @RequestParam(required = false, name = "posName") String number,
+                         @RequestParam(required = false, name = "cell") String cell) {
+        ToJson toJson= new ToJson();
+        Integer pos = Integer.parseInt(number);
+        List<Cell> cellList = positions.get(pos).getCells().stream().filter(p -> p.getAbout().equals(about)).collect(Collectors.toList());
+        Map<String, String> paramColor = new HashMap<>();
+        for (int i = 0; i < cellList.size(); i++) {
+            if (cellList.get(i).getAbout().startsWith("GSM")) {
+                Cell2G p = (Cell2G) cellList.get(i);
+                paramColor.put(p.getBcchBsic(), ColorHelper.mColors[i]);
+            } else if (cellList.get(i).getAbout().startsWith("UMTS")) {
+                Cell3G p = (Cell3G) cellList.get(i);
+                paramColor.put(p.getScr() + "", ColorHelper.mColors[i]);
+            } else if (cellList.get(i).getAbout().startsWith("LTE")) {
+                Cell4G p = (Cell4G) cellList.get(i);
+                paramColor.put(p.getPCI() + "", ColorHelper.mColors[i]);
+            }
+        }
+        List<CellToMap> cellToMapList = null;
+        if (about.startsWith("GSM")) {
+            cellToMapList = cellList.stream().map(p -> (Cell2G) p).map(p -> new CellToMap(p.getCi(), p.getAzimuth(), paramColor.get(p.getBcchBsic()))).collect(Collectors.toList());
+        } else if (about.startsWith("UMTS")) {
+            cellToMapList = cellList.stream().map(p -> (Cell3G) p).map(p -> new CellToMap(p.getCi(), p.getAzimuth(), paramColor.get(p.getScr() + ""))).collect(Collectors.toList());
+        } else if (about.startsWith("LTE")) {
+            cellToMapList = cellList.stream().map(p -> (Cell4G) p).map(p -> new CellToMap(p.getCi(), p.getAzimuth(), paramColor.get(p.getPCI() + ""))).collect(Collectors.toList());
+        }
+        Set<Point> pointsTomap = new HashSet<>();
+        for (Cell c : cellList) {
+            if (about.startsWith("GSM")) {
+                Cell2G g = (Cell2G) c;
+                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getMainMap().get(about) != null && p.getMainMap().get(about).get(g.getBcchBsic()) != null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            } else if (about.startsWith("UMTS")) {
+                Cell3G g = (Cell3G) c;
+                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getMainMap().get(about) != null && p.getMainMap().get(about).get(g.getScr() + "") != null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            } else if (about.startsWith("LTE")) {
+                Cell4G g = (Cell4G) c;
+                Set<Point> set = positions.get(pos).getAllPointsInPosition().stream().filter(p -> p.getMainMap().get(about) != null && p.getMainMap().get(about).get(g.getPCI() + "") != null).collect(Collectors.toSet());
+                pointsTomap.addAll(set);
+            }
+        }
+        if (cell != null) {
+            String param = "";
+            for (Cell c : cellList) {
+                if (c.getCi() == Integer.parseInt(cell)) {
+                    param = c.getParam();
+                    model.addAttribute("azimuthOfsector", c.getAzimuth());
+                    toJson.setAzimuthOfsector(c.getAzimuth());
+                }
+            }
+            String finalParam = param;
+            List<PointToMap> listWithLevels = pointsTomap.stream().map(m -> new PointToMap(m, about, finalParam)).
+                    peek(p -> System.out.println(p.getLongitude() + " " + p.getLatitude() + " " + p.getColor() + " " + p.getParam())).collect(Collectors.toList());
+            model.addAttribute("listWithLevels", listWithLevels);
+            toJson.setPoints(listWithLevels);
+            if (about.startsWith("GSM")) {
+                Set<String> set = new TreeSet<>(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        String a = o1.split(" ")[0].split("_")[0];
+                        String b = o2.split(" ")[0].split("_")[0];
+                        double a1 = Double.parseDouble(a);
+                        double b1 = Double.parseDouble(b);
+                        if (a1 > b1) {
+                            return 1;
+                        } else if (a1 < b1) {
+                            return -1;
+                        } else return 0;
+                    }
+                });
+                for (Map.Entry s : HelperCell.colerSet2G.entrySet()) {
+                    set.add(s.getKey().toString() + " " + s.getValue().toString());
+                }
+                model.addAttribute("colorSet", set);
+                toJson.setColorset(set);
+            } else if (about.startsWith("UMTS")) {
+                Set<String> set = new TreeSet<>(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        String a = o1.split(" ")[0].split("_")[0];
+                        String b = o2.split(" ")[0].split("_")[0];
+                        double a1 = Double.parseDouble(a);
+                        double b1 = Double.parseDouble(b);
+                        if (a1 > b1) {
+                            return 1;
+                        } else if (a1 < b1) {
+                            return -1;
+                        } else return 0;
+                    }
+                });
+                for (Map.Entry s : HelperCell.colorSet3G.entrySet()) {
+                    set.add(s.getKey().toString() + " " + s.getValue().toString());
+                }
+                model.addAttribute("colorSet", set);
+                toJson.setColorset(set);
+            } else if (about.startsWith("LTE")) {
+                Set<String> set = new TreeSet<>(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        String a = o1.split(" ")[0].split("_")[0];
+                        String b = o2.split(" ")[0].split("_")[0];
+                        double a1 = Double.parseDouble(a);
+                        double b1 = Double.parseDouble(b);
+                        if (a1 > b1) {
+                            return 1;
+                        } else if (a1 < b1) {
+                            return -1;
+                        } else return 0;
+                    }
+                });
+                for (Map.Entry s : HelperCell.colorSet4G.entrySet()) {
+                    set.add(s.getKey().toString() + " " + s.getValue().toString());
+                }
+                model.addAttribute("colorSet", set);
+                toJson.setColorset(set);
+            }
+        }
+        ObjectMapper mapper= new ObjectMapper();
+        String res=null;
+        try {
+            res = mapper.writeValueAsString(toJson);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            System.out.println("json не сформирован");
+        }
+        return res;
+
     }
 }

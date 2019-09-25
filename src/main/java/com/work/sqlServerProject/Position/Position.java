@@ -143,7 +143,7 @@ public class Position {
                 stringBuilder.append("<br>");
             }
             else
-            if (countOfNoBest>=2 || (cellsOfFalseWithExistBest.size()>=2 &&countOfDifBests<cellsOfFalseWithExistBest.size())){
+            if ((countOfNoBest>=2 || (cellsOfFalseWithExistBest.size()>=2 &&countOfDifBests<cellsOfFalseWithExistBest.size())) || (cellsOfOneBand.size()==3 && cellsOfOneBand.size()-countOfExistBest==1 && countOfTrue==1)){
                 stringBuilder.append(res+" - <span style='color:blue'>данных недостаточно.</span>");
                 stringBuilder.append("<br>");
             }

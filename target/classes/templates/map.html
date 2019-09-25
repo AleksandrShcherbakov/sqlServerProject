@@ -24,7 +24,7 @@
 <div id="map"></div>
 <div id="color"></div>
 <div id="note"></div>
-<input type="button" value="проверка" onclick="getAjax('http://localhost:8080/mapCell?about='+ about + '&posName='+pos+'&cell='+cellss[0].ci,
+<input type="button" value="проверка" onclick="getAjax('http://localhost:8080/mapCell?about='+ about + '&posName='+pos+'&cell='+cellss[1].ci,
  function(data){
     const obj = JSON.parse(data);
 listWithLevels=obj.points;
@@ -70,6 +70,7 @@ draw();
     function draw() {
         map.geoObjects.removeAll();
         $("#color").empty();
+        $('#header').empty();
 
         radius = rad*500/1300;
 
@@ -210,24 +211,6 @@ draw();
     }
 
     ymaps.ready(init);
-
-
-    for (i=0;i<cellss.length;i++){
-        var url='http://localhost:8080/mapCell?about='+ about + '&posName='+pos+'&cell='+cellss[i].ci;
-        function setData(data){
-            const obj = JSON.parse(data);
-            listWithLevels=obj.points;
-            azimuthOfSector=obj.azimuthOfsector;
-            colorSet=obj.colorset;
-            draw();
-        }
-        $('#note').append('<input type="radio" name="cell" onclick="getAjax(url,setData(data))"/>посмотреть сектор '+cellss[i].ci+' азимут: '+cellss[i].azimuth+'<br>');
-        //$('#note').append('<a href="/map?about='+ about + '&posName='+pos+'&cell='+cellss[i].ci+'">посмотреть сектор '+cellss[i].ci+' азимут: '+cellss[i].azimuth+'</a><br>');
-    }
-    $('#note').append('<input type="radio" name="cell" onclick="function () {listWithLevels=null;' +
-            'draw();  }"/>посмотреть все<br>');
-    //$('#note').append('<a href="/map?about='+ about + '&posName='+pos+'">посмотреть все </a><br>');
-
     function getAjax(url, success) {
         var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         xhr.open('GET', url);
@@ -239,8 +222,25 @@ draw();
         return xhr;
     }
 
+    function setAll() {
+        listWithLevels=null;
+        draw();
+    }
 
-    </script>
+    for (i=0;i<cellss.length;i++){
+        var url='http://localhost:8080/mapCell?about='+ about + '&posName='+pos+'&cell='+cellss[i].ci;
+        $('#note').append('<input type="button" value="'+cellss[i].ci+'" onclick="getAjax(url,function(data){const obj = JSON.parse(data);listWithLevels=obj.points;azimuthOfSector=obj.azimuthOfsector;colorSet=obj.colorset;draw();})">');
+
+
+        //$('#note').append('<a href="/map?about='+ about + '&posName='+pos+'&cell='+cellss[i].ci+'">посмотреть сектор '+cellss[i].ci+' азимут: '+cellss[i].azimuth+'</a><br>');
+    }
+
+    $('#note').append('<input type="radio" name="cell" onclick="getAjax(\'http://localhost:8080/mapCell?about=\'+ about + \'&posName=\'+pos+\'&cell=\'+cellss[i].ci ,function(data){      const obj = JSON.parse(data);listWithLevels=obj.points;azimuthOfSector=obj.azimuthOfsector;colorSet=obj.colorset;draw();}) " >посмотреть сектор '+cellss[i].ci+' азимут: '+cellss[i].azimuth+'<br>');
+
+
+
+
+</script>
 </body>
 
 </html>

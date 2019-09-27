@@ -15,7 +15,7 @@
 
 <form th:action="@{/szPos}" th:object="${szFormPos}" method="post">
     <p>
-        <b>укажите номер БС:</b><br>
+        <b>Укажите номер БС:</b><br>
         <input type="text" th:field="*{posName}"/>
     </p>
     <div id ='bands'>
@@ -41,7 +41,7 @@
     <div id="executors">
     </div>
     <p>
-        <b>Укажите путь к директории, куда будет помещён файл СЗ. Иначе – в default-папку "С://Cлужебные записки" (рекомендуется):</b><br>
+        <b>Укажите, куда поместить файл СЗ. Иначе – в папку "С://Cлужебные записки" (рекомендуется):</b><br>
         <input type="text" th:field="*{pathDir}"><br>
         <input type="submit" value="OK"/>
     </p>

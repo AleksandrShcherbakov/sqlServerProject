@@ -2,7 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0be1d93e-50a8-4b65-9ad3-156517c62d49" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/work/sqlServerProject/NBFparser/Parser.class" afterPath="$PROJECT_DIR$/target/classes/com/work/sqlServerProject/NBFparser/Parser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/work/sqlServerProject/Position/Cell2G.class" afterPath="$PROJECT_DIR$/target/classes/com/work/sqlServerProject/Position/Cell2G.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/work/sqlServerProject/Position/Cell3G.class" afterPath="$PROJECT_DIR$/target/classes/com/work/sqlServerProject/Position/Cell3G.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/work/sqlServerProject/Position/Cell4G.class" afterPath="$PROJECT_DIR$/target/classes/com/work/sqlServerProject/Position/Cell4G.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/sqlServerProject-0.0.1-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/target/sqlServerProject-0.0.1-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/sqlServerProject-0.0.1-SNAPSHOT.jar.original" afterPath="$PROJECT_DIR$/target/sqlServerProject-0.0.1-SNAPSHOT.jar.original" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/Parser.java" afterPath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/Parser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java" afterPath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell3G.java" afterPath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell3G.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell4G.java" afterPath="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell4G.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/checkPos.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/checkPos.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/checking/checkPathFileScan.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/checking/checkPathFileScan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/checking/result.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/checking/result.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/createBts.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/createBts.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/map.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/map.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/start.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/start.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/templates/checkPos.html" afterPath="$PROJECT_DIR$/target/classes/templates/checkPos.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/templates/checking/checkPathFileScan.html" afterPath="$PROJECT_DIR$/target/classes/templates/checking/checkPathFileScan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/templates/checking/result.html" afterPath="$PROJECT_DIR$/target/classes/templates/checking/result.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/templates/createBts.html" afterPath="$PROJECT_DIR$/target/classes/templates/createBts.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/templates/map.html" afterPath="$PROJECT_DIR$/target/classes/templates/map.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/templates/start.html" afterPath="$PROJECT_DIR$/target/classes/templates/start.html" />
     </list>
     <ignored path="sqlServerProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,174 +49,9 @@
       <file leaf-file-name="CellMapper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/mapper/CellMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
+            <state relative-caret-position="587">
               <caret line="41" column="59" selection-start-line="12" selection-start-column="45" selection-end-line="41" selection-end-column="59" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NoCarrierException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/NoCarrierException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="35" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
-              <folding>
-                <element signature="e#387#388#0" expanded="false" />
-                <element signature="e#412#413#0" expanded="false" />
-                <element signature="e#445#446#0" expanded="false" />
-                <element signature="e#473#474#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Cell.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2108">
-              <caret line="127" column="22" selection-start-line="127" selection-start-column="22" selection-end-line="127" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#8361#8362#0" expanded="false" />
-                <element signature="e#8394#8395#0" expanded="false" />
-                <element signature="e#8443#8444#0" expanded="false" />
-                <element signature="e#8487#8488#0" expanded="false" />
-                <element signature="e#8516#8517#0" expanded="false" />
-                <element signature="e#8541#8542#0" expanded="false" />
-                <element signature="e#8578#8579#0" expanded="false" />
-                <element signature="e#8606#8607#0" expanded="false" />
-                <element signature="e#8644#8645#0" expanded="false" />
-                <element signature="e#8678#8679#0" expanded="false" />
-                <element signature="e#8732#8733#0" expanded="false" />
-                <element signature="e#8778#8779#0" expanded="false" />
-                <element signature="e#8816#8817#0" expanded="false" />
-                <element signature="e#8850#8851#0" expanded="false" />
-                <element signature="e#8904#8905#0" expanded="false" />
-                <element signature="e#8950#8951#0" expanded="false" />
-                <element signature="e#8989#8990#0" expanded="false" />
-                <element signature="e#9027#9028#0" expanded="false" />
-                <element signature="e#9086#9087#0" expanded="false" />
-                <element signature="e#9140#9141#0" expanded="false" />
-                <element signature="e#9172#9173#0" expanded="false" />
-                <element signature="e#9200#9201#0" expanded="false" />
-                <element signature="e#9242#9243#0" expanded="false" />
-                <element signature="e#9276#9277#0" expanded="false" />
-                <element signature="e#9309#9310#0" expanded="false" />
-                <element signature="e#9337#9338#0" expanded="false" />
-                <element signature="e#9380#9381#0" expanded="false" />
-                <element signature="e#9414#9415#0" expanded="false" />
-                <element signature="e#9449#9450#0" expanded="false" />
-                <element signature="e#9483#9484#0" expanded="false" />
-                <element signature="e#9531#9532#0" expanded="false" />
-                <element signature="e#9574#9575#0" expanded="false" />
-                <element signature="e#9618#9619#0" expanded="false" />
-                <element signature="e#9653#9654#0" expanded="false" />
-                <element signature="e#9714#9715#0" expanded="false" />
-                <element signature="e#9762#9763#0" expanded="false" />
-                <element signature="e#9807#9808#0" expanded="false" />
-                <element signature="e#9841#9842#0" expanded="false" />
-                <element signature="e#9902#9903#0" expanded="false" />
-                <element signature="e#9948#9949#0" expanded="false" />
-                <element signature="e#9979#9980#0" expanded="false" />
-                <element signature="e#10009#10010#0" expanded="false" />
-                <element signature="e#10052#10053#0" expanded="false" />
-                <element signature="e#10090#10091#0" expanded="false" />
-                <element signature="e#10123#10124#0" expanded="false" />
-                <element signature="e#10154#10155#0" expanded="false" />
-                <element signature="e#10200#10201#0" expanded="false" />
-                <element signature="e#10240#10241#0" expanded="false" />
-                <element signature="e#10269#10270#0" expanded="false" />
-                <element signature="e#10296#10297#0" expanded="false" />
-                <element signature="e#10334#10335#0" expanded="false" />
-                <element signature="e#10366#10367#0" expanded="false" />
-                <element signature="e#10399#10400#0" expanded="false" />
-                <element signature="e#10428#10429#0" expanded="false" />
-                <element signature="e#10472#10473#0" expanded="false" />
-                <element signature="e#10508#10509#0" expanded="false" />
-                <element signature="e#10536#10537#0" expanded="false" />
-                <element signature="e#10563#10564#0" expanded="false" />
-                <element signature="e#10600#10601#0" expanded="false" />
-                <element signature="e#10632#10633#0" expanded="false" />
-                <element signature="e#10673#10674#0" expanded="false" />
-                <element signature="e#10713#10714#0" expanded="false" />
-                <element signature="e#10776#10777#0" expanded="false" />
-                <element signature="e#10834#10835#0" expanded="false" />
-                <element signature="e#10876#10877#0" expanded="false" />
-                <element signature="e#10917#10918#0" expanded="false" />
-                <element signature="e#10982#10983#0" expanded="false" />
-                <element signature="e#11042#11043#0" expanded="false" />
-                <element signature="e#11073#11074#0" expanded="false" />
-                <element signature="e#11103#11104#0" expanded="false" />
-                <element signature="e#11146#11147#0" expanded="false" />
-                <element signature="e#11184#11185#0" expanded="false" />
-                <element signature="e#11221#11222#0" expanded="false" />
-                <element signature="e#11252#11253#0" expanded="false" />
-                <element signature="e#11302#11303#0" expanded="false" />
-                <element signature="e#11342#11343#0" expanded="false" />
-                <element signature="e#11373#11374#0" expanded="false" />
-                <element signature="e#11403#11404#0" expanded="false" />
-                <element signature="e#11446#11447#0" expanded="false" />
-                <element signature="e#11484#11485#0" expanded="false" />
-                <element signature="e#11510#11511#0" expanded="false" />
-                <element signature="e#11535#11536#0" expanded="false" />
-                <element signature="e#11568#11569#0" expanded="false" />
-                <element signature="e#11596#11597#0" expanded="false" />
-                <element signature="e#11632#11633#0" expanded="false" />
-                <element signature="e#11664#11665#0" expanded="false" />
-                <element signature="e#11714#11715#0" expanded="false" />
-                <element signature="e#11756#11757#0" expanded="false" />
-                <element signature="e#11791#11792#0" expanded="false" />
-                <element signature="e#11822#11823#0" expanded="false" />
-                <element signature="e#11870#11871#0" expanded="false" />
-                <element signature="e#11910#11911#0" expanded="false" />
-                <element signature="e#11939#11940#0" expanded="false" />
-                <element signature="e#11967#11968#0" expanded="false" />
-                <element signature="e#12006#12007#0" expanded="false" />
-                <element signature="e#12040#12041#0" expanded="false" />
-                <element signature="e#12069#12070#0" expanded="false" />
-                <element signature="e#12097#12098#0" expanded="false" />
-                <element signature="e#12136#12137#0" expanded="false" />
-                <element signature="e#12170#12171#0" expanded="false" />
-                <element signature="e#12200#12201#0" expanded="false" />
-                <element signature="e#12226#12227#0" expanded="false" />
-                <element signature="e#12265#12266#0" expanded="false" />
-                <element signature="e#12295#12296#0" expanded="false" />
-                <element signature="e#12325#12326#0" expanded="false" />
-                <element signature="e#12351#12352#0" expanded="false" />
-                <element signature="e#12390#12391#0" expanded="false" />
-                <element signature="e#12420#12421#0" expanded="false" />
-                <element signature="e#12452#12453#0" expanded="false" />
-                <element signature="e#12480#12481#0" expanded="false" />
-                <element signature="e#12522#12523#0" expanded="false" />
-                <element signature="e#12556#12557#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Position.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Position.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2329">
-              <caret line="142" column="45" selection-start-line="142" selection-start-column="45" selection-end-line="142" selection-end-column="45" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#9864#9865#0" expanded="false" />
-                <element signature="e#9906#9907#0" expanded="false" />
-                <element signature="e#10083#10084#0" expanded="false" />
-                <element signature="e#10122#10123#0" expanded="false" />
-                <element signature="e#10183#10184#0" expanded="false" />
-                <element signature="e#10239#10240#0" expanded="false" />
-                <element signature="e#10275#10276#0" expanded="false" />
-                <element signature="e#10303#10304#0" expanded="false" />
-                <element signature="e#10349#10350#0" expanded="false" />
-                <element signature="e#10383#10384#0" expanded="false" />
-                <element signature="e#10577#10578#0" expanded="false" />
-                <element signature="e#10659#10660#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -202,51 +59,29 @@
       <file leaf-file-name="checkPos.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checkPos.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1360">
-              <caret line="80" column="33" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+            <state relative-caret-position="731">
+              <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="map.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/map.html">
+      <file leaf-file-name="checkPathFileScan.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checking/checkPathFileScan.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="229" column="34" selection-start-line="229" selection-start-column="34" selection-end-line="229" selection-end-column="34" />
+            <state relative-caret-position="663">
+              <caret line="39" column="89" selection-start-line="39" selection-start-column="89" selection-end-line="39" selection-end-column="89" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Point.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/Point.java">
+      <file leaf-file-name="start.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/start.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1462">
-              <caret line="90" column="13" selection-start-line="90" selection-start-column="13" selection-end-line="90" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#4213#4214#0" expanded="false" />
-                <element signature="e#4243#4244#0" expanded="false" />
-                <element signature="e#4315#4316#0" expanded="false" />
-                <element signature="e#4353#4354#0" expanded="false" />
-                <element signature="e#4403#4404#0" expanded="false" />
-                <element signature="e#4435#4436#0" expanded="false" />
-                <element signature="e#4499#4500#0" expanded="false" />
-                <element signature="e#4541#4542#0" expanded="false" />
-                <element signature="e#4573#4574#0" expanded="false" />
-                <element signature="e#4601#4602#0" expanded="false" />
-                <element signature="e#4643#4644#0" expanded="false" />
-                <element signature="e#4677#4678#0" expanded="false" />
-                <element signature="e#4713#4714#0" expanded="false" />
-                <element signature="e#4745#4746#0" expanded="false" />
-                <element signature="e#4795#4796#0" expanded="false" />
-                <element signature="e#4837#4838#0" expanded="false" />
-                <element signature="e#4872#4873#0" expanded="false" />
-                <element signature="e#4903#4904#0" expanded="false" />
-                <element signature="e#4951#4952#0" expanded="false" />
-                <element signature="e#4991#4992#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="357">
+              <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -261,25 +96,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CheckingController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="szTableRes.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/szTableRes.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="748">
+              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CheckingController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/CheckingController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9503">
-              <caret line="568" column="39" selection-start-line="568" selection-start-column="39" selection-end-line="568" selection-end-column="39" />
-              <folding>
-                <element signature="e#20113#20785#0" expanded="false" />
-                <element signature="e#20784#20785#0" expanded="false" />
-                <element signature="e#21128#21800#0" expanded="false" />
-                <element signature="e#21799#21800#0" expanded="false" />
-                <element signature="e#22143#22815#0" expanded="false" />
-                <element signature="e#22814#22815#0" expanded="false" />
-                <element signature="e#28142#28756#0" expanded="false" />
-                <element signature="e#28755#28756#0" expanded="false" />
-                <element signature="e#29125#29739#0" expanded="false" />
-                <element signature="e#29738#29739#0" expanded="false" />
-                <element signature="e#30107#30721#0" expanded="false" />
-                <element signature="e#30720#30721#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="340">
+              <caret line="701" column="19" selection-start-line="701" selection-start-column="19" selection-end-line="701" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="szTable.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/szTable.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -289,6 +131,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
               <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
+              <folding>
+                <element signature="e#340#341#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="map.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/map.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="235">
+              <caret line="242" column="34" selection-start-line="242" selection-start-column="34" selection-end-line="242" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -317,7 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/PointsToMap.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/AllRxLev.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/AllRxLevWeight.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/checking/checkPosAndNMF.html" />
@@ -327,7 +180,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/LogFilesHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/TastController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/CellInfo.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/start.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/HelperFreq.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/szTable.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/szTableRes.html" />
@@ -339,34 +191,36 @@
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/FileScanHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/BS.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/CellForSZ.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/Parser.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/form/CellNameForm.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/checking/result.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/CreateWord.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/SZController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/sqlForSZ" />
-        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell3G.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell4G.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/PointToMap.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/mapper/CellForSZMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/ParserHalper.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/checking/checkPathFileScan.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/PathScanFile.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/SqlServerProjectApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/HelperCell.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/mapper/CellMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/checkPos.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/dao/CellNameDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/NoCarrierException.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Position.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/ToJson.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/CheckingController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/Point.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/Parser.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell3G.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell4G.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/start.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/checking/result.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/createBts.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/checkPos.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/checking/checkPathFileScan.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/map.html" />
       </list>
     </option>
@@ -388,10 +242,10 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="1962" />
+    <option name="y" value="222" />
     <option name="width" value="1382" />
-    <option name="height" value="754" />
+    <option name="height" value="988" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -418,7 +272,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -517,9 +370,138 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="checking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mapper" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sqlServerProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -528,7 +510,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SearchEverywhereHistoryKey" value="ma&#9;ACTION&#9;ActivateMavenProjectsToolWindow&#10;maven&#9;ACTION&#9;ActivateMavenProjectsToolWindow&#10;mav&#9;ACTION&#9;ActivateMavenProjectsToolWindow&#10;mave&#9;ACTION&#9;ActivateMavenProjectsToolWindow" />
+    <property name="SearchEverywhereHistoryKey" value="mav&#9;ACTION&#9;ActivateMavenProjectsToolWindow&#10;ьф&#9;FILE&#9;file://C:/projects/отладка/sqlServerProject/src/main/java/com/work/sqlServerProject/mapper/CellMapper.java&#10;ma&#9;ACTION&#9;ActivateMavenProjectsToolWindow&#10;maven&#9;ACTION&#9;ActivateMavenProjectsToolWindow&#10;mave&#9;ACTION&#9;ActivateMavenProjectsToolWindow" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
@@ -1075,31 +1057,32 @@
       <workItem from="1568269255603" duration="27014000" />
       <workItem from="1569316415118" duration="14744000" />
       <workItem from="1569439305511" duration="6788000" />
+      <workItem from="1569479651223" duration="22604000" />
+      <workItem from="1569593997169" duration="1104000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="546552000" />
+    <option name="totallyTimeSpent" value="570260000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
+    <frame x="1962" y="222" width="1382" height="988" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28337237" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24228792" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24205749" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2533557" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2180723" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23600605" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23600605" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1112,6 +1095,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28337237" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1138,21 +1122,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/show result.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="62" selection-start-line="8" selection-start-column="62" selection-end-line="8" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/Yandex.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/BS.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1245,27 +1214,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell3G.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell4G.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checking/result.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="70" column="25" selection-start-line="70" selection-start-column="25" selection-end-line="70" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/PosForCheck.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1294,13 +1242,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checking/checkPathFileScan.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="29" column="77" selection-start-line="29" selection-start-column="77" selection-end-line="29" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/SqlServerProjectApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -1312,14 +1253,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="42" selection-start-line="13" selection-start-column="42" selection-end-line="13" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1241">
-          <caret line="27" column="33" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1338,35 +1271,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/ParserHalper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="9" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="50" column="37" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/TastController.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/createBts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/szTableRes.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="54" column="38" selection-start-line="54" selection-start-column="38" selection-end-line="54" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/SZController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2448">
@@ -1400,24 +1305,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/szTable.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/mapper/CellForSZMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="935">
           <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="40" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -1435,16 +1326,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/mapper/CellMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="41" column="59" selection-start-line="12" selection-start-column="45" selection-end-line="41" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Helper/NoCarrierException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1454,128 +1335,10 @@
             <element signature="e#412#413#0" expanded="false" />
             <element signature="e#445#446#0" expanded="false" />
             <element signature="e#473#474#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2108">
-          <caret line="127" column="22" selection-start-line="127" selection-start-column="22" selection-end-line="127" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#8361#8362#0" expanded="false" />
-            <element signature="e#8394#8395#0" expanded="false" />
-            <element signature="e#8443#8444#0" expanded="false" />
-            <element signature="e#8487#8488#0" expanded="false" />
-            <element signature="e#8516#8517#0" expanded="false" />
-            <element signature="e#8541#8542#0" expanded="false" />
-            <element signature="e#8578#8579#0" expanded="false" />
-            <element signature="e#8606#8607#0" expanded="false" />
-            <element signature="e#8644#8645#0" expanded="false" />
-            <element signature="e#8678#8679#0" expanded="false" />
-            <element signature="e#8732#8733#0" expanded="false" />
-            <element signature="e#8778#8779#0" expanded="false" />
-            <element signature="e#8816#8817#0" expanded="false" />
-            <element signature="e#8850#8851#0" expanded="false" />
-            <element signature="e#8904#8905#0" expanded="false" />
-            <element signature="e#8950#8951#0" expanded="false" />
-            <element signature="e#8989#8990#0" expanded="false" />
-            <element signature="e#9027#9028#0" expanded="false" />
-            <element signature="e#9086#9087#0" expanded="false" />
-            <element signature="e#9140#9141#0" expanded="false" />
-            <element signature="e#9172#9173#0" expanded="false" />
-            <element signature="e#9200#9201#0" expanded="false" />
-            <element signature="e#9242#9243#0" expanded="false" />
-            <element signature="e#9276#9277#0" expanded="false" />
-            <element signature="e#9309#9310#0" expanded="false" />
-            <element signature="e#9337#9338#0" expanded="false" />
-            <element signature="e#9380#9381#0" expanded="false" />
-            <element signature="e#9414#9415#0" expanded="false" />
-            <element signature="e#9449#9450#0" expanded="false" />
-            <element signature="e#9483#9484#0" expanded="false" />
-            <element signature="e#9531#9532#0" expanded="false" />
-            <element signature="e#9574#9575#0" expanded="false" />
-            <element signature="e#9618#9619#0" expanded="false" />
-            <element signature="e#9653#9654#0" expanded="false" />
-            <element signature="e#9714#9715#0" expanded="false" />
-            <element signature="e#9762#9763#0" expanded="false" />
-            <element signature="e#9807#9808#0" expanded="false" />
-            <element signature="e#9841#9842#0" expanded="false" />
-            <element signature="e#9902#9903#0" expanded="false" />
-            <element signature="e#9948#9949#0" expanded="false" />
-            <element signature="e#9979#9980#0" expanded="false" />
-            <element signature="e#10009#10010#0" expanded="false" />
-            <element signature="e#10052#10053#0" expanded="false" />
-            <element signature="e#10090#10091#0" expanded="false" />
-            <element signature="e#10123#10124#0" expanded="false" />
-            <element signature="e#10154#10155#0" expanded="false" />
-            <element signature="e#10200#10201#0" expanded="false" />
-            <element signature="e#10240#10241#0" expanded="false" />
-            <element signature="e#10269#10270#0" expanded="false" />
-            <element signature="e#10296#10297#0" expanded="false" />
-            <element signature="e#10334#10335#0" expanded="false" />
-            <element signature="e#10366#10367#0" expanded="false" />
-            <element signature="e#10399#10400#0" expanded="false" />
-            <element signature="e#10428#10429#0" expanded="false" />
-            <element signature="e#10472#10473#0" expanded="false" />
-            <element signature="e#10508#10509#0" expanded="false" />
-            <element signature="e#10536#10537#0" expanded="false" />
-            <element signature="e#10563#10564#0" expanded="false" />
-            <element signature="e#10600#10601#0" expanded="false" />
-            <element signature="e#10632#10633#0" expanded="false" />
-            <element signature="e#10673#10674#0" expanded="false" />
-            <element signature="e#10713#10714#0" expanded="false" />
-            <element signature="e#10776#10777#0" expanded="false" />
-            <element signature="e#10834#10835#0" expanded="false" />
-            <element signature="e#10876#10877#0" expanded="false" />
-            <element signature="e#10917#10918#0" expanded="false" />
-            <element signature="e#10982#10983#0" expanded="false" />
-            <element signature="e#11042#11043#0" expanded="false" />
-            <element signature="e#11073#11074#0" expanded="false" />
-            <element signature="e#11103#11104#0" expanded="false" />
-            <element signature="e#11146#11147#0" expanded="false" />
-            <element signature="e#11184#11185#0" expanded="false" />
-            <element signature="e#11221#11222#0" expanded="false" />
-            <element signature="e#11252#11253#0" expanded="false" />
-            <element signature="e#11302#11303#0" expanded="false" />
-            <element signature="e#11342#11343#0" expanded="false" />
-            <element signature="e#11373#11374#0" expanded="false" />
-            <element signature="e#11403#11404#0" expanded="false" />
-            <element signature="e#11446#11447#0" expanded="false" />
-            <element signature="e#11484#11485#0" expanded="false" />
-            <element signature="e#11510#11511#0" expanded="false" />
-            <element signature="e#11535#11536#0" expanded="false" />
-            <element signature="e#11568#11569#0" expanded="false" />
-            <element signature="e#11596#11597#0" expanded="false" />
-            <element signature="e#11632#11633#0" expanded="false" />
-            <element signature="e#11664#11665#0" expanded="false" />
-            <element signature="e#11714#11715#0" expanded="false" />
-            <element signature="e#11756#11757#0" expanded="false" />
-            <element signature="e#11791#11792#0" expanded="false" />
-            <element signature="e#11822#11823#0" expanded="false" />
-            <element signature="e#11870#11871#0" expanded="false" />
-            <element signature="e#11910#11911#0" expanded="false" />
-            <element signature="e#11939#11940#0" expanded="false" />
-            <element signature="e#11967#11968#0" expanded="false" />
-            <element signature="e#12006#12007#0" expanded="false" />
-            <element signature="e#12040#12041#0" expanded="false" />
-            <element signature="e#12069#12070#0" expanded="false" />
-            <element signature="e#12097#12098#0" expanded="false" />
-            <element signature="e#12136#12137#0" expanded="false" />
-            <element signature="e#12170#12171#0" expanded="false" />
-            <element signature="e#12200#12201#0" expanded="false" />
-            <element signature="e#12226#12227#0" expanded="false" />
-            <element signature="e#12265#12266#0" expanded="false" />
-            <element signature="e#12295#12296#0" expanded="false" />
-            <element signature="e#12325#12326#0" expanded="false" />
-            <element signature="e#12351#12352#0" expanded="false" />
-            <element signature="e#12390#12391#0" expanded="false" />
-            <element signature="e#12420#12421#0" expanded="false" />
-            <element signature="e#12452#12453#0" expanded="false" />
-            <element signature="e#12480#12481#0" expanded="false" />
-            <element signature="e#12522#12523#0" expanded="false" />
-            <element signature="e#12556#12557#0" expanded="false" />
+            <element signature="e#500#501#0" expanded="false" />
+            <element signature="e#526#527#0" expanded="false" />
+            <element signature="e#561#562#0" expanded="false" />
+            <element signature="e#591#592#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1586,6 +1349,8 @@
           <caret line="142" column="45" selection-start-line="142" selection-start-column="45" selection-end-line="142" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="false" />
+            <element signature="e#7995#8952#0" expanded="false" />
+            <element signature="e#8951#8952#0" expanded="false" />
             <element signature="e#9864#9865#0" expanded="false" />
             <element signature="e#9906#9907#0" expanded="false" />
             <element signature="e#10083#10084#0" expanded="false" />
@@ -1599,51 +1364,6 @@
             <element signature="e#10577#10578#0" expanded="false" />
             <element signature="e#10659#10660#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checkbox.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checkPos.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="80" column="33" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/CheckingController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9503">
-          <caret line="568" column="39" selection-start-line="568" selection-start-column="39" selection-end-line="568" selection-end-column="39" />
-          <folding>
-            <element signature="e#20113#20785#0" expanded="false" />
-            <element signature="e#20784#20785#0" expanded="false" />
-            <element signature="e#21128#21800#0" expanded="false" />
-            <element signature="e#21799#21800#0" expanded="false" />
-            <element signature="e#22143#22815#0" expanded="false" />
-            <element signature="e#22814#22815#0" expanded="false" />
-            <element signature="e#28142#28756#0" expanded="false" />
-            <element signature="e#28755#28756#0" expanded="false" />
-            <element signature="e#29125#29739#0" expanded="false" />
-            <element signature="e#29738#29739#0" expanded="false" />
-            <element signature="e#30107#30721#0" expanded="false" />
-            <element signature="e#30720#30721#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/ToJson.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1677,10 +1397,166 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/ParserHalper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="9" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/NBFparser/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3825">
+          <caret line="127" column="22" selection-start-line="127" selection-start-column="22" selection-end-line="127" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell2G.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="150" column="30" selection-start-line="146" selection-start-column="15" selection-end-line="150" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell3G.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="127" column="42" selection-start-line="127" selection-start-column="42" selection-end-line="127" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/Position/Cell4G.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="136" column="30" selection-start-line="136" selection-start-column="30" selection-end-line="136" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checking/result.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="44" column="52" selection-start-line="44" selection-start-column="52" selection-end-line="44" selection-end-column="52" />
+          <folding>
+            <marker date="1569593462495" expanded="true" signature="492:502" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/createBts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/show result.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/start.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/szTable.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/szTableRes.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checkbox.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checkPos.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/checking/checkPathFileScan.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="39" column="89" selection-start-line="39" selection-start-column="89" selection-end-line="39" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/mapper/CellMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="41" column="59" selection-start-line="12" selection-start-column="45" selection-end-line="41" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/map.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="229" column="34" selection-start-line="229" selection-start-column="34" selection-end-line="229" selection-end-column="34" />
+        <state relative-caret-position="235">
+          <caret line="242" column="34" selection-start-line="242" selection-start-column="34" selection-end-line="242" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/model/ToJson.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
+          <folding>
+            <element signature="e#340#341#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/work/sqlServerProject/controller/CheckingController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="701" column="19" selection-start-line="701" selection-start-column="19" selection-end-line="701" selection-end-column="19" />
           <folding />
         </state>
       </provider>

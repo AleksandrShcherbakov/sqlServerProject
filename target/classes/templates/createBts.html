@@ -7,18 +7,18 @@
 </head>
 <body>
 <form th:action="@{/bts}" th:object="${btsForm}" method="post">
-    <b>Укажите путь к директории, куда будет помещён БТС-файл. Иначе – в корень диска C:</b><br>
+    <b>Укажите, куда поместить БТС-файл. Иначе – в корень диска C:</b><br>
     <input type="text" th:field="*{path}"/>
     <br><br>
     <input type="submit" value="Создать БТС-файл"/>
 </form>
 <br>
 <form th:action="@{/}" method="get">
-    <input type="submit" value="на стартовую страницу">
+    <input type="submit" value="На стартовую страницу">
 </form>
 <br>
 <form th:action="@{/exit}" method="get">
-    <input type="submit" value="выключить программу"/>
+    <input type="submit" value="Выключить программу"/>
 </form>
 
 </body>

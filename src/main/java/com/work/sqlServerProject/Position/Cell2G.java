@@ -144,10 +144,11 @@ public class Cell2G extends Cell {
         else
             r=" ok: "+super.isOk();
 
-        return "system: "+super.getSystem()+" "+super.getBand()+
-                " selfCI: "+super.getCi()+
-                " bestScanCI: "+super.getBestCellID()+
-                " азимут: "+super.getAzimuth()+r;
+        return "System: "+super.getSystem()+"-"+super.getBand()+","+
+                " Азимут: "+super.getAzimuth()+","+
+                " CI(Project): "+super.getCi()+","+
+                " CI(BestScan): "+super.getBestCellID()+","+
+                " Result: "+r;
 
     }
 

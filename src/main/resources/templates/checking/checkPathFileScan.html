@@ -19,13 +19,13 @@
 
     </div>
     <form id="formForExist" th:action="@{/reset}" th:method="get">
-        <input type="submit" value="удалить загруженные файлы">
+        <input type="submit" value="Удалить загруженные файлы">
     </form>
 </div>
 <div>
     <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post"  enctype="multipart/form-data" >
         <p>
-            Выберите файл сканнера:
+            Выберите файл сканера:
             <br>
             <input type="file" th:field="*{scanFile}" accept=".nmf" multiple>
             <br><br>
@@ -34,10 +34,10 @@
             <br><br>
             Или выберите из списка последних файлов:
             <div id="files"></div>
-            <input id="mainButton" type="submit" value="загрузить файл">
+            <input id="mainButton" type="submit" value="Проверить БС">
         </p>
         <p>
-            <input type="checkbox" id="useBts" name="isBTS" value="ок"> Использовать БТС файл (если компьютер не подключен к базе данных General)
+            <input type="checkbox" id="useBts" name="isBTS" value="ок"> Использовать БТС-файл (если компьютер не подключен к базе данных General)
             <br>
         <div id="checkBts">
             Выберите БТС файл:

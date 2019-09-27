@@ -135,7 +135,7 @@ public class Parser {
         String[] temp = channels[0].split(",");
         String ch=null;
         for (String freq : CheckingController.UMTS){
-            if (s.contains(freq)) {
+            if (s.contains(freq+",1,")) {
                 ch=freq;
             }
         }

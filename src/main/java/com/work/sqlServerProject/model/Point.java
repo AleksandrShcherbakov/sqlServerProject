@@ -85,7 +85,7 @@ public class Point {
             }
             } catch (ArrayIndexOutOfBoundsException e) {
                 for (String k : scrEcNoRscp) {
-                    System.out.println(k);
+                    //System.out.println(k);
                 }
 
             }
@@ -125,9 +125,9 @@ public class Point {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (String key : mainMap.keySet()){
-            stringBuilder.append(mainMap.get(key)+"<br>");
+            stringBuilder.append(key+":"+mainMap.get(key)+"\\;");
         }
-        return longitude+" "+latitude+"<br>"+stringBuilder.toString();
+        return longitude+"_"+latitude+" "+stringBuilder.toString()+System.lineSeparator();
     }
 
 

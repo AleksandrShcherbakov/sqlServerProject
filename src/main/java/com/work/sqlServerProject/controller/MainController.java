@@ -130,6 +130,11 @@ public class MainController {
     }
     @RequestMapping(value = "/exit", method = RequestMethod.GET)
     public String exit(){
+        try {
+            Files.delete(Paths.get("C://points.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.exit(0);
         return null;
     }

@@ -103,7 +103,7 @@ public class CellMapper implements RowMapper<CellInfo> {
             "                        from pmc.EXPORT_HU_UCELL_BSC6910UMTS\n"+
             "                       union\n"+
             "                      select utrancellid, utrandlarfcn, pscrambcode\n"+
-            "                       from pmc.EXPORT_HU_eNodeBUtranExternalCell_eNodeB\n"+
+            "                       from pmc.EXPORT_HU_eNodeBUtranExternalCell_eNodeB where rac!=237\n"+
             "                       union\n"+
             /*"                       select cellid, utrandlarfcn, pscrambcode\n"+
             "                        from pmc.EXPORT_HU_UTRANEXTERNALCELL_BTS5900\n"+

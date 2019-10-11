@@ -111,10 +111,24 @@ public class Parser {
         if (s.contains("11800")){
             channelString = s.split("11800,")[1];
         }
+        String[] channeisElements= channelString.split(",");
+        List<String> bcchs=new ArrayList<>();
+        try {
+            for (int i = 2; i < channeisElements.length; i += 5) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(channeisElements[i] + "," + channeisElements[i + 1] + "," + channeisElements[i + 2]);
+                bcchs.add(stringBuilder.toString());
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+        String[]channels= new String[bcchs.size()];
+        bcchs.toArray(channels);
 
-        String [] channels = channelString.split(",,,");
-        String[]temp = channels[0].split(",");
-        channels[0]=temp[2]+","+temp[3]+","+temp[4];
+        //String [] channels = channelString.split(",,,");
+        //String[]temp = channels[0].split(",");
+        //channels[0]=temp[2]+","+temp[3]+","+temp[4];
         return channels;
 
     }

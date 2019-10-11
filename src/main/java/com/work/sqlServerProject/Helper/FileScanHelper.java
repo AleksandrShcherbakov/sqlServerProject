@@ -20,7 +20,7 @@ public class FileScanHelper {
             BasicFileAttributes atr1 = null;
             try {
                 atr1 = Files.readAttributes(o1, BasicFileAttributes.class);
-                System.out.println(atr1.creationTime());
+                //System.out.println(atr1.creationTime());
             } catch (IOException e) {
                 System.out.println(o1+" нет атрибутов");
             }
@@ -30,7 +30,7 @@ public class FileScanHelper {
             } catch (IOException e) {
                 System.out.println(o2+" нет атрибутов");
             }
-            System.out.println(atr2.creationTime().compareTo(atr1.creationTime()));
+            //System.out.println(atr2.creationTime().compareTo(atr1.creationTime()));
             return atr2.creationTime().compareTo(atr1.creationTime());
         }
     };

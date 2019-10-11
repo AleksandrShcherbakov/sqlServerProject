@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,10 +32,11 @@ import java.util.stream.Collectors;
 public class CheckingController {
 
 
-
+File filePoints=null;
 
     public static String[]LTE;
     public static String[]UMTS;
+
 
     @Autowired
     private CellNameDAO cellNameDAO;
@@ -63,6 +66,14 @@ public class CheckingController {
 
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
     public String showSelectScanFilePage(Model model){
+        try {
+            Files.createFile(Paths.get("C://points.txt"));
+            filePoints=new File("C://points.txt");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         List<Path>list=new ArrayList<>();
         LTE=MainController.LTE;
         UMTS=MainController.UMTS;
@@ -257,6 +268,7 @@ public class CheckingController {
             points = Parser.getPointsFromScan(parsered);
         }
         else points.addAll(Parser.getPointsFromScan(parsered));
+        
         int size2=points.size();
         if (points.size()!=0 && size1!=size2) {
             return "файл " + path + " прочитан";
@@ -280,11 +292,14 @@ public class CheckingController {
             points = Parser.getPointsFromScan(parsered);
         }
         else points.addAll(Parser.getPointsFromScan(parsered));
+
         int size2=points.size();
         if (points.size()!=0 && size1!=size2) {
             return "файл " + path + " прочитан";
         }
+
         else return "файл "+ path + " не прочитан";
+
     }
 
 

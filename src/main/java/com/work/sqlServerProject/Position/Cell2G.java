@@ -123,7 +123,7 @@ public class Cell2G extends Cell {
         }
 
         //для теста
-        if (super.getCi()==42594){
+        if (super.getCi()==29622){
             System.out.println("self = "+super.getAbout()+" test = "+bcchBsic+" aver = "+common/count+"; count="+count);
             System.out.println("averWeight = "+(common/count)/count);
         }

@@ -22,6 +22,7 @@
 <div th:if="${nopoints}" th:utext="${nopoints}" style="color: red"></div>
 <h2 id="header"></h2>
 <div id="notetest"></div>
+<br>
 <div id="map"></div>
 <div id="color"></div>
 <div id="note"></div>
@@ -85,7 +86,7 @@
                     createsectors(cellss[i].azimuth, "#808080", 0, 1);
                 }
             }
-            document.title=pos+" "+about+" CI: "+cell+" азимут:"+azimuthOfSector;
+            document.title=pos+" ("+about+") CI: "+cell+" азимут:"+azimuthOfSector;
             for (i=0;i<listWithLevels.length;i++) {
 
 
@@ -132,7 +133,7 @@
             for (i = 0; i < pointsInPos.length; i++) {
                 createPoint(pointsInPos[i].longitude, pointsInPos[i].latitude, pointsInPos[i].color, pointsInPos[i].param);
             }
-            document.title=pos+" "+about;
+            document.title=pos+" ("+about+")";
         }
         $('#header').append(document.title);
 
@@ -246,7 +247,7 @@
             }
         }(cellss[i].ci);
         notetest.appendChild(ch);
-        notetest.appendChild(document.createElement("label").appendChild(document.createTextNode("посмотреть сектор "+cellss[i].ci+" азимут: "+cellss[i].azimuth)));
+        notetest.appendChild(document.createElement("label").appendChild(document.createTextNode("Посмотреть сектор CI= "+cellss[i].ci+" (азимут= "+cellss[i].azimuth+")")));
         notetest.appendChild(document.createElement("br"));
     }
 

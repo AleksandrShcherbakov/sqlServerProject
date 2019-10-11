@@ -9,10 +9,13 @@
 <div>
     <form th:action="@{/checkPos}" th:object="${pos}" th:method="post">
         <p>
-            Ввести номера позиций (через запятую):
+            Введите номера позиций (через запятую):
+            <br>
+            <br>
             <input type="text" th:field="*{posnames}" style="width: 100%">
             <br>
-            <input type="submit" value="проверить">
+            <br>
+            <input type="submit" value="Проверить БС">
         </p>
     </form>
 </div>

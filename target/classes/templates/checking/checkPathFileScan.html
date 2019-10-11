@@ -8,6 +8,7 @@
 </head>
 <body>
 <p><a href='/'>На главную.</a></p>
+<h4>ПУТЬ К ФАЙЛАМ СКАНЕРА:</h4>
 <div>
     <div th:if="${nobts}" th:utext="${nobts}" style="color: red"> </div>
     <div th:if="${nofiles}" th:utext="${nofiles}" style="color: red"> </div>
@@ -25,31 +26,34 @@
 <div>
     <form th:action="@{/inputScan}" th:object="${pathScanFile}" th:method="post"  enctype="multipart/form-data" >
         <p>
-            Выберите файл сканера:
+            * Загрузите файл(-ы) сканера:
             <br>
             <input type="file" th:field="*{scanFile}" accept=".nmf" multiple>
             <br><br>
-            Или введите путь к файлу сканнера:
+            * Или введите путь к одному файлу:
             <input type="text" th:field="*{url}" style="width: 100%">
             <br><br>
-            Или выберите из списка последних файлов:
+            * Или выберите файл(-ы) из списка последних:
             <div id="files"></div>
-            <input id="mainButton" type="submit" value="Проверить БС">
+
         </p>
+        ===============================================================
         <p>
             <input type="checkbox" id="useBts" name="isBTS" value="ок"> Использовать БТС-файл (если компьютер не подключен к базе данных General)
             <br>
         <div id="checkBts">
-            Выберите БТС файл:
+            Выберите БТС-файл:
             <br>
             <input type="file" th:field="*{btsFile}" accept=".csv,.nbf"><br><br>
-            Или укажите путь к bts файлу:
+            Или укажите путь к БТС-файлу:
             <input type="text" id="pathToBts" th:field="*{toBts}" style="width: 100%">
         <br><br>
 
             Или выберите из имеющихся:
             <div id="listOfBts"></div>
         </div>
+        <br>
+        <input id="mainButton" type="submit" value="ДАЛЕЕ">
 
         <script>
             $('#checkBts').hide();

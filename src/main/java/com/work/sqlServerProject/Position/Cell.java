@@ -252,17 +252,29 @@ public class Cell {
         this.minDistance=10;
         this.sectorOfFinding=90;
         if (system.equals("GSM")){
-            numID=HelperCell.numIds.get(system+" "+band);
+
+            numID = HelperCell.numIds.get(system + " " + band);
+
             about=system+" "+band;
         }
         else
         if (system.equals("UMTS")){
-            numID=HelperCell.numIds.get(system+" "+channel);
+            if (channel==0){
+                numID=HelperCell.numIds.get(null);
+            }
+            else {
+                numID = HelperCell.numIds.get(system + " " + channel);
+            }
             about=system+" "+channel;
         }
         else
         if (system.equals("LTE")){
-            numID=HelperCell.numIds.get(system+" "+channel);
+            if (channel==0){
+                numID=HelperCell.numIds.get(null);
+            }
+            else {
+                numID = HelperCell.numIds.get(system + " " + channel);
+            }
             about=system+" "+channel;
         }
     }

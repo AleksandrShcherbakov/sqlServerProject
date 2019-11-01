@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -66,13 +64,6 @@ File filePoints=null;
 
     @RequestMapping(value = "/inputScan", method = RequestMethod.GET)
     public String showSelectScanFilePage(Model model){
-        try {
-            Files.createFile(Paths.get("C://points.txt"));
-            filePoints=new File("C://points.txt");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         List<Path>list=new ArrayList<>();
         LTE=MainController.LTE;
@@ -321,6 +312,7 @@ File filePoints=null;
                 int pos=Integer.parseInt(s);
                 int i=0;
                 try{
+
                     i=setPosition(pos);
                 }
                 catch (NoCarrierException e ){

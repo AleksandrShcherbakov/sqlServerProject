@@ -118,6 +118,27 @@ public class Position {
             System.out.println(i+" "+countOfExistBest);
             String res=null;
             res="<a href='/map?about=" + cellsOfOneBand.get(0).getAbout() + "&posName="+cellsOfOneBand.get(0).getPosname()+"' target=\"_blank\">" + cellsOfOneBand.get(0).getAbout() + "</a>";
+            if (cellsOfOneBand.get(0).getAbout().endsWith(" 0")){
+                StringBuilder cells = new StringBuilder();
+                cells.append(cellsOfOneBand.get(0).getSystem()+" c CI: ");
+                for (Cell c : cellsOfOneBand){
+                    cells.append(c.getCi()+", ");
+                }
+                cells.delete(cells.lastIndexOf(", "),cells.length());
+                String oneOrMany1, oneOrMany2="";
+                if (cellsOfOneBand.size()==1){
+                    oneOrMany1="сектора";
+                    oneOrMany2="сектор";
+                }
+                else {
+                    oneOrMany1="секторов";
+                    oneOrMany2="сектора";
+                }
+                res="Для "+oneOrMany1+" "+cells+" частота в БД не указана. Вероятнее всего, "+oneOrMany2+" не в эфире.";
+                stringBuilder.append("<span style='color:red'>"+res+"</span>");
+                stringBuilder.append("<br>");
+            }
+            else
             if (countOfExistBest==0){
                 stringBuilder.append(res+" - <span style='color:orange'>или сектора не в эфире, или Ch, SCR, PCI на сети не соответствуют БД General. Либо станцию не объехали.</span>");
                 stringBuilder.append("<br>");

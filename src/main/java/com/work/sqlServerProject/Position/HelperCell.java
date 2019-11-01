@@ -49,6 +49,7 @@ public class HelperCell {
 
     static {
         numIds=new HashMap<>();
+        numIds.put(null,0);
         Integer id=1;
         numIds.put("GSM 900",id);
         id++;

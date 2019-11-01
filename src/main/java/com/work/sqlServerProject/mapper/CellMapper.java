@@ -3,6 +3,7 @@ package com.work.sqlServerProject.mapper;
 import com.work.sqlServerProject.model.CellInfo;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.io.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,6 +11,30 @@ import java.sql.SQLException;
  * Created by a.shcherbakov on 19.02.2019.
  */
 public class CellMapper implements RowMapper<CellInfo> {
+    public final static String readSqlStr(String path) {
+        String result="";
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+            StringBuilder res = new StringBuilder();
+            while (reader.ready()){
+                res.append(reader.readLine());
+            }
+            result=res.toString();
+        } catch (FileNotFoundException e) {
+            System.out.println("файл sql не найден");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /*public static final String All_2G_SQL;
+
+    static {
+        All_2G_SQL=readSqlStr("C:\\projects\\отладка\\sqlServerProject\\src\\main\\resources\\sqlQuerryes/2G.sql");
+    }*/
+
     public static final String All_2G_SQL = "select distinct\n" +
             "\n" +
             "            'GSM' as SYSTEM,\n" +

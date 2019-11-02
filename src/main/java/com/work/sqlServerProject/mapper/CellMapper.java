@@ -2,8 +2,10 @@ package com.work.sqlServerProject.mapper;
 
 import com.work.sqlServerProject.model.CellInfo;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.ui.Model;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,13 +13,15 @@ import java.sql.SQLException;
  * Created by a.shcherbakov on 19.02.2019.
  */
 public class CellMapper implements RowMapper<CellInfo> {
-    public final static String readSqlStr(String path) {
-        String result="";
+    public String readSqlStr(String path) throws URISyntaxException {
+        String result="000";
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+            Class clazz = Model.class;
+            InputStream inputStream = clazz.getResourceAsStream(path);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             StringBuilder res = new StringBuilder();
             while (reader.ready()){
-                res.append(reader.readLine());
+                res.append(reader.readLine()+" ");
             }
             result=res.toString();
         } catch (FileNotFoundException e) {

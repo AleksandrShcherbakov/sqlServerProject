@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="main">
+    <input type="button" value="ok" onclick="ajax()">
+
+</div>
+<div id="info"></div>
+
+<script type="javascript">
+    
+
+
+    function ajax() {
+        $.ajax({
+            type:"get",
+            url:"http://begin-english.ru/samouchitel/7",
+            //data:$('#mainform').serializeToString(),
+            success : function(data) {
+                //console.log("SUCCESS: ", data);
+                $('#info').html(data);
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

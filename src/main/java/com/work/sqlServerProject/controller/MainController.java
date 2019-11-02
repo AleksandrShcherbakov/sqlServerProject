@@ -4,6 +4,7 @@ import com.work.sqlServerProject.Helper.Helper;
 import com.work.sqlServerProject.dao.CellNameDAO;
 import com.work.sqlServerProject.form.BTSForm;
 import com.work.sqlServerProject.form.CellNameForm;
+import com.work.sqlServerProject.mapper.CellMapper;
 import com.work.sqlServerProject.model.CellInfo;
 import com.work.sqlServerProject.model.CellNameInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -139,20 +141,16 @@ public class MainController {
         return null;
     }
 
+
     @RequestMapping(value = "/file", method = RequestMethod.GET)
     @ResponseBody
-    public String  createFile() throws IOException {
-        File file1 = new File("C://123.txt");
-        String string = "\n привет ghbdtn";
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1, true)));
-            bufferedWriter.write(string);
-            bufferedWriter.close();
-        }
-        catch (Exception e){
-            return "ничего не получилось";
-        }
-        return file1.toString();
+    public String  createFile() throws URISyntaxException {
+
+        CellMapper mapper = new CellMapper();
+        String res=mapper.readSqlStr("/sqlQuerries/2G.sql");
+        String res2 = mapper.readSqlStr("/sqlQuerries/2G.sql");
+
+        return res+" "+res2;
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)

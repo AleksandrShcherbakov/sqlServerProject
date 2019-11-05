@@ -13,7 +13,13 @@ import java.net.URISyntaxException;
 public class SqlTest {
     @Test
     public void testSql() throws URISyntaxException {
-        String res = new CellMapper().readSqlStr("/sqlQuerries/2G.sql");
+        String res = CellMapper.readSqlStr("/sqlQuerries/2G.sql");
         System.out.println(res);
+    }
+
+    @Test
+    public void testCellInit(){
+        System.out.println(CellMapper.All_2G_SQL);
+        System.out.println(CellMapper.SQL_LTE_Ericsson);
     }
 }

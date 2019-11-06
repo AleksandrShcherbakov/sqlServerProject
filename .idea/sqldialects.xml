@@ -6,5 +6,6 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/sqlQuerries/3G Huawei.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sqlQuerries/4G Ericsson.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sqlQuerries/4G Huawei.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sqlQuerries/forSZ.sql" dialect="TSQL" />
   </component>
 </project>

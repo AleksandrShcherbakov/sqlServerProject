@@ -69,8 +69,7 @@ public class CellNameDAO extends JdbcDaoSupport {
     }
 
     public List<CellForSZ> getBSforSZ (int posname){
-        String[] partsOfQuerry=CellForSZMapper.SQL_SZ.split("union",2);
-        String sql = partsOfQuerry[0]+" and posname= "+posname+" union "+partsOfQuerry[1]+" and a.posname= "+posname+" order by ran, frequency, carriernum, uarfcndl, azimuth;";
+        String sql = CellForSZMapper.SQL_SZ+" where posname= "+posname+" order by ran, frequency, carriernum, uarfcndl, azimuth;";
         Object[]params=new Object[]{};
         CellForSZMapper mapper = new CellForSZMapper();
         List<CellForSZ>list=this.getJdbcTemplate().query(sql,params,mapper);

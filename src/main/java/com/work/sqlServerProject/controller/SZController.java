@@ -104,14 +104,19 @@ public class SZController {
     public String getInfoForSZ(Model model, @ModelAttribute("szFormPos") SZFormPos szFormPos,
                                @RequestParam (required=false, name = "system") String system,
                                @RequestParam (required=false, name="executor") String ex) throws IOException {
-        if (ex==null){
-            model.addAttribute("noExecutor", "Необходимо указать имя исполнителя.");
-            model.addAttribute("executors",exec);
-            model.addAttribute("LTE",LTE);
-            model.addAttribute("UMTS",UMTS);
-            return "checkPos";
+        if (executors.length==1){
+            this.setExecutor(executors[0]);
         }
-        this.setExecutor(ex);
+        else {
+            if (ex == null) {
+                model.addAttribute("noExecutor", "Необходимо указать имя исполнителя.");
+                model.addAttribute("executors", exec);
+                model.addAttribute("LTE", LTE);
+                model.addAttribute("UMTS", UMTS);
+                return "checkPos";
+            }
+            this.setExecutor(ex);
+        }
 
         if (szFormPos.getPosName() == 0) {
             model.addAttribute("nopos", "Номер позиции не может быть \"0\"");

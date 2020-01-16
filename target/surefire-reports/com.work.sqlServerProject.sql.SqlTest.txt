@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.work.sqlServerProject.sql.SqlTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.968 s - in com.work.sqlServerProject.sql.SqlTest
+Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.005 s <<< FAILURE! - in com.work.sqlServerProject.sql.SqlTest
+getBsForSZ(com.work.sqlServerProject.sql.SqlTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
+	at com.work.sqlServerProject.sql.SqlTest.getBsForSZ(SqlTest.java:36)
+

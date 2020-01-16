@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Select BS</title>
+    <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
 <p><a href='/'>На главную.</a></p>
@@ -18,29 +19,33 @@
         <b>Укажите номер БС:</b><br>
         <input type="text" th:field="*{posName}"/>
     </p>
+    <input type="checkbox" id="selectAll"> Выбрать все
+    <br>
+    <br>
+
     <div id ='bands'>
-    <p style="color: green">
-        <input type="checkbox" name="system" value="2G 900 0" >2G 900<br>
-        <input type="checkbox" name="system" value="2G 1800 0">2G 1800
-    </p>
-    <p id="UMTS 2100" style="color: red">
-        <!--<input type="checkbox" name="system" value="3G 2100 10813">3G 2100 ch: 10813<br>
-        <input type="checkbox" name="system" value="3G 2100 10788">3G 2100 ch: 10788<br>
-        <input type="checkbox" name="system" value="3G 2100 10836">3G 2100 ch: 10836-->
-    </p>
-    <p id="UMTS 900" style="color: brown">
-        <!--<input type="checkbox" name="system" value="3G 900 3036">3G 900 ch: 3036<br>
-        <input type="checkbox" name="system" value="3G 900 3012">3G 900 ch: 3012-->
-    </p>
-    <p id="LTE" style="color: blueviolet">
-        <!--<input type="checkbox" name="system" value="4G 2600 3300">4G 2600 ch: 3300<br>
-        <input type="checkbox" name="system" value="4G 1800 1301">4G 1800 ch: 1301<br>
-        <input type="checkbox" name="system" value="4G 800 6413">4G 800 ch: 6413-->
-    </p>
+        <p style="color: green">
+            <input type="checkbox"  name="system" value="2G 900 0" >2G 900<br>
+            <input type="checkbox" name="system" value="2G 1800 0">2G 1800
+        </p>
+        <p id="UMTS 2100" style="color: red">
+            <!--<input type="checkbox" name="system" value="3G 2100 10813">3G 2100 ch: 10813<br>
+            <input type="checkbox" name="system" value="3G 2100 10788">3G 2100 ch: 10788<br>
+            <input type="checkbox" name="system" value="3G 2100 10836">3G 2100 ch: 10836-->
+        </p>
+        <p id="UMTS 900" style="color: brown">
+            <!--<input type="checkbox" name="system" value="3G 900 3036">3G 900 ch: 3036<br>
+            <input type="checkbox" name="system" value="3G 900 3012">3G 900 ch: 3012-->
+        </p>
+        <p id="LTE" style="color: blueviolet">
+            <!--<input type="checkbox" name="system" value="4G 2600 3300">4G 2600 ch: 3300<br>
+            <input type="checkbox" name="system" value="4G 1800 1301">4G 1800 ch: 1301<br>
+            <input type="checkbox" name="system" value="4G 800 6413">4G 800 ch: 6413-->
+        </p>
     </div>
     <div id="executors">
     </div>
-    <p>
+    <p id="cb">
         <b>Укажите, куда поместить файл СЗ. Иначе – в папку "С://Cлужебные записки" (рекомендуется):</b><br>
         <input type="text" th:field="*{pathDir}"><br>
         <input type="submit" value="OK"/>
@@ -90,15 +95,36 @@
     }
 
     var div= document.getElementById("executors");
-    for (i=0;i<executorsList.length;i++){
-        var radio = document.createElement("input");
-        radio.type="radio";
-        radio.name="executor";
-        radio.value=executorsList[i];
-        div.appendChild(radio);
-        div.appendChild(document.createElement('label').appendChild(document.createTextNode(executorsList[i])));
-        div.appendChild(document.createElement('br'));
+    if (executorsList.length===1){
+        var ex = document.createElement('p');
+        ex.appendChild(document.createElement('label').appendChild(document.createTextNode(executorsList[0])));
+        div.appendChild(ex);
+
     }
+    else {
+        for (i = 0; i < executorsList.length; i++) {
+            var radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "executor";
+            radio.value = executorsList[i];
+            div.appendChild(radio);
+            div.appendChild(document.createElement('label').appendChild(document.createTextNode(executorsList[i])));
+            div.appendChild(document.createElement('br'));
+            if (executorsList.length === 1) {
+                radio.setProperty('chacked', true);
+            }
+        }
+    }
+
+</script>
+<script>
+    $('#selectAll').click(function(){
+        if ($(this).is(':checked')){
+            $('#bands input:checkbox').prop('checked', true);
+        } else {
+            $('#bands input:checkbox').prop('checked', false);
+        }
+    });
 </script>
 
 </body>
